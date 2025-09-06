@@ -1,0 +1,71 @@
+-- Insertar propiedades de ejemplo para la inmobiliaria
+INSERT INTO public.properties (
+  title, 
+  description, 
+  price, 
+  property_type, 
+  bedrooms, 
+  bathrooms, 
+  area_m2, 
+  address, 
+  city, 
+  operation_type,
+  features,
+  images
+) VALUES 
+(
+  'Casa Moderna en Piantini',
+  'Hermosa casa de 3 niveles en una de las zonas más exclusivas de Santiago. Cuenta con acabados de primera calidad, cocina equipada y amplio jardín.',
+  15500000.00,
+  'casa',
+  4,
+  3,
+  280.50,
+  'Calle Principal #123, Piantini',
+  'Santiago',
+  'venta',
+  ARRAY['piscina', 'garaje', 'jardín', 'cocina equipada', 'aire acondicionado'],
+  ARRAY['/placeholder.svg?height=400&width=600']
+),
+(
+  'Apartamento Ejecutivo Centro',
+  'Moderno apartamento en el corazón de Santiago, ideal para profesionales. Excelente ubicación cerca de centros comerciales y oficinas.',
+  8500000.00,
+  'apartamento',
+  2,
+  2,
+  95.00,
+  'Av. 27 de Febrero #456',
+  'Santiago',
+  'venta',
+  ARRAY['balcón', 'aire acondicionado', 'parqueo', 'seguridad 24h'],
+  ARRAY['/placeholder.svg?height=400&width=600']
+),
+(
+  'Local Comercial Zona Colonial',
+  'Amplio local comercial en excelente ubicación para cualquier tipo de negocio. Alto flujo peatonal y fácil acceso.',
+  45000.00,
+  'local',
+  0,
+  1,
+  120.00,
+  'Calle del Sol #789',
+  'Santiago',
+  'alquiler',
+  ARRAY['vitrina', 'baño', 'aire acondicionado', 'parqueo'],
+  ARRAY['/placeholder.svg?height=400&width=600']
+),
+(
+  'Terreno Residencial Los Jardines',
+  'Excelente terreno para construcción en urbanización cerrada. Todos los servicios disponibles y excelente ubicación.',
+  3200000.00,
+  'terreno',
+  0,
+  0,
+  450.00,
+  'Urbanización Los Jardines, Lote #15',
+  'Santiago',
+  'venta',
+  ARRAY['urbanización cerrada', 'todos los servicios', 'seguridad'],
+  ARRAY['/placeholder.svg?height=400&width=600']
+);
