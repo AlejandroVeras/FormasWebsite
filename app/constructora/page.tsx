@@ -9,7 +9,7 @@ export default function ConstructoraPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-6 lg:px-8 py-4">
+        <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -55,7 +55,7 @@ export default function ConstructoraPage() {
 
       {/* Services Section */}
       <section className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -117,7 +117,7 @@ export default function ConstructoraPage() {
 
       {/* Process Section */}
       <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16">
             <h3 className="text-3xl font-bold mb-4">Nuestro Proceso</h3>
             <p className="text-muted-foreground text-lg">Metodología probada para garantizar el éxito de tu proyecto</p>
@@ -160,7 +160,7 @@ export default function ConstructoraPage() {
 
       {/* Contact Form */}
       <section className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold mb-4">Solicita tu Presupuesto</h3>
@@ -218,25 +218,69 @@ export default function ConstructoraPage() {
         </div>
       </section>
 
-      {/* Contact Info */}
-      <section className="py-12 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <div className="flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-primary" />
-              <span>Santiago, República Dominicana</span>
+  {/* Footer */}
+      <footer className="bg-card border-t py-12">
+        <div className="container mx-auto px-8 lg:px-32">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="animate-in fade-in slide-in-from-left-5 duration-700">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-bold text-primary">FORMAS</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.
+              </p>
             </div>
-            <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-primary" />
-              <span>+1 (809) 123-4568</span>
+
+            <div className="animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
+              <h6 className="font-semibold mb-3">Nuestras Empresas</h6>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>
+                  <Link href="/estructuras-metalicas" className="hover:text-primary transition-colors duration-300">
+                    Estructuras Metálicas
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/constructora" className="hover:text-primary transition-colors duration-300">
+                    Constructora
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/inmobiliaria" className="hover:text-primary transition-colors duration-300">
+                    Inmobiliaria
+                  </Link>
+                </li>
+              </ul>
             </div>
-            <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-primary" />
-              <span>constructora@formas.com.do</span>
+
+            <div className="animate-in fade-in slide-in-from-bottom-5 duration-700 delay-200">
+              <h6 className="font-semibold mb-3">Servicios</h6>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Naves Industriales</li>
+                <li>Construcción Residencial</li>
+                <li>Venta de Propiedades</li>
+                <li>Asesoría Técnica</li>
+              </ul>
+            </div>
+
+            <div className="animate-in fade-in slide-in-from-right-5 duration-700 delay-300">
+              <h6 className="font-semibold mb-3">Contacto</h6>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Santiago, RD</li>
+                <li>+1 (809) 123-4567</li>
+                <li>info@formas.com.do</li>
+              </ul>
             </div>
           </div>
+
+          <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground animate-in fade-in duration-700 delay-500">
+            <p>&copy; 2024 Grupo Formas. Todos los derechos reservados.</p>
+          </div>
         </div>
-      </section>
+      </footer>
     </div>
   )
 }
+

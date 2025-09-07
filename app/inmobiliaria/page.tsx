@@ -44,7 +44,7 @@ export default async function InmobiliariaPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-6 lg:px-8 py-4">
+        <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center transition-transform hover:scale-110">
@@ -123,7 +123,7 @@ export default async function InmobiliariaPage() {
 
       {/* Services Section */}
       <section className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -206,7 +206,7 @@ export default async function InmobiliariaPage() {
 
       {/* Featured Properties */}
       <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
             <h3 className="text-3xl font-bold mb-4">Propiedades Destacadas</h3>
             <p className="text-muted-foreground text-lg">Algunas de nuestras mejores opciones disponibles</p>
@@ -310,7 +310,7 @@ export default async function InmobiliariaPage() {
 
       {/* Propiedades Disponibles */}
       <section id="propiedades" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
             <h3 className="text-3xl font-bold mb-4">Propiedades Disponibles</h3>
             <p className="text-muted-foreground text-lg">
@@ -424,7 +424,7 @@ export default async function InmobiliariaPage() {
 
       {/* Contact Form */}
       <section className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8 animate-in fade-in-50 duration-1000">
               <h3 className="text-3xl font-bold mb-4">¿Buscas una Propiedad?</h3>

@@ -17,7 +17,7 @@ export default function HomePage() {
 
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-6 lg:px-8 py-4">
+        <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
@@ -97,7 +97,7 @@ export default function HomePage() {
 
       {/* Empresas Section */}
       <section id="empresas" className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in slide-in-from-top-5 duration-700">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestras Empresas</h3>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -212,7 +212,7 @@ export default function HomePage() {
 
       {/* About Section */}
       <section id="nosotros" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <h3 className="text-3xl font-bold mb-6">Más de 25 años construyendo confianza</h3>
@@ -259,7 +259,7 @@ export default function HomePage() {
 
       {/* Contact Section */}
       <section id="contacto" className="py-20">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-32">
           <div className="text-center mb-16 animate-in fade-in slide-in-from-top-5 duration-700">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">Contáctanos</h3>
             <p className="text-muted-foreground text-lg">Estamos listos para hacer realidad tu próximo proyecto</p>
@@ -350,7 +350,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="bg-card border-t py-12">
-        <div className="container mx-auto px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-32">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
