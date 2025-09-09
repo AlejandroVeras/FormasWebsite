@@ -35,7 +35,32 @@ export default function NewPropertyPage() {
     operation_type: "",
     status: "disponible",
   })
+const [images, setImages] = useState<string[]>([]);
 
+const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files;
+  if (!files) return;
+  const supabase = createClient();
+  let uploadedImages: string[] = [];
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const fileName = `${Date.now()}_${file.name}`;
+    // Subir al bucket
+    const { data, error } = await supabase.storage
+      .from("properties-images")
+      .upload(fileName, file);
+
+    if (error) {
+      alert("Error al subir imagen: " + error.message);
+      continue;
+    }
+    // Construir URL público
+    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/properties-images/${fileName}`;
+    uploadedImages.push(imageUrl);
+  }
+  setImages([...images, ...uploadedImages]);
+};
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
@@ -267,7 +292,21 @@ export default function NewPropertyPage() {
                   />
                 </div>
               </div>
-
+<div>
+  <Label>Imágenes</Label>
+  <input
+    type="file"
+    multiple
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="block mt-2"
+  />
+  <div className="flex gap-2 mt-2">
+    {images.map((url) => (
+      <img key={url} src={url} alt="Preview" className="w-20 h-20 object-cover rounded" />
+    ))}
+  </div>
+</div>
               {/* Características */}
               <div>
                 <Label>Características</Label>
