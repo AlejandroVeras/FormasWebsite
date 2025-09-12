@@ -111,28 +111,76 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
   const PropertyIcon = getPropertyIcon(property.property_type)
 
+  // Structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": property.title,
+    "description": property.description,
+    "url": `https://formas.com.do/inmobiliaria/propiedades/${property.id}`,
+    "image": property.images?.[0] || "",
+    "offers": {
+      "@type": "Offer",
+      "price": property.price,
+      "priceCurrency": "DOP",
+      "availability": "https://schema.org/InStock",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": property.price,
+        "priceCurrency": "DOP"
+      }
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": property.address,
+      "addressLocality": property.city,
+      "addressCountry": property.country
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "addressCountry": property.country
+    },
+    "numberOfRooms": property.bedrooms,
+    "numberOfBathroomsTotal": property.bathrooms,
+    "floorSize": {
+      "@type": "QuantitativeValue",
+      "value": property.area_m2,
+      "unitCode": "MTK"
+    },
+    "datePosted": property.created_at,
+    "category": property.operation_type,
+    "amenityFeature": property.features?.map(feature => ({
+      "@type": "LocationFeatureSpecification",
+      "name": feature
+    })) || []
+  }
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {/* Header */}
       <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4 min-w-0 flex-1">
+              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform shrink-0">
                 <Link href="/inmobiliaria/propiedades" className="gap-2">
-                  <ArrowLeft className="w-4 h-4" /> Volver a Propiedades
+                  <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Volver a Propiedades</span><span className="sm:hidden">Volver</span>
                 </Link>
               </Button>
-              <Separator orientation="vertical" className="h-6" />
-              <div>
-                <h1 className="text-lg font-semibold">{property.title}</h1>
-                <p className="text-sm text-muted-foreground flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  {property.address}, {property.city}
+              <Separator orientation="vertical" className="h-6 hidden sm:block" />
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-lg font-semibold truncate">{property.title}</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
+                  <MapPin className="w-3 h-3 shrink-0" />
+                  <span className="truncate">{property.address}, {property.city}</span>
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <Button variant="ghost" size="sm" className="hover:scale-105 transition-transform">
                 <Share2 className="w-4 h-4" />
               </Button>
