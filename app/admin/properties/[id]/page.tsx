@@ -1,10 +1,32 @@
-import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { DeletePropertyDialog } from "@/components/admin/delete-property-dialog"
 import Link from "next/link"
 import { ArrowLeft, Building2, Edit, MapPin, Calendar, User } from "lucide-react"
+
+interface Property {
+  id: string
+  title: string
+  description: string | null
+  price: number
+  property_type: string
+  bedrooms: number | null
+  bathrooms: number | null
+  area_m2: number | null
+  address: string
+  city: string
+  operation_type: string
+  status: string
+  features: string[]
+  images: string[]
+  created_at: string
+}
 
 interface PropertyPageProps {
   params: {
@@ -12,20 +34,38 @@ interface PropertyPageProps {
   }
 }
 
-export default async function PropertyPage({ params }: PropertyPageProps) {
-  const supabase = await createClient()
+export default function PropertyPage({ params }: PropertyPageProps) {
+  const router = useRouter()
+  const [property, setProperty] = useState<Property | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect("/admin/login")
-  }
+  useEffect(() => {
+    const loadProperty = async () => {
+      const supabase = createClient()
+      
+      const { data: userData, error: authError } = await supabase.auth.getUser()
+      if (authError || !userData?.user) {
+        router.push("/admin/login")
+        return
+      }
 
-  // Obtener la propiedad específica
-  const { data: property } = await supabase.from("properties").select("*").eq("id", params.id).single()
+      const { data: property, error } = await supabase
+        .from("properties")
+        .select("*")
+        .eq("id", params.id)
+        .single()
 
-  if (!property) {
-    redirect("/admin/properties")
-  }
+      if (error || !property) {
+        router.push("/admin/properties")
+        return
+      }
+
+      setProperty(property)
+      setIsLoading(false)
+    }
+
+    loadProperty()
+  }, [params.id, router])
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-DO", {
@@ -55,6 +95,21 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
       month: "long",
       day: "numeric",
     })
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Building2 className="w-12 h-12 text-green-600 mx-auto mb-4 animate-spin" />
+          <p className="text-gray-600">Cargando propiedad...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!property) {
+    return null
   }
 
   return (
@@ -230,6 +285,12 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                     Editar Propiedad
                   </Link>
                 </Button>
+                <DeletePropertyDialog 
+                  propertyId={property.id}
+                  propertyTitle={property.title}
+                  variant="destructive"
+                  className="w-full"
+                />
                 <Button asChild variant="outline" className="w-full bg-transparent">
                   <Link href="/admin/properties">
                     <ArrowLeft className="w-4 h-4 mr-2" />
