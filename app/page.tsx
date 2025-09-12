@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Building2, Home, Wrench, MapPin, Phone, Mail, ArrowRight } from "lucide-react"
+import { Building2, Home, Wrench, MapPin, Phone, Mail, ArrowRight, ChevronDown } from "lucide-react"
 import Link from "next/link"
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <Building2 className="w-6 h-6 text-primary-foreground" />
@@ -28,31 +30,60 @@ export default function HomePage() {
                 <p className="text-xs text-muted-foreground">Santiago, República Dominicana</p>
               </div>
             </div>
-            <nav className="hidden md:flex items-center gap-6 animate-in fade-in slide-in-from-right-5 duration-700 delay-200">
+            {/* NavBar */}
+            <nav className="flex items-center gap-6 animate-in fade-in slide-in-from-right-5 duration-700 delay-200">
+            
+              {/* Otros links normales */}
               <a
                 href="#inicio"
-                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
+                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105 font-semibold"
               >
                 Inicio
               </a>
               <a
-                href="#empresas"
-                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
-              >
-                Empresas
-              </a>
-              <a
                 href="#nosotros"
-                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
+                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105 font-semibold"
               >
                 Nosotros
               </a>
               <a
                 href="#contacto"
-                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105"
+                className="text-foreground hover:text-primary transition-all duration-300 hover:scale-105 font-semibold"
               >
                 Contacto
               </a>
+                {/* Botón EMPRESAS destacado */}
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  <button
+                    className="flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-white font-semibold shadow-md border-2 border-primary hover:bg-primary/90 hover:scale-105 transition-all duration-200 focus:outline-none"
+                    style={{ boxShadow: "0 2px 10px rgba(0,128,0,0.08)" }}
+                  >
+                    Empresas
+                    <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content
+                  sideOffset={8}
+                  className="bg-white border border-primary rounded-lg shadow-lg mt-2 p-2 min-w-[200px] z-50"
+                >
+                  <DropdownMenu.Item asChild>
+                    <Link href="/estructuras-metalicas" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                      Estructuras Metálicas
+                    </Link>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link href="/inmobiliaria" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                      Inmobiliaria
+                    </Link>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link href="/constructora" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                      Constructora
+                    </Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             </nav>
           </div>
         </div>
