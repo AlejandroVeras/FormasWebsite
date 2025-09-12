@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import ContactForm from "@/components/contact-form"
 import { Home, Building, MapPin, Phone, Mail, ArrowLeft, Search, Bed, Bath, Square, Settings } from "lucide-react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
@@ -44,19 +45,19 @@ export default async function InmobiliariaPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-6 lg:px-32 py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4 sm:py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center transition-transform hover:scale-110">
-                <Home className="w-6 h-6 text-primary-foreground" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center transition-transform hover:scale-110">
+                <Home className="w-4 h-4 sm:w-6 sm:h-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-primary">FORMAS Inmobiliaria</h1>
-                <p className="text-xs text-muted-foreground">Tu hogar ideal te espera</p>
+                <h1 className="text-lg sm:text-2xl font-bold text-primary">FORMAS Inmobiliaria</h1>
+                <p className="text-xs text-muted-foreground hidden sm:block">Tu hogar ideal te espera</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 animate-in slide-in-from-right-5 duration-700">
-              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform">
+            <div className="flex items-center gap-1 sm:gap-2 animate-in slide-in-from-right-5 duration-700">
+              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex">
                 <Link href="/admin/login" className="gap-2">
                   <Settings className="w-4 h-4" /> Admin
                 </Link>
@@ -68,7 +69,7 @@ export default async function InmobiliariaPage() {
                 className="hover:scale-105 transition-transform bg-transparent"
               >
                 <Link href="/" className="gap-2">
-                  <ArrowLeft className="w-4 h-4" /> Volver al Grupo
+                  <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
                 </Link>
               </Button>
             </div>
@@ -78,7 +79,7 @@ export default async function InmobiliariaPage() {
 
       {/* Hero Section */}
       <section
-        className="py-20 bg-gradient-to-br from-background to-primary/5 relative overflow-hidden"
+        className="py-16 sm:py-20 bg-gradient-to-br from-background to-primary/5 relative overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/modern-houses--apartments--real-estate-properties-.jpg')`,
           backgroundSize: "cover",
@@ -86,17 +87,17 @@ export default async function InmobiliariaPage() {
           backgroundAttachment: "fixed",
         }}
       >
-        <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Badge
             variant="outline"
             className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
           >
             Parte del Grupo Formas
           </Badge>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
             Tu <span className="text-primary">Hogar Ideal</span> te Espera
           </h2>
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
+          <p className="text-lg sm:text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la
             confianza y experiencia del Grupo Formas.
           </p>
@@ -122,16 +123,16 @@ export default async function InmobiliariaPage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-8 lg:px-16">
-          <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+      <section className="py-16 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-8 lg:px-16">
+          <div className="text-center mb-12 sm:mb-16 animate-in fade-in-50 duration-1000">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
               Servicios inmobiliarios completos para todas tus necesidades
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 icon: Home,
@@ -398,8 +399,11 @@ export default async function InmobiliariaPage() {
                           size="sm"
                           variant="outline"
                           className="hover:scale-105 transition-transform bg-transparent"
+                          asChild
                         >
-                          Ver Detalles
+                          <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                            Ver Detalles
+                          </Link>
                         </Button>
                       </div>
                     </CardContent>
@@ -431,65 +435,9 @@ export default async function InmobiliariaPage() {
               <p className="text-muted-foreground">Cuéntanos qué necesitas y te ayudaremos a encontrarla</p>
             </div>
 
-            <Card className="animate-in slide-in-from-bottom-8 duration-1000 delay-300 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="animate-in fade-in-50 duration-700 delay-500">
-                    <label className="text-sm font-medium mb-2 block">Nombre</label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                      placeholder="Tu nombre"
-                    />
-                  </div>
-                  <div className="animate-in fade-in-50 duration-700 delay-600">
-                    <label className="text-sm font-medium mb-2 block">Teléfono</label>
-                    <input
-                      type="tel"
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                      placeholder="Tu teléfono"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="animate-in fade-in-50 duration-700 delay-700">
-                    <label className="text-sm font-medium mb-2 block">Tipo de Propiedad</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20">
-                      <option>Apartamento</option>
-                      <option>Casa</option>
-                      <option>Local Comercial</option>
-                      <option>Terreno</option>
-                    </select>
-                  </div>
-                  <div className="animate-in fade-in-50 duration-700 delay-800">
-                    <label className="text-sm font-medium mb-2 block">Modalidad</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20">
-                      <option>Compra</option>
-                      <option>Alquiler</option>
-                      <option>Venta</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="animate-in fade-in-50 duration-700 delay-900">
-                  <label className="text-sm font-medium mb-2 block">Presupuesto</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                    placeholder="Rango de presupuesto"
-                  />
-                </div>
-                <div className="animate-in fade-in-50 duration-700 delay-1000">
-                  <label className="text-sm font-medium mb-2 block">Comentarios</label>
-                  <textarea
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background h-24 resize-none transition-all focus:ring-2 focus:ring-primary/20"
-                    placeholder="Cuéntanos más detalles sobre lo que buscas..."
-                  ></textarea>
-                </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 animate-in fade-in-50 duration-700 delay-1100 hover:scale-105 transition-transform">
-                  Buscar Propiedades
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="animate-in slide-in-from-bottom-8 duration-1000 delay-300">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
