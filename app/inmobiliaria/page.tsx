@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import ContactForm from "@/components/contact-form"
 import { Home, Building, MapPin, Phone, Mail, ArrowLeft, Search, Bed, Bath, Square, Settings } from "lucide-react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
@@ -398,8 +399,11 @@ export default async function InmobiliariaPage() {
                           size="sm"
                           variant="outline"
                           className="hover:scale-105 transition-transform bg-transparent"
+                          asChild
                         >
-                          Ver Detalles
+                          <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                            Ver Detalles
+                          </Link>
                         </Button>
                       </div>
                     </CardContent>
@@ -431,65 +435,9 @@ export default async function InmobiliariaPage() {
               <p className="text-muted-foreground">Cuéntanos qué necesitas y te ayudaremos a encontrarla</p>
             </div>
 
-            <Card className="animate-in slide-in-from-bottom-8 duration-1000 delay-300 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="animate-in fade-in-50 duration-700 delay-500">
-                    <label className="text-sm font-medium mb-2 block">Nombre</label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                      placeholder="Tu nombre"
-                    />
-                  </div>
-                  <div className="animate-in fade-in-50 duration-700 delay-600">
-                    <label className="text-sm font-medium mb-2 block">Teléfono</label>
-                    <input
-                      type="tel"
-                      className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                      placeholder="Tu teléfono"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="animate-in fade-in-50 duration-700 delay-700">
-                    <label className="text-sm font-medium mb-2 block">Tipo de Propiedad</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20">
-                      <option>Apartamento</option>
-                      <option>Casa</option>
-                      <option>Local Comercial</option>
-                      <option>Terreno</option>
-                    </select>
-                  </div>
-                  <div className="animate-in fade-in-50 duration-700 delay-800">
-                    <label className="text-sm font-medium mb-2 block">Modalidad</label>
-                    <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20">
-                      <option>Compra</option>
-                      <option>Alquiler</option>
-                      <option>Venta</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="animate-in fade-in-50 duration-700 delay-900">
-                  <label className="text-sm font-medium mb-2 block">Presupuesto</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
-                    placeholder="Rango de presupuesto"
-                  />
-                </div>
-                <div className="animate-in fade-in-50 duration-700 delay-1000">
-                  <label className="text-sm font-medium mb-2 block">Comentarios</label>
-                  <textarea
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background h-24 resize-none transition-all focus:ring-2 focus:ring-primary/20"
-                    placeholder="Cuéntanos más detalles sobre lo que buscas..."
-                  ></textarea>
-                </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 animate-in fade-in-50 duration-700 delay-1100 hover:scale-105 transition-transform">
-                  Buscar Propiedades
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="animate-in slide-in-from-bottom-8 duration-1000 delay-300">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
