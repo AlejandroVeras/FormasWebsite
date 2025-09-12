@@ -25,6 +25,31 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
 
+    // Check if Supabase is properly configured
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      // Log the inquiry locally when Supabase is not configured
+      console.log("=== CONTACT FORM SUBMISSION ===")
+      console.log("Name:", name)
+      console.log("Email:", email)
+      console.log("Phone:", phone)
+      console.log("Message:", message)
+      console.log("Property ID:", property_id || "General inquiry")
+      console.log("Timestamp:", new Date().toISOString())
+      console.log("================================")
+
+      return NextResponse.json(
+        { 
+          success: true, 
+          message: "Consulta registrada (modo demo - Supabase no configurado)",
+          inquiry_id: "demo-" + Date.now()
+        },
+        { status: 201 }
+      )
+    }
+
     // Insert inquiry into database
     const { data, error } = await supabase
       .from("property_inquiries")

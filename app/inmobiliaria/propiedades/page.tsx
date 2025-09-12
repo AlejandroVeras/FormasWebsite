@@ -37,11 +37,11 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
     query = query.or(`title.ilike.%${searchParams.search}%,address.ilike.%${searchParams.search}%,description.ilike.%${searchParams.search}%`)
   }
 
-  if (searchParams.property_type) {
+  if (searchParams.property_type && searchParams.property_type !== "all") {
     query = query.eq("property_type", searchParams.property_type)
   }
 
-  if (searchParams.operation_type) {
+  if (searchParams.operation_type && searchParams.operation_type !== "all") {
     query = query.eq("operation_type", searchParams.operation_type)
   }
 
@@ -53,11 +53,11 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
     query = query.lte("price", parseInt(searchParams.max_price))
   }
 
-  if (searchParams.bedrooms) {
+  if (searchParams.bedrooms && searchParams.bedrooms !== "all") {
     query = query.eq("bedrooms", parseInt(searchParams.bedrooms))
   }
 
-  if (searchParams.bathrooms) {
+  if (searchParams.bathrooms && searchParams.bathrooms !== "all") {
     query = query.eq("bathrooms", parseInt(searchParams.bathrooms))
   }
 
@@ -261,12 +261,12 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
 
             {/* Filter Row */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              <Select name="property_type" defaultValue={searchParams.property_type || ""}>
+              <Select name="property_type" defaultValue={searchParams.property_type || "all"}>
                 <SelectTrigger className="bg-background">
                   <SelectValue placeholder="Tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todos los tipos</SelectItem>
+                  <SelectItem value="all">Todos los tipos</SelectItem>
                   <SelectItem value="casa">Casa</SelectItem>
                   <SelectItem value="apartamento">Apartamento</SelectItem>
                   <SelectItem value="local">Local</SelectItem>
@@ -275,35 +275,35 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                 </SelectContent>
               </Select>
 
-              <Select name="operation_type" defaultValue={searchParams.operation_type || ""}>
+              <Select name="operation_type" defaultValue={searchParams.operation_type || "all"}>
                 <SelectTrigger className="bg-background">
                   <SelectValue placeholder="Operación" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Venta y Alquiler</SelectItem>
+                  <SelectItem value="all">Venta y Alquiler</SelectItem>
                   <SelectItem value="venta">Venta</SelectItem>
                   <SelectItem value="alquiler">Alquiler</SelectItem>
                 </SelectContent>
               </Select>
 
-              <Select name="city" defaultValue={searchParams.city || ""}>
+              <Select name="city" defaultValue={searchParams.city || "all"}>
                 <SelectTrigger className="bg-background">
                   <SelectValue placeholder="Ciudad" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todas las ciudades</SelectItem>
+                  <SelectItem value="all">Todas las ciudades</SelectItem>
                   {uniqueCities.map((city) => (
                     <SelectItem key={city} value={city}>{city}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
-              <Select name="bedrooms" defaultValue={searchParams.bedrooms || ""}>
+              <Select name="bedrooms" defaultValue={searchParams.bedrooms || "all"}>
                 <SelectTrigger className="bg-background">
                   <SelectValue placeholder="Habitaciones" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Cualquier cantidad</SelectItem>
+                  <SelectItem value="all">Cualquier cantidad</SelectItem>
                   <SelectItem value="1">1+ habitación</SelectItem>
                   <SelectItem value="2">2+ habitaciones</SelectItem>
                   <SelectItem value="3">3+ habitaciones</SelectItem>
@@ -348,7 +348,7 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
               <div className="flex flex-wrap gap-2 pt-2">
                 <span className="text-sm text-muted-foreground">Filtros activos:</span>
                 {Object.entries(searchParams).map(([key, value]) => {
-                  if (!value) return null
+                  if (!value || value === "all") return null
                   
                   let displayValue = value
                   if (key === "property_type") displayValue = `Tipo: ${value}`
