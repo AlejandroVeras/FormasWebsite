@@ -17,13 +17,21 @@ export default async function InmobiliariaPage() {
     .limit(6)
 
   // Get featured properties for the hero section
+  // TODO: Enable this after running the database migration (006_add_featured_properties.sql)
   const { data: featuredProperties } = await supabase
     .from("properties")
     .select("*")
-    .eq("featured", true)
     .eq("status", "disponible")
-    .order("featured_order")
+    .order("created_at", { ascending: false })
     .limit(3)
+  // Once migration is complete, use this query instead:
+  // const { data: featuredProperties } = await supabase
+  //   .from("properties")
+  //   .select("*")
+  //   .eq("featured", true)
+  //   .eq("status", "disponible")
+  //   .order("featured_order")
+  //   .limit(3)
 
   const formatPrice = (price: number, operationType: string) => {
     const formattedPrice = new Intl.NumberFormat("es-DO", {

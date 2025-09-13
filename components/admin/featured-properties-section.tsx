@@ -103,18 +103,26 @@ async function reorderFeatured(propertyId: string, direction: "up" | "down") {
 export default async function FeaturedPropertiesSection() {
   const supabase = await createClient()
   
+  // TODO: Enable this after running the database migration (006_add_featured_properties.sql)
   // Get featured properties
+  // const { data: featuredProperties } = await supabase
+  //   .from("properties")
+  //   .select("id, title, price, operation_type, featured_order, images")
+  //   .eq("featured", true)
+  //   .order("featured_order")
+  
+  // Temporary: Get recent properties until migration is run
   const { data: featuredProperties } = await supabase
     .from("properties")
-    .select("id, title, price, operation_type, featured_order, images")
-    .eq("featured", true)
-    .order("featured_order")
+    .select("id, title, price, operation_type, images")
+    .eq("status", "disponible")
+    .order("created_at", { ascending: false })
+    .limit(3)
   
   // Get available properties that are not featured
   const { data: availableProperties } = await supabase
     .from("properties")
     .select("id, title, price, operation_type, images")
-    .eq("featured", false)
     .eq("status", "disponible")
     .order("created_at", { ascending: false })
     .limit(10)
@@ -139,12 +147,16 @@ export default async function FeaturedPropertiesSection() {
           </CardTitle>
           <CardDescription>
             Gestiona las propiedades que aparecen en la sección destacada del sitio web
+            <br />
+            <Badge variant="outline" className="text-xs mt-2">
+              ⚠️ Ejecuta el script 006_add_featured_properties.sql para habilitar esta funcionalidad
+            </Badge>
           </CardDescription>
         </CardHeader>
         <CardContent>
           {featuredProperties && featuredProperties.length > 0 ? (
             <div className="space-y-3">
-              {featuredProperties.map((property) => (
+              {featuredProperties.map((property, index) => (
                 <div key={property.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
@@ -166,36 +178,14 @@ export default async function FeaturedPropertiesSection() {
                         {formatPrice(property.price, property.operation_type)}
                       </p>
                       <Badge variant="outline" className="text-xs">
-                        Orden: {property.featured_order}
+                        Temporal: {index + 1}
                       </Badge>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <form action={reorderFeatured.bind(null, property.id, "up")}>
-                      <Button 
-                        type="submit" 
-                        size="sm" 
-                        variant="outline"
-                        disabled={property.featured_order === 1}
-                      >
-                        <ArrowUp className="w-4 h-4" />
-                      </Button>
-                    </form>
-                    <form action={reorderFeatured.bind(null, property.id, "down")}>
-                      <Button 
-                        type="submit" 
-                        size="sm" 
-                        variant="outline"
-                        disabled={property.featured_order === featuredProperties.length}
-                      >
-                        <ArrowDown className="w-4 h-4" />
-                      </Button>
-                    </form>
-                    <form action={toggleFeatured.bind(null, property.id, false)}>
-                      <Button type="submit" size="sm" variant="outline">
-                        <StarOff className="w-4 h-4" />
-                      </Button>
-                    </form>
+                    <Badge variant="secondary" className="text-xs">
+                      Migración pendiente
+                    </Badge>
                     <Button size="sm" variant="outline" asChild>
                       <Link href={`/admin/properties/${property.id}`}>
                         Ver
@@ -208,8 +198,8 @@ export default async function FeaturedPropertiesSection() {
           ) : (
             <div className="text-center py-8 text-gray-500">
               <Star className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No hay propiedades destacadas</p>
-              <p className="text-sm">Selecciona propiedades de la lista de abajo para destacarlas</p>
+              <p>No hay propiedades disponibles</p>
+              <p className="text-sm">Ejecuta la migración de base de datos para habilitar propiedades destacadas</p>
             </div>
           )}
         </CardContent>
@@ -250,12 +240,15 @@ export default async function FeaturedPropertiesSection() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <form action={toggleFeatured.bind(null, property.id, true)}>
-                      <Button type="submit" size="sm" className="bg-yellow-500 hover:bg-yellow-600">
-                        <Star className="w-4 h-4 mr-2" />
-                        Destacar
-                      </Button>
-                    </form>
+                    <Button 
+                      size="sm" 
+                      className="bg-yellow-500 hover:bg-yellow-600"
+                      disabled
+                      title="Disponible después de la migración de BD"
+                    >
+                      <Star className="w-4 h-4 mr-2" />
+                      Destacar
+                    </Button>
                     <Button size="sm" variant="outline" asChild>
                       <Link href={`/admin/properties/${property.id}`}>
                         Ver
