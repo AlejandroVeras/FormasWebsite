@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Home, Building, MapPin, ArrowLeft, Bed, Bath, Square, Filter, Search, SlidersHorizontal, X } from "lucide-react"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
@@ -17,6 +18,7 @@ interface SearchParams {
   bedrooms?: string
   bathrooms?: string
   city?: string
+  page?: string
 }
 
 interface PropiedadesPageProps {
@@ -26,10 +28,15 @@ interface PropiedadesPageProps {
 async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
   const supabase = await createClient()
 
+  // Pagination settings
+  const ITEMS_PER_PAGE = 12
+  const currentPage = parseInt(searchParams.page || "1")
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE
+
   // Build dynamic query based on search parameters
   let query = supabase
     .from("properties")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("status", "disponible")
 
   // Apply filters
@@ -65,7 +72,11 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
     query = query.eq("city", searchParams.city)
   }
 
-  const { data: properties } = await query.order("created_at", { ascending: false })
+  const { data: properties, count } = await query
+    .order("created_at", { ascending: false })
+    .range(offset, offset + ITEMS_PER_PAGE - 1)
+
+  const totalPages = Math.ceil((count || 0) / ITEMS_PER_PAGE)
 
   const formatPrice = (price: number, operationType: string) => {
     const formattedPrice = new Intl.NumberFormat("es-DO", {
@@ -92,11 +103,25 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
     }
   }
 
+  // Generate pagination URLs
+  const generatePageUrl = (page: number) => {
+    const params = new URLSearchParams()
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (key !== "page" && value) {
+        params.set(key, value)
+      }
+    })
+    if (page > 1) {
+      params.set("page", page.toString())
+    }
+    return `/inmobiliaria/propiedades?${params.toString()}`
+  }
+
   return (
     <>
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-2">
-          {properties?.length || 0} Propiedades Encontradas
+          {count || 0} Propiedades Encontradas
         </h2>
         <p className="text-muted-foreground">
           {Object.keys(searchParams).length > 0 
@@ -104,83 +129,137 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
             : "Encuentra la propiedad perfecta para ti en Santiago"
           }
         </p>
+        {totalPages > 1 && (
+          <p className="text-sm text-muted-foreground mt-1">
+            Página {currentPage} de {totalPages}
+          </p>
+        )}
       </div>
 
       {properties && properties.length > 0 ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {properties.map((property) => {
-            const PropertyIcon = getPropertyIcon(property.property_type)
-            return (
-              <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
-                <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                  <div className="h-48 bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center relative overflow-hidden">
-                    {property.images && property.images[0] ? (
-                      <img
-                        src={property.images[0] || "/placeholder.svg"}
-                        alt={property.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    ) : (
-                      <PropertyIcon className="w-12 h-12 text-accent/50" />
-                    )}
-                    <Badge
-                      variant={property.operation_type === "venta" ? "secondary" : "outline"}
-                      className="absolute top-2 right-2 bg-background/90"
-                    >
-                      {property.operation_type}
-                    </Badge>
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  </div>
-                </Link>
-                <CardContent className="p-4">
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {properties.map((property) => {
+              const PropertyIcon = getPropertyIcon(property.property_type)
+              return (
+                <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
                   <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                    <h4 className="font-semibold text-lg mb-2 line-clamp-1 hover:text-primary transition-colors">
-                      {property.title}
-                    </h4>
+                    <div className="h-48 bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center relative overflow-hidden">
+                      {property.images && property.images[0] ? (
+                        <img
+                          src={property.images[0] || "/placeholder.svg"}
+                          alt={property.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        <PropertyIcon className="w-12 h-12 text-accent/50" />
+                      )}
+                      <Badge
+                        variant={property.operation_type === "venta" ? "secondary" : "outline"}
+                        className="absolute top-2 right-2 bg-background/90"
+                      >
+                        {property.operation_type}
+                      </Badge>
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                    </div>
                   </Link>
-                  <p className="text-sm text-muted-foreground mb-3 flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    <span className="line-clamp-1">
-                      {property.address}, {property.city}
-                    </span>
-                  </p>
+                  <CardContent className="p-4">
+                    <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                      <h4 className="font-semibold text-lg mb-2 line-clamp-1 hover:text-primary transition-colors">
+                        {property.title}
+                      </h4>
+                    </Link>
+                    <p className="text-sm text-muted-foreground mb-3 flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      <span className="line-clamp-1">
+                        {property.address}, {property.city}
+                      </span>
+                    </p>
 
-                  <div className="flex gap-3 text-sm text-muted-foreground mb-3">
-                    {property.bedrooms && (
-                      <div className="flex items-center gap-1">
-                        <Bed className="w-3 h-3" />
-                        <span>{property.bedrooms}</span>
-                      </div>
-                    )}
-                    {property.bathrooms && (
-                      <div className="flex items-center gap-1">
-                        <Bath className="w-3 h-3" />
-                        <span>{property.bathrooms}</span>
-                      </div>
-                    )}
-                    {property.area_m2 && (
-                      <div className="flex items-center gap-1">
-                        <Square className="w-3 h-3" />
-                        <span>{property.area_m2}m²</span>
-                      </div>
-                    )}
-                  </div>
+                    <div className="flex gap-3 text-sm text-muted-foreground mb-3">
+                      {property.bedrooms && (
+                        <div className="flex items-center gap-1">
+                          <Bed className="w-3 h-3" />
+                          <span>{property.bedrooms}</span>
+                        </div>
+                      )}
+                      {property.bathrooms && (
+                        <div className="flex items-center gap-1">
+                          <Bath className="w-3 h-3" />
+                          <span>{property.bathrooms}</span>
+                        </div>
+                      )}
+                      {property.area_m2 && (
+                        <div className="flex items-center gap-1">
+                          <Square className="w-3 h-3" />
+                          <span>{property.area_m2}m²</span>
+                        </div>
+                      )}
+                    </div>
 
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-accent">
-                      {formatPrice(property.price, property.operation_type)}
-                    </span>
-                    <Button size="sm" variant="outline" asChild className="hover:scale-105 transition-transform">
-                      <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                        Ver Detalles
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold text-accent">
+                        {formatPrice(property.price, property.operation_type)}
+                      </span>
+                      <Button size="sm" variant="outline" asChild className="hover:scale-105 transition-transform">
+                        <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                          Ver Detalles
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+          
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-12 flex justify-center">
+              <Pagination>
+                <PaginationContent>
+                  {currentPage > 1 && (
+                    <PaginationItem>
+                      <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
+                    </PaginationItem>
+                  )}
+                  
+                  {/* Page numbers */}
+                  {(() => {
+                    const pages = []
+                    const showPages = 5
+                    let startPage = Math.max(1, currentPage - Math.floor(showPages / 2))
+                    let endPage = Math.min(totalPages, startPage + showPages - 1)
+                    
+                    if (endPage - startPage < showPages - 1) {
+                      startPage = Math.max(1, endPage - showPages + 1)
+                    }
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                      pages.push(
+                        <PaginationItem key={i}>
+                          <PaginationLink
+                            href={generatePageUrl(i)}
+                            isActive={i === currentPage}
+                          >
+                            {i}
+                          </PaginationLink>
+                        </PaginationItem>
+                      )
+                    }
+                    return pages
+                  })()}
+                  
+                  {currentPage < totalPages && (
+                    <PaginationItem>
+                      <PaginationNext href={generatePageUrl(currentPage + 1)} />
+                    </PaginationItem>
+                  )}
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
+        </>
       ) : (
         <div className="text-center py-16">
           <Home className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />

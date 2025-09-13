@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Building2, Plus, Settings, LogOut, MessageSquare, Mail } from "lucide-react"
+import { Building2, Plus, Settings, LogOut, MessageSquare, Mail, Star } from "lucide-react"
+import FeaturedPropertiesSection from "@/components/admin/featured-properties-section"
 
 export default async function AdminDashboard() {
   const supabase = await createClient()
@@ -113,7 +114,7 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
               <CardTitle>Gestión de Propiedades</CardTitle>
@@ -177,6 +178,9 @@ export default async function AdminDashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Featured Properties Management */}
+        <FeaturedPropertiesSection />
       </main>
     </div>
   )

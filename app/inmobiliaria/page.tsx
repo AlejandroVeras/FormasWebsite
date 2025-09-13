@@ -16,6 +16,15 @@ export default async function InmobiliariaPage() {
     .order("created_at", { ascending: false })
     .limit(6)
 
+  // Get featured properties for the hero section
+  const { data: featuredProperties } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("featured", true)
+    .eq("status", "disponible")
+    .order("featured_order")
+    .limit(3)
+
   const formatPrice = (price: number, operationType: string) => {
     const formattedPrice = new Intl.NumberFormat("es-DO", {
       style: "currency",
@@ -115,8 +124,11 @@ export default async function InmobiliariaPage() {
               variant="outline"
               size="lg"
               className="hover:scale-105 transition-transform bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              asChild
             >
-              Vender mi Propiedad
+              <a href="#contacto" className="scroll-smooth">
+                Vender mi Propiedad
+              </a>
             </Button>
           </div>
         </div>
@@ -196,7 +208,13 @@ export default async function InmobiliariaPage() {
                     variant={index === 0 ? "default" : "outline"}
                     asChild
                   >
-                    <Link href="#propiedades">{service.buttonText}</Link>
+                    {index === 0 ? (
+                      <Link href="/inmobiliaria/propiedades?operation_type=venta">{service.buttonText}</Link>
+                    ) : index === 1 ? (
+                      <Link href="/inmobiliaria/propiedades?operation_type=alquiler">{service.buttonText}</Link>
+                    ) : (
+                      <a href="#contacto" className="scroll-smooth">{service.buttonText}</a>
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -213,99 +231,189 @@ export default async function InmobiliariaPage() {
             <p className="text-muted-foreground text-lg">Algunas de nuestras mejores opciones disponibles</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-200">
-              <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <Home className="w-16 h-16 text-primary/50" />
-              </div>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold">Apartamento Moderno</h4>
-                  <Badge variant="secondary">Venta</Badge>
+          {featuredProperties && featuredProperties.length > 0 ? (
+            <div className="grid md:grid-cols-3 gap-8">
+              {featuredProperties.map((property, index) => {
+                const PropertyIcon = getPropertyIcon(property.property_type)
+                return (
+                  <Card key={property.id} className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}>
+                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
+                      {property.images && property.images[0] ? (
+                        <img
+                          src={property.images[0] || "/placeholder.svg"}
+                          alt={property.title}
+                          className="w-full h-full object-cover transition-transform hover:scale-110"
+                        />
+                      ) : (
+                        <PropertyIcon className="w-16 h-16 text-primary/50" />
+                      )}
+                      <Badge
+                        variant={property.operation_type === "venta" ? "secondary" : "outline"}
+                        className="absolute top-2 right-2"
+                      >
+                        {property.operation_type}
+                      </Badge>
+                    </div>
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="font-semibold text-lg">{property.title}</h4>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
+                        <MapPin className="w-3 h-3" />
+                        {property.address}, {property.city}
+                      </p>
+                      <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                        {property.bedrooms && (
+                          <div className="flex items-center gap-1">
+                            <Bed className="w-4 h-4" />
+                            <span>{property.bedrooms}</span>
+                          </div>
+                        )}
+                        {property.bathrooms && (
+                          <div className="flex items-center gap-1">
+                            <Bath className="w-4 h-4" />
+                            <span>{property.bathrooms}</span>
+                          </div>
+                        )}
+                        {property.area_m2 && (
+                          <div className="flex items-center gap-1">
+                            <Square className="w-4 h-4" />
+                            <span>{property.area_m2}m²</span>
+                          </div>
+                        )}
+                      </div>
+                      {property.features && property.features.length > 0 && (
+                        <div className="mb-4">
+                          <div className="flex flex-wrap gap-1">
+                            {property.features.slice(0, 3).map((feature, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs">
+                                {feature}
+                              </Badge>
+                            ))}
+                            {property.features.length > 3 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{property.features.length - 3}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex justify-between items-center">
+                        <span className="text-xl font-bold text-primary">
+                          {formatPrice(property.price, property.operation_type)}
+                        </span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="hover:scale-105 transition-transform bg-transparent"
+                          asChild
+                        >
+                          <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                            Ver Detalles
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Fallback: Show sample cards when no featured properties */}
+              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-200">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                  <Home className="w-16 h-16 text-primary/50" />
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">Bella Vista, Santiago</p>
-                <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Bed className="w-4 h-4" />
-                    <span>3</span>
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold">Apartamento Moderno</h4>
+                    <Badge variant="secondary">Venta</Badge>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Bath className="w-4 h-4" />
-                    <span>2</span>
+                  <p className="text-sm text-muted-foreground mb-4">Bella Vista, Santiago</p>
+                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-1">
+                      <Bed className="w-4 h-4" />
+                      <span>3</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Bath className="w-4 h-4" />
+                      <span>2</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Square className="w-4 h-4" />
+                      <span>120m²</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Square className="w-4 h-4" />
-                    <span>120m²</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-primary">$185,000</span>
+                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
+                      Ver Detalles
+                    </Button>
                   </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-primary">$185,000</span>
-                  <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                    Ver Detalles
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-400">
-              <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <Building className="w-16 h-16 text-primary/50" />
-              </div>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold">Casa Familiar</h4>
-                  <Badge variant="secondary">Venta</Badge>
+              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-400">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                  <Building className="w-16 h-16 text-primary/50" />
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">Los Jardines, Santiago</p>
-                <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Bed className="w-4 h-4" />
-                    <span>4</span>
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold">Casa Familiar</h4>
+                    <Badge variant="secondary">Venta</Badge>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Bath className="w-4 h-4" />
-                    <span>3</span>
+                  <p className="text-sm text-muted-foreground mb-4">Los Jardines, Santiago</p>
+                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-1">
+                      <Bed className="w-4 h-4" />
+                      <span>4</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Bath className="w-4 h-4" />
+                      <span>3</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Square className="w-4 h-4" />
+                      <span>250m²</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Square className="w-4 h-4" />
-                    <span>250m²</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-primary">$320,000</span>
+                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
+                      Ver Detalles
+                    </Button>
                   </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-primary">$320,000</span>
-                  <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                    Ver Detalles
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-600">
-              <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                <Home className="w-16 h-16 text-primary/50" />
-              </div>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold">Local Comercial</h4>
-                  <Badge variant="outline">Alquiler</Badge>
+              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-600">
+                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                  <Home className="w-16 h-16 text-primary/50" />
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">Centro de Santiago</p>
-                <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Square className="w-4 h-4" />
-                    <span>80m²</span>
+                <CardContent className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold">Local Comercial</h4>
+                    <Badge variant="outline">Alquiler</Badge>
                   </div>
-                  <span>Planta baja</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-primary">$1,200/mes</span>
-                  <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                    Ver Detalles
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                  <p className="text-sm text-muted-foreground mb-4">Centro de Santiago</p>
+                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-1">
+                      <Square className="w-4 h-4" />
+                      <span>80m²</span>
+                    </div>
+                    <span>Planta baja</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-primary">$1,200/mes</span>
+                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
+                      Ver Detalles
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </section>
 
@@ -427,7 +535,7 @@ export default async function InmobiliariaPage() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20">
+      <section id="contacto" className="py-20">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8 animate-in fade-in-50 duration-1000">
