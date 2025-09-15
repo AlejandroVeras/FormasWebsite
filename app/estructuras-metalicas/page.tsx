@@ -12,11 +12,15 @@ export default function EstructurasMetalicasPage() {
         <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center transition-transform hover:scale-110">
-                <Wrench className="w-6 h-6 text-primary-foreground" />
-              </div>
+              <img 
+                src="/img/formaslogo.svg" 
+                alt="Formas Logo" 
+                className="w-12 h-12 transition-transform hover:scale-110"
+              />
               <div>
-                <h1 className="text-2xl font-bold text-primary">FORMAS Estructuras Metálicas</h1>
+                <h1 className="text-2xl font-bold text-primary">
+                  <span className="viner-hand">FORMAS</span> Estructuras Metálicas
+                </h1>
                 <p className="text-xs text-muted-foreground">Empresa Principal del Grupo</p>
               </div>
             </div>
@@ -220,10 +224,12 @@ export default function EstructurasMetalicasPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Building2 className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold text-primary">FORMAS</span>
+                <img 
+                  src="/img/formaslogo.svg" 
+                  alt="Formas Logo" 
+                  className="w-8 h-8"
+                />
+                <span className="text-xl font-bold text-primary viner-hand">FORMAS</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.

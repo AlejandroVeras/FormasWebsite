@@ -1,0 +1,32 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="58" fill="#B91C1C" stroke="#DC2626" stroke-width="2"/>
+  
+  <!-- Building/Construction icon representing "Formas" -->
+  <g transform="translate(30, 25)" fill="white">
+    <!-- Main building structure -->
+    <rect x="10" y="30" width="40" height="50" fill="white"/>
+    
+    <!-- Roof triangle -->
+    <polygon points="8,30 30,10 52,30" fill="white"/>
+    
+    <!-- Windows -->
+    <rect x="15" y="40" width="8" height="8" fill="#B91C1C"/>
+    <rect x="25" y="40" width="8" height="8" fill="#B91C1C"/>
+    <rect x="37" y="40" width="8" height="8" fill="#B91C1C"/>
+    
+    <rect x="15" y="52" width="8" height="8" fill="#B91C1C"/>
+    <rect x="25" y="52" width="8" height="8" fill="#B91C1C"/>
+    <rect x="37" y="52" width="8" height="8" fill="#B91C1C"/>
+    
+    <!-- Door -->
+    <rect x="25" y="65" width="10" height="15" fill="#B91C1C"/>
+    
+    <!-- Metal beam accents -->
+    <rect x="0" y="75" width="60" height="3" fill="white"/>
+    <rect x="5" y="82" width="50" height="2" fill="white"/>
+  </g>
+  
+  <!-- Company name text -->
+  <text x="60" y="105" text-anchor="middle" font-family="serif" font-size="14" font-weight="bold" fill="white">FORMAS</text>
+</svg>
