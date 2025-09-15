@@ -11,7 +11,7 @@
   --card-foreground: oklch(0.35 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.35 0 0);
-  --primary: oklch(0.45 0.22 15);
+  --primary: #fe0000;
   --primary-foreground: oklch(1 0 0);
   /* Updated secondary and accent colors from pink/magenta (340) to red tones (15) */
   --secondary: oklch(0.92 0.05 15);
@@ -48,7 +48,7 @@
   --card-foreground: oklch(0.95 0 0);
   --popover: oklch(0.1 0 0);
   --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.6 0.22 15);
+  --primary: #fe0000;
   --primary-foreground: oklch(0.1 0 0);
   /* Updated dark mode secondary and accent colors to use red tones instead of pink */
   --secondary: oklch(0.25 0.05 15);
