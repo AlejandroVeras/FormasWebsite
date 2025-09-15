@@ -21,7 +21,6 @@ export default function EstructurasMetalicasPage() {
                 <h1 className="text-2xl font-bold text-primary">
                   <span className="viner-hand">FORMAS</span> Estructuras Metálicas
                 </h1>
-                <p className="text-xs text-muted-foreground">Empresa Principal del Grupo</p>
               </div>
             </div>
             <Button
@@ -53,7 +52,6 @@ export default function EstructurasMetalicasPage() {
             variant="default"
             className="mb-6 animate-in fade-in-50 duration-1000 delay-300 bg-primary/90 backdrop-blur-sm"
           >
-            Empresa Principal del Grupo Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
             Líderes en <span className="text-primary">Estructuras Metálicas</span>

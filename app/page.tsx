@@ -29,7 +29,6 @@ export default function HomePage() {
               />
               <div>
                 <h1 className="text-2xl font-bold text-primary viner-hand">FORMAS</h1>
-                <p className="text-xs text-muted-foreground">Santiago, República Dominicana</p>
               </div>
             </div>
             {/* NavBar */}
