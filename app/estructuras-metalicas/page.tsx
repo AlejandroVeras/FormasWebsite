@@ -13,7 +13,7 @@ export default function EstructurasMetalicasPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
               <img 
-                src="/img/formaslogo.svg" 
+                src="/img/formaslogo.png" 
                 alt="Formas Logo" 
                 className="w-12 h-12 transition-transform hover:scale-110"
               />
@@ -225,7 +225,7 @@ export default function EstructurasMetalicasPage() {
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
                 <img 
-                  src="/img/formaslogo.svg" 
+                  src="/img/formaslogo.png" 
                   alt="Formas Logo" 
                   className="w-8 h-8"
                 />
