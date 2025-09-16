@@ -513,7 +513,7 @@ export default async function InmobiliariaPage() {
                         </div>
                       )}
                       <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold text-primary">
+                        <span className="text-xl font-bold formas-turquesa">
                           {formatPrice(property.price, property.operation_type)}
                         </span>
                         <Button
