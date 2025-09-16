@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export default function ConstructoraPage() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#00bfc5' }}>
+  <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b bg-white/30 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 lg:px-32 py-6">
