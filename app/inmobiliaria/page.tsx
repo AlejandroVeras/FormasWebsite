@@ -1,3 +1,4 @@
+import "@/styles/formas-turquesa.css"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -116,7 +117,7 @@ export default async function InmobiliariaPage() {
             Parte del Grupo Formas
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
-            Tu <span className="text-primary">Hogar Ideal</span> te Espera
+            Tu <span className="formas-turquesa">Hogar Ideal</span> te Espera
           </h2>
           <p className="text-lg sm:text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la
@@ -125,20 +126,20 @@ export default async function InmobiliariaPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
             <Button
               size="lg"
-              className="gap-2 bg-primary hover:bg-primary/90 hover:scale-105 transition-transform"
+              className="gap-2 formas-turquesa-bg hover:scale-105 transition-transform"
               asChild
             >
               <Link href="#propiedades">
-                Ver Propiedades <Search className="w-4 h-4" />
+                <span className="formas-turquesa-bg">Ver Propiedades</span> <Search className="w-4 h-4 formas-turquesa" />
               </Link>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="hover:scale-105 transition-transform bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              className="hover:scale-105 transition-transform formas-turquesa formas-turquesa-border"
               asChild
             >
-              <a href="#contacto" className="scroll-smooth">
+              <a href="#contacto" className="scroll-smooth formas-turquesa">
                 Vender mi Propiedad
               </a>
             </Button>

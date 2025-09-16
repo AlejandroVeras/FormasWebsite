@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import "@/styles/formas-turquesa.css"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Building2, Home, MapPin, Phone, Mail, ArrowLeft, Users, Award } from "lucide-react"
@@ -40,7 +41,7 @@ export default function ConstructoraPage() {
             Parte del Grupo Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Construcción <span className="text-primary">Integral</span>
+            Construcción <span className="formas-turquesa">Integral</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
             Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos ideas en
@@ -48,10 +49,10 @@ export default function ConstructoraPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90">
-              Ver Proyectos <Building2 className="w-4 h-4" />
+              <span className="formas-turquesa">Ver Proyectos</span> <Building2 className="w-4 h-4 formas-turquesa" />
             </Button>
             <Button variant="outline" size="lg">
-              Solicitar Presupuesto
+              <span className="formas-turquesa">Solicitar Presupuesto</span>
             </Button>
           </div>
         </div>
