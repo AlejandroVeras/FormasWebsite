@@ -59,18 +59,22 @@ export default async function InmobiliariaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+  <div className="min-h-screen" style={{ backgroundColor: '#00bfc5' }}>
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
+      <header className="border-b bg-white/30 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
         <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4 sm:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center transition-transform hover:scale-110">
-                <Home className="w-4 h-4 sm:w-6 sm:h-6 text-primary-foreground" />
-              </div>
+            {/* Logo */}
+            <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
+              <img 
+                src="/img/formaslogo.png" 
+                alt="Formas Logo" 
+                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow"
+                style={{ border: '2px solid #00bfc5' }}
+              />
               <div>
-                <h1 className="text-lg sm:text-2xl font-bold text-primary">FORMAS Inmobiliaria</h1>
-                <p className="text-xs text-muted-foreground hidden sm:block">Tu hogar ideal te espera</p>
+                <h1 className="text-2xl font-bold" style={{ color: '#00bfc5', fontFamily: 'Viner Hand ITC, cursive' }}>FORMAS</h1>
+                <p className="text-xs text-gray-700 hidden sm:block">Inmobiliaria</p>
               </div>
             </div>
             <div className="flex items-center gap-1 sm:gap-2 animate-in slide-in-from-right-5 duration-700">

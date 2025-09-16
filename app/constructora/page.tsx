@@ -6,18 +6,22 @@ import Link from "next/link"
 
 export default function ConstructoraPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: '#00bfc5' }}>
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b bg-white/30 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 lg:px-32 py-6">
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-primary-foreground" />
-              </div>
+              <img 
+                src="/img/formaslogo.png" 
+                alt="Formas Logo" 
+                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow"
+                style={{ border: '2px solid #00bfc5' }}
+              />
               <div>
-                <h1 className="text-2xl font-bold text-primary">FORMAS Constructora</h1>
-                <p className="text-xs text-muted-foreground">Construcción Integral</p>
+                <h1 className="text-2xl font-bold" style={{ color: '#00bfc5', fontFamily: 'Viner Hand ITC, cursive' }}>FORMAS</h1>
+                <p className="text-xs text-gray-700">Constructora</p>
               </div>
             </div>
             <Button variant="outline" size="sm" asChild>

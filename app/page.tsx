@@ -153,9 +153,9 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                   <Wrench className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle className="text-xl">Formas Estructuras Metálicas</CardTitle>
+                <CardTitle className="text-xl">Formas Estructuras en Acero </CardTitle>
                 <CardDescription>
-                  Empresa especializada en diseño, fabricación e instalación de estructuras metálicas
+                  Empresa especializada en diseño, fabricación e instalación de estructuras en acero
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative z-10">
@@ -183,7 +183,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <Building2 className="w-6 h-6 text-secondary" />
                 </div>
-                <CardTitle className="text-xl">Formas Constructora</CardTitle>
+                <CardTitle className="text-xl">Constructora Formas</CardTitle>
                 <CardDescription>
                   Empresa de construcción integral para proyectos residenciales, comerciales e industriales
                 </CardDescription>
@@ -217,7 +217,7 @@ export default function HomePage() {
                 <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                   <Home className="w-6 h-6 text-accent" />
                 </div>
-                <CardTitle className="text-xl">Formas Inmobiliaria</CardTitle>
+                <CardTitle className="text-xl">Informas</CardTitle>
                 <CardDescription>
                   Empresa inmobiliaria especializada en desarrollo, venta y alquiler de propiedades
                 </CardDescription>
