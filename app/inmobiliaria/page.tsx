@@ -1,4 +1,4 @@
-import "@/styles/formas-turquesa.css"
+import "@/styles/inmobiliaria-verde.css"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -70,11 +70,10 @@ export default async function InmobiliariaPage() {
               <img 
                 src="/img/formaslogo.png" 
                 alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow"
-                style={{ border: '2px solid #00bfc5' }}
+                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow inmobiliaria-verde-border"
               />
               <div>
-                <h1 className="text-2xl font-bold" style={{ color: '#00bfc5', fontFamily: 'Viner Hand ITC, cursive' }}>FORMAS</h1>
+                <h1 className="text-2xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
                 <p className="text-xs text-gray-700 hidden sm:block">Inmobiliaria</p>
               </div>
             </div>
@@ -117,7 +116,7 @@ export default async function InmobiliariaPage() {
             Parte del Grupo Formas
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
-            Tu <span className="formas-turquesa">Hogar Ideal</span> te Espera
+            Tu <span className="inmobiliaria-verde">Hogar Ideal</span> te Espera
           </h2>
           <p className="text-lg sm:text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la
@@ -126,20 +125,20 @@ export default async function InmobiliariaPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
             <Button
               size="lg"
-              className="gap-2 formas-turquesa-bg hover:scale-105 transition-transform"
+              className="gap-2 inmobiliaria-verde-bg hover:scale-105 transition-transform"
               asChild
             >
               <Link href="#propiedades">
-                <span className="formas-turquesa-bg">Ver Propiedades</span> <Search className="w-4 h-4 formas-turquesa" />
+                <span className="inmobiliaria-verde-bg">Ver Propiedades</span> <Search className="w-4 h-4 inmobiliaria-verde" />
               </Link>
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="hover:scale-105 transition-transform formas-turquesa formas-turquesa-border"
+              className="hover:scale-105 transition-transform inmobiliaria-verde inmobiliaria-verde-border"
               asChild
             >
-              <a href="#contacto" className="scroll-smooth formas-turquesa">
+              <a href="#contacto" className="scroll-smooth inmobiliaria-verde">
                 Vender mi Propiedad
               </a>
             </Button>
@@ -205,7 +204,7 @@ export default async function InmobiliariaPage() {
               >
                 <CardHeader>
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110">
-                    <service.icon className="w-6 h-6 formas-turquesa" />
+                    <service.icon className="w-6 h-6 inmobiliaria-verde" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                   <CardDescription>{service.desc}</CardDescription>
@@ -217,7 +216,7 @@ export default async function InmobiliariaPage() {
                     ))}
                   </ul>
                   <Button
-                    className={`w-full ${index === 0 ? "formas-turquesa-bg hover:formas-turquesa-bg" : "bg-transparent"} hover:scale-105 transition-transform`}
+                    className={`w-full ${index === 0 ? "inmobiliaria-verde-bg hover:inmobiliaria-verde-bg" : "bg-transparent"} hover:scale-105 transition-transform`}
                     variant={index === 0 ? "default" : "outline"}
                     asChild
                   >
@@ -258,7 +257,7 @@ export default async function InmobiliariaPage() {
                           className="w-full h-full object-cover transition-transform hover:scale-110"
                         />
                       ) : (
-                        <PropertyIcon className="w-16 h-16 formas-turquesa/50" />
+                        <PropertyIcon className="w-16 h-16 inmobiliaria-verde/50" />
                       )}
                       <Badge
                         variant={property.operation_type === "venta" ? "secondary" : "outline"}
@@ -312,7 +311,7 @@ export default async function InmobiliariaPage() {
                         </div>
                       )}
                       <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold formas-turquesa">
+                        <span className="text-xl font-bold inmobiliaria-verde">
                           {formatPrice(property.price, property.operation_type)}
                         </span>
                         <Button
@@ -336,7 +335,7 @@ export default async function InmobiliariaPage() {
               {/* Fallback: Show sample cards when no featured properties */}
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-200">
                 <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Home className="w-16 h-16 formas-turquesa/50" />
+                  <Home className="w-16 h-16 inmobiliaria-verde/50" />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-2">
@@ -359,7 +358,7 @@ export default async function InmobiliariaPage() {
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$185,000</span>
+                    <span className="text-xl font-bold inmobiliaria-verde">$185,000</span>
                     <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
                       Ver Detalles
                     </Button>
@@ -369,7 +368,7 @@ export default async function InmobiliariaPage() {
 
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-400">
                 <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Building className="w-16 h-16 formas-turquesa" />
+                  <Building className="w-16 h-16 inmobiliaria-verde" />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-2">
@@ -392,7 +391,7 @@ export default async function InmobiliariaPage() {
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$320,000</span>
+                    <span className="text-xl font-bold inmobiliaria-verde">$320,000</span>
                     <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
                       Ver Detalles
                     </Button>
@@ -402,7 +401,7 @@ export default async function InmobiliariaPage() {
 
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-600">
                 <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Home className="w-16 h-16 formas-turquesa/50" />
+                  <Home className="w-16 h-16 inmobiliaria-verde/50" />
                 </div>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-2">
@@ -418,7 +417,7 @@ export default async function InmobiliariaPage() {
                     <span>Planta baja</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$1,200/mes</span>
+                    <span className="text-xl font-bold inmobiliaria-verde">$1,200/mes</span>
                     <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
                       Ver Detalles
                     </Button>
@@ -459,7 +458,7 @@ export default async function InmobiliariaPage() {
                           className="w-full h-full object-cover transition-transform hover:scale-110"
                         />
                       ) : (
-                        <PropertyIcon className="w-16 h-16 formas-turquesa" />
+                        <PropertyIcon className="w-16 h-16 inmobiliaria-verde" />
                       )}
                       <Badge
                         variant={property.operation_type === "venta" ? "secondary" : "outline"}
@@ -513,7 +512,7 @@ export default async function InmobiliariaPage() {
                         </div>
                       )}
                       <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold formas-turquesa">
+                        <span className="text-xl font-bold inmobiliaria-verde">
                           {formatPrice(property.price, property.operation_type)}
                         </span>
                         <Button
@@ -576,7 +575,7 @@ export default async function InmobiliariaPage() {
                 key={index}
                 className={`flex items-center gap-3 animate-in slide-in-from-bottom-5 duration-700 ${contact.delay} hover:scale-105 transition-transform`}
               >
-                <contact.icon className="w-5 h-5 formas-turquesa" />
+                <contact.icon className="w-5 h-5 inmobiliaria-verde" />
                 <span>{contact.text}</span>
               </div>
             ))}

@@ -1,0 +1,47 @@
+/* Estructuras Metálicas - Red Color Scheme */
+.estructuras-rojo {
+  color: #fe0000 !important;
+}
+
+.estructuras-rojo-bg {
+  background-color: #fe0000 !important;
+  color: #fff !important;
+}
+
+.estructuras-rojo-border {
+  border-color: #fe0000 !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+.estructuras-rojo-outline {
+  outline-color: #fe0000 !important;
+}
+
+.estructuras-rojo-hover:hover {
+  color: #fe0000 !important;
+}
+
+.estructuras-rojo-bg-hover:hover {
+  background-color: #fe0000 !important;
+  color: #fff !important;
+}
+
+/* Additional red variations for better contrast */
+.estructuras-rojo-light {
+  color: #ff4444 !important;
+}
+
+.estructuras-rojo-light-bg {
+  background-color: #ff4444 !important;
+  color: #fff !important;
+}
+
+.estructuras-rojo-dark {
+  color: #cc0000 !important;
+}
+
+.estructuras-rojo-dark-bg {
+  background-color: #cc0000 !important;
+  color: #fff !important;
+}
