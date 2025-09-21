@@ -20,7 +20,7 @@ export default function EstructurasMetalicasPage() {
               />
               <div>
                 <h1 className="text-2xl font-bold estructuras-rojo">
-                  <span className="viner-hand">FORMAS</span> Estructuras Metálicas
+                  <span className="viner-hand estructuras-rojo">FORMAS</span> Estructuras Metálicas
                 </h1>
               </div>
             </div>
