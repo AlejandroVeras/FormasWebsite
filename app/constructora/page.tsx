@@ -34,7 +34,7 @@ export default function ConstructoraPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-background to-primary/5">
+      <section className="py-20 bg-gradient-to-br from-background to-constructora-teal/5">
         <div className="container mx-auto px-6 lg:px-8 text-center">
           <Badge variant="default" className="mb-6">
             Parte del Grupo Formas
@@ -47,7 +47,7 @@ export default function ConstructoraPage() {
             realidades construidas con la más alta calidad.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90">
+            <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover">
               <span className="constructora-teal-bg">Ver Proyectos</span> <Building2 className="w-4 h-4 constructora-teal" />
             </Button>
             <Button variant="outline" size="lg">
@@ -70,8 +70,8 @@ export default function ConstructoraPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-6 h-6 constructora-teal" />
+                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Home className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">Residencial</CardTitle>
               </CardHeader>
@@ -82,8 +82,8 @@ export default function ConstructoraPage() {
 
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Building2 className="w-6 h-6 constructora-teal" />
+                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">Comercial</CardTitle>
               </CardHeader>
@@ -94,8 +94,8 @@ export default function ConstructoraPage() {
 
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-6 h-6 constructora-teal" />
+                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">Industrial</CardTitle>
               </CardHeader>
@@ -106,8 +106,8 @@ export default function ConstructoraPage() {
 
             <Card className="text-center">
               <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-6 h-6 constructora-teal" />
+                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-6 h-6 text-white" />
                 </div>
                 <CardTitle className="text-lg">Remodelaciones</CardTitle>
               </CardHeader>
@@ -129,8 +129,8 @@ export default function ConstructoraPage() {
 
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="constructora-teal-bg font-bold text-xl">1</div>
+              <div className="w-16 h-16 constructora-teal-bg rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
+                1
               </div>
               <h4 className="font-semibold mb-2">Consulta Inicial</h4>
               <p className="text-sm text-muted-foreground">
@@ -138,22 +138,22 @@ export default function ConstructoraPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="constructora-teal-bg font-bold text-xl">2</div>
+              <div className="w-16 h-16 constructora-teal-bg rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
+                2
               </div>
               <h4 className="font-semibold mb-2">Diseño y Planificación</h4>
               <p className="text-sm text-muted-foreground">Creamos planos detallados y cronograma de trabajo</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="constructora-teal-bg font-bold text-xl">3</div>
+              <div className="w-16 h-16 constructora-teal-bg rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
+                3
               </div>
               <h4 className="font-semibold mb-2">Construcción</h4>
               <p className="text-sm text-muted-foreground">Ejecutamos el proyecto con supervisión constante</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="constructora-teal-bg font-bold text-xl">4</div>
+              <div className="w-16 h-16 constructora-teal-bg rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">
+                4
               </div>
               <h4 className="font-semibold mb-2">Entrega</h4>
               <p className="text-sm text-muted-foreground">Entregamos tu proyecto terminado y con garantía</p>
@@ -215,8 +215,7 @@ export default function ConstructoraPage() {
                     placeholder="Describe tu proyecto de construcción..."
                   ></textarea>
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary/90">Solicitar Presupuesto</Button>
-<Button className="w-full constructora-teal-bg hover:constructora-teal-bg">Solicitar Presupuesto</Button>
+                <Button className="w-full constructora-teal-bg hover:constructora-teal-bg-hover">Solicitar Presupuesto</Button>
               </CardContent>
             </Card>
           </div>
@@ -229,8 +228,8 @@ export default function ConstructoraPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Building2 className="w-5 h-5 constructora-teal" />
+                <div className="w-8 h-8 constructora-teal-bg rounded-lg flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold constructora-teal">FORMAS</span>
               </div>

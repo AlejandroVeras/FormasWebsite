@@ -19,7 +19,7 @@ export default function EstructurasMetalicasPage() {
                 className="w-12 h-12 transition-transform hover:scale-110"
               />
               <div>
-                <h1 className="text-2xl font-bold text-primary">
+                <h1 className="text-2xl font-bold estructuras-rojo">
                   <span className="viner-hand">FORMAS</span> Estructuras Metálicas
                 </h1>
               </div>
@@ -51,11 +51,11 @@ export default function EstructurasMetalicasPage() {
         <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
           <Badge
             variant="default"
-            className="mb-6 animate-in fade-in-50 duration-1000 delay-300 bg-primary/90 backdrop-blur-sm"
+            className="mb-6 animate-in fade-in-50 duration-1000 delay-300 estructuras-rojo-bg backdrop-blur-sm"
           >
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
-            Líderes en <span className="text-primary">Estructuras Metálicas</span>
+            Líderes en <span className="estructuras-rojo">Estructuras Metálicas</span>
           </h2>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
             Más de 25 años diseñando, fabricando e instalando estructuras metálicas de la más alta calidad para
@@ -118,8 +118,8 @@ export default function EstructurasMetalicasPage() {
                 className={`text-center hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 ${service.delay}`}
               >
                 <CardHeader>
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110">
-                    <service.icon className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 estructuras-rojo-light-bg rounded-lg flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110">
+                    <service.icon className="w-6 h-6 text-white" />
                   </div>
                   <CardTitle className="text-lg">{service.title}</CardTitle>
                 </CardHeader>
@@ -172,7 +172,7 @@ export default function EstructurasMetalicasPage() {
                     key={index}
                     className={`flex items-start gap-3 animate-in slide-in-from-left-5 duration-700 ${item.delay}`}
                   >
-                    <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 estructuras-rojo mt-1 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold mb-1">{item.title}</h4>
                       <p className="text-sm text-muted-foreground">{item.desc}</p>
@@ -188,13 +188,13 @@ export default function EstructurasMetalicasPage() {
                   <label className="text-sm font-medium mb-2 block">Nombre de la Empresa</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20"
+                    className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-red-500/20"
                     placeholder="Nombre de tu empresa"
                   />
                 </div>
                 <div className="animate-in fade-in-50 duration-700 delay-500">
                   <label className="text-sm font-medium mb-2 block">Tipo de Proyecto</label>
-                  <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-primary/20">
+                  <select className="w-full px-3 py-2 border border-input rounded-md bg-background transition-all focus:ring-2 focus:ring-red-500/20">
                     <option>Nave Industrial</option>
                     <option>Techo Metálico</option>
                     <option>Estructura Comercial</option>
@@ -204,7 +204,7 @@ export default function EstructurasMetalicasPage() {
                 <div className="animate-in fade-in-50 duration-700 delay-700">
                   <label className="text-sm font-medium mb-2 block">Descripción del Proyecto</label>
                   <textarea
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background h-24 resize-none transition-all focus:ring-2 focus:ring-primary/20"
+                    className="w-full px-3 py-2 border border-input rounded-md bg-background h-24 resize-none transition-all focus:ring-2 focus:ring-red-500/20"
                     placeholder="Describe tu proyecto..."
                   ></textarea>
                 </div>
@@ -228,7 +228,7 @@ export default function EstructurasMetalicasPage() {
                   alt="Formas Logo" 
                   className="w-8 h-8"
                 />
-                <span className="text-xl font-bold text-primary viner-hand">FORMAS</span>
+                <span className="text-xl font-bold estructuras-rojo viner-hand">FORMAS</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.
@@ -239,17 +239,17 @@ export default function EstructurasMetalicasPage() {
               <h6 className="font-semibold mb-3">Nuestras Empresas</h6>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <Link href="/estructuras-metalicas" className="hover:text-primary transition-colors duration-300">
+                  <Link href="/estructuras-metalicas" className="estructuras-rojo-hover transition-colors duration-300">
                     Estructuras Metálicas
                   </Link>
                 </li>
                 <li>
-                  <Link href="/constructora" className="hover:text-primary transition-colors duration-300">
+                  <Link href="/constructora" className="estructuras-rojo-hover transition-colors duration-300">
                     Constructora
                   </Link>
                 </li>
                 <li>
-                  <Link href="/inmobiliaria" className="hover:text-primary transition-colors duration-300">
+                  <Link href="/inmobiliaria" className="estructuras-rojo-hover transition-colors duration-300">
                     Inmobiliaria
                   </Link>
                 </li>

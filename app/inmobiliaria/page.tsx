@@ -100,7 +100,7 @@ export default async function InmobiliariaPage() {
 
       {/* Hero Section */}
       <section
-        className="py-16 sm:py-20 bg-gradient-to-br from-background to-primary/5 relative overflow-hidden"
+        className="py-16 sm:py-20 bg-gradient-to-br from-background to-inmobiliaria-verde/5 relative overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/modern-houses--apartments--real-estate-properties-.jpg')`,
           backgroundSize: "cover",
@@ -203,7 +203,7 @@ export default async function InmobiliariaPage() {
                 className={`text-center hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 ${service.delay}`}
               >
                 <CardHeader>
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110">
+                  <div className="w-12 h-12 inmobiliaria-verde-light-bg rounded-lg flex items-center justify-center mx-auto mb-4 transition-transform hover:scale-110">
                     <service.icon className="w-6 h-6 inmobiliaria-verde" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
@@ -249,7 +249,7 @@ export default async function InmobiliariaPage() {
                 const PropertyIcon = getPropertyIcon(property.property_type)
                 return (
                   <Card key={property.id} className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}>
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
+                    <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center relative">
                       {property.images && property.images[0] ? (
                         <img
                           src={property.images[0] || "/placeholder.svg"}
@@ -334,7 +334,7 @@ export default async function InmobiliariaPage() {
             <div className="grid md:grid-cols-3 gap-8">
               {/* Fallback: Show sample cards when no featured properties */}
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-200">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center">
                   <Home className="w-16 h-16 inmobiliaria-verde/50" />
                 </div>
                 <CardContent className="p-6">
@@ -367,7 +367,7 @@ export default async function InmobiliariaPage() {
               </Card>
 
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-400">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center">
                   <Building className="w-16 h-16 inmobiliaria-verde" />
                 </div>
                 <CardContent className="p-6">
@@ -400,7 +400,7 @@ export default async function InmobiliariaPage() {
               </Card>
 
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-600">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center">
                   <Home className="w-16 h-16 inmobiliaria-verde/50" />
                 </div>
                 <CardContent className="p-6">
@@ -450,7 +450,7 @@ export default async function InmobiliariaPage() {
                     key={property.id}
                     className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}
                   >
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
+                    <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center relative">
                       {property.images && property.images[0] ? (
                         <img
                           src={property.images[0] || "/placeholder.svg"}
