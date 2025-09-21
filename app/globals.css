@@ -128,6 +128,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* 
+   * Company name font styling
+   * Using 'Kalam' as web-safe alternative to 'Viner Hand ITC'
+   * Falls back to cursive and fantasy for better browser support
+   */
   .viner-hand {
     font-family: 'Kalam', cursive, 'Viner Hand ITC', fantasy;
   }
