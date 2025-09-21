@@ -1,0 +1,58 @@
+/* Inmobiliaria (Informas) - Green Color Scheme */
+.inmobiliaria-verde {
+  color: #3dcf96 !important;
+}
+
+.inmobiliaria-verde-bg {
+  background-color: #3dcf96 !important;
+  color: #fff !important;
+}
+
+.inmobiliaria-verde-border {
+  border-color: #3dcf96 !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+.inmobiliaria-verde-outline {
+  outline-color: #3dcf96 !important;
+}
+
+.inmobiliaria-verde-hover:hover {
+  color: #3dcf96 !important;
+}
+
+.inmobiliaria-verde-bg-hover:hover {
+  background-color: #3dcf96 !important;
+  color: #fff !important;
+}
+
+/* Additional green variations for professional appearance */
+.inmobiliaria-verde-light {
+  color: #5dd8a8 !important;
+}
+
+.inmobiliaria-verde-light-bg {
+  background-color: #5dd8a8 !important;
+  color: #fff !important;
+}
+
+.inmobiliaria-verde-dark {
+  color: #2db77c !important;
+}
+
+.inmobiliaria-verde-dark-bg {
+  background-color: #2db77c !important;
+  color: #fff !important;
+}
+
+/* Neutral combinations for professional look */
+.inmobiliaria-neutral-bg {
+  background-color: #f8f9fa !important;
+  color: #333 !important;
+}
+
+.inmobiliaria-white-bg {
+  background-color: #ffffff !important;
+  color: #333 !important;
+}

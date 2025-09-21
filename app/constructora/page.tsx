@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button"
-import "@/styles/formas-turquesa.css"
-import "@/styles/formas-turquesa.css"
-import "@/styles/formas-turquesa.css"
+import "@/styles/constructora-teal.css"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Building2, Home, MapPin, Phone, Mail, ArrowLeft, Users, Award } from "lucide-react"
@@ -19,11 +17,10 @@ export default function ConstructoraPage() {
               <img 
                 src="/img/formaslogo.png" 
                 alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow"
-                style={{ border: '2px solid #00bfc5' }}
+                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow constructora-teal-border"
               />
               <div>
-                <h1 className="text-2xl font-bold" style={{ color: '#00bfc5', fontFamily: 'Viner Hand ITC, cursive' }}>FORMAS</h1>
+                <h1 className="text-2xl font-bold constructora-teal viner-hand">FORMAS</h1>
                 <p className="text-xs text-gray-700">Constructora</p>
               </div>
             </div>
@@ -43,7 +40,7 @@ export default function ConstructoraPage() {
             Parte del Grupo Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Construcción <span className="formas-turquesa">Integral</span>
+            Construcción <span className="constructora-teal">Integral</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
             Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos ideas en
@@ -51,10 +48,10 @@ export default function ConstructoraPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="gap-2 bg-primary hover:bg-primary/90">
-              <span className="formas-turquesa-bg">Ver Proyectos</span> <Building2 className="w-4 h-4 formas-turquesa" />
+              <span className="constructora-teal-bg">Ver Proyectos</span> <Building2 className="w-4 h-4 constructora-teal" />
             </Button>
             <Button variant="outline" size="lg">
-              <span className="formas-turquesa">Solicitar Presupuesto</span>
+              <span className="constructora-teal">Solicitar Presupuesto</span>
             </Button>
           </div>
         </div>
@@ -74,7 +71,7 @@ export default function ConstructoraPage() {
             <Card className="text-center">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-6 h-6 formas-turquesa" />
+                  <Home className="w-6 h-6 constructora-teal" />
                 </div>
                 <CardTitle className="text-lg">Residencial</CardTitle>
               </CardHeader>
@@ -86,7 +83,7 @@ export default function ConstructoraPage() {
             <Card className="text-center">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Building2 className="w-6 h-6 formas-turquesa" />
+                  <Building2 className="w-6 h-6 constructora-teal" />
                 </div>
                 <CardTitle className="text-lg">Comercial</CardTitle>
               </CardHeader>
@@ -98,7 +95,7 @@ export default function ConstructoraPage() {
             <Card className="text-center">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-6 h-6 formas-turquesa" />
+                  <Award className="w-6 h-6 constructora-teal" />
                 </div>
                 <CardTitle className="text-lg">Industrial</CardTitle>
               </CardHeader>
@@ -110,7 +107,7 @@ export default function ConstructoraPage() {
             <Card className="text-center">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-6 h-6 formas-turquesa" />
+                  <Users className="w-6 h-6 constructora-teal" />
                 </div>
                 <CardTitle className="text-lg">Remodelaciones</CardTitle>
               </CardHeader>
@@ -133,7 +130,7 @@ export default function ConstructoraPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="formas-turquesa-bg font-bold text-xl">1</div>
+                <div className="constructora-teal-bg font-bold text-xl">1</div>
               </div>
               <h4 className="font-semibold mb-2">Consulta Inicial</h4>
               <p className="text-sm text-muted-foreground">
@@ -142,21 +139,21 @@ export default function ConstructoraPage() {
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="formas-turquesa-bg font-bold text-xl">2</div>
+                <div className="constructora-teal-bg font-bold text-xl">2</div>
               </div>
               <h4 className="font-semibold mb-2">Diseño y Planificación</h4>
               <p className="text-sm text-muted-foreground">Creamos planos detallados y cronograma de trabajo</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="formas-turquesa-bg font-bold text-xl">3</div>
+                <div className="constructora-teal-bg font-bold text-xl">3</div>
               </div>
               <h4 className="font-semibold mb-2">Construcción</h4>
               <p className="text-sm text-muted-foreground">Ejecutamos el proyecto con supervisión constante</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
-                <div className="formas-turquesa-bg font-bold text-xl">4</div>
+                <div className="constructora-teal-bg font-bold text-xl">4</div>
               </div>
               <h4 className="font-semibold mb-2">Entrega</h4>
               <p className="text-sm text-muted-foreground">Entregamos tu proyecto terminado y con garantía</p>
@@ -219,7 +216,7 @@ export default function ConstructoraPage() {
                   ></textarea>
                 </div>
                 <Button className="w-full bg-primary hover:bg-primary/90">Solicitar Presupuesto</Button>
-<Button className="w-full formas-turquesa-bg hover:formas-turquesa-bg">Solicitar Presupuesto</Button>
+<Button className="w-full constructora-teal-bg hover:constructora-teal-bg">Solicitar Presupuesto</Button>
               </CardContent>
             </Card>
           </div>
@@ -233,9 +230,9 @@ export default function ConstructoraPage() {
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Building2 className="w-5 h-5 formas-turquesa" />
+                  <Building2 className="w-5 h-5 constructora-teal" />
                 </div>
-                <span className="text-xl font-bold formas-turquesa">FORMAS</span>
+                <span className="text-xl font-bold constructora-teal">FORMAS</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.
@@ -246,17 +243,17 @@ export default function ConstructoraPage() {
               <h6 className="font-semibold mb-3">Nuestras Empresas</h6>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <Link href="/estructuras-metalicas" className="hover:formas-turquesa transition-colors duration-300">
+                  <Link href="/estructuras-metalicas" className="hover:constructora-teal transition-colors duration-300">
                     Estructuras Metálicas
                   </Link>
                 </li>
                 <li>
-                  <Link href="/constructora" className="hover:formas-turquesa transition-colors duration-300">
+                  <Link href="/constructora" className="hover:constructora-teal transition-colors duration-300">
                     Constructora
                   </Link>
                 </li>
                 <li>
-                  <Link href="/inmobiliaria" className="hover:formas-turquesa transition-colors duration-300">
+                  <Link href="/inmobiliaria" className="hover:constructora-teal transition-colors duration-300">
                     Inmobiliaria
                   </Link>
                 </li>

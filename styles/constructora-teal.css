@@ -1,0 +1,67 @@
+/* Constructora Formas - Enhanced Teal Color Scheme */
+.constructora-teal {
+  color: #00bfc5 !important;
+}
+
+.constructora-teal-bg {
+  background-color: #00bfc5 !important;
+  color: #fff !important;
+}
+
+.constructora-teal-border {
+  border-color: #00bfc5 !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+.constructora-teal-outline {
+  outline-color: #00bfc5 !important;
+}
+
+.constructora-teal-hover:hover {
+  color: #00bfc5 !important;
+}
+
+.constructora-teal-bg-hover:hover {
+  background-color: #00bfc5 !important;
+  color: #fff !important;
+}
+
+/* Enhanced teal variations for elegant contrast */
+.constructora-teal-light {
+  color: #00d4da !important;
+}
+
+.constructora-teal-light-bg {
+  background-color: #00d4da !important;
+  color: #fff !important;
+}
+
+.constructora-teal-dark {
+  color: #009499 !important;
+}
+
+.constructora-teal-dark-bg {
+  background-color: #009499 !important;
+  color: #fff !important;
+}
+
+/* Professional combinations */
+.constructora-light-gray-bg {
+  background-color: #f5f5f5 !important;
+  color: #333 !important;
+}
+
+.constructora-white-bg {
+  background-color: #ffffff !important;
+  color: #333 !important;
+}
+
+.constructora-dark-accent {
+  color: #2c3e50 !important;
+}
+
+.constructora-dark-accent-bg {
+  background-color: #2c3e50 !important;
+  color: #fff !important;
+}

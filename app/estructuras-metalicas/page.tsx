@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Building2, Wrench, MapPin, Phone, Mail, ArrowLeft, CheckCircle, Star } from "lucide-react"
 import Link from "next/link"
+import "@/styles/estructuras-rojo.css"
 
 export default function EstructurasMetalicasPage() {
   return (
