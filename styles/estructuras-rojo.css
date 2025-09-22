@@ -27,6 +27,17 @@
   color: #fff !important;
 }
 
+/* Focus states for accessibility */
+.estructuras-rojo-focus:focus {
+  outline: 2px solid #fe0000 !important;
+  outline-offset: 2px !important;
+}
+
+.estructuras-rojo-focus:focus-visible {
+  outline: 2px solid #fe0000 !important;
+  outline-offset: 2px !important;
+}
+
 /* Additional red variations for better contrast */
 .estructuras-rojo-light {
   color: #ff4444 !important;

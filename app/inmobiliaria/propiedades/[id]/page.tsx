@@ -1,3 +1,4 @@
+import "@/styles/inmobiliaria-verde.css"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -233,8 +234,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
               </div>
             </div>
           ) : (
-            <div className="h-[500px] bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg flex items-center justify-center">
-              <PropertyIcon className="w-24 h-24 text-primary/50" />
+            <div className="h-[500px] bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 rounded-lg flex items-center justify-center">
+              <PropertyIcon className="w-24 h-24 inmobiliaria-verde/50" />
             </div>
           )}
         </div>
@@ -254,7 +255,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                       <MapPin className="w-4 h-4" />
                       {property.address}, {property.city}, {property.country}
                     </p>
-                    <div className="text-3xl font-bold text-primary">
+                    <div className="text-3xl font-bold inmobiliaria-verde">
                       {formatPrice(property.price, property.operation_type)}
                     </div>
                   </div>
@@ -314,7 +315,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                       const FeatureIcon = getFeatureIcon(feature)
                       return (
                         <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                          <FeatureIcon className="w-5 h-5 text-primary" />
+                          <FeatureIcon className="w-5 h-5 inmobiliaria-verde" />
                           <span>{feature}</span>
                         </div>
                       )
@@ -375,8 +376,8 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">Agente Inmobiliario</h3>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Home className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 inmobiliaria-verde-light-bg rounded-full flex items-center justify-center">
+                    <Home className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h4 className="font-medium">FORMAS Inmobiliaria</h4>

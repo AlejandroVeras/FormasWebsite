@@ -1,3 +1,4 @@
+import "@/styles/inmobiliaria-verde.css"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -117,7 +118,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                 return (
                   <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
                     <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                      <div className="h-48 bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center relative overflow-hidden">
+                      <div className="h-48 bg-gradient-to-br from-inmobiliaria-verde/20 to-inmobiliaria-verde/5 flex items-center justify-center relative overflow-hidden">
                         {property.images && property.images[0] ? (
                           <img
                             src={property.images[0] || "/placeholder.svg"}
@@ -125,7 +126,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
                         ) : (
-                          <PropertyIcon className="w-12 h-12 text-accent/50" />
+                          <PropertyIcon className="w-12 h-12 inmobiliaria-verde/50" />
                         )}
                         <Badge
                           variant={property.operation_type === "venta" ? "secondary" : "outline"}
@@ -138,7 +139,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                     </Link>
                     <CardContent className="p-4">
                       <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                        <h4 className="font-semibold text-lg mb-2 line-clamp-1 hover:text-primary transition-colors">
+                        <h4 className="font-semibold text-lg mb-2 line-clamp-1 inmobiliaria-verde-hover transition-colors">
                           {property.title}
                         </h4>
                       </Link>
@@ -171,7 +172,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                       </div>
 
                       <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-accent">
+                        <span className="text-lg font-bold inmobiliaria-verde">
                           {formatPrice(property.price, property.operation_type)}
                         </span>
                         <Button size="sm" variant="outline" asChild className="hover:scale-105 transition-transform">
@@ -290,12 +291,12 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-                <Home className="w-6 h-6 text-accent-foreground" />
+              <div className="w-10 h-10 inmobiliaria-verde-bg rounded-lg flex items-center justify-center">
+                <Home className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-accent">Todas las Propiedades</h1>
-                <p className="text-xs text-muted-foreground">Encuentra tu hogar ideal</p>
+                <h1 className="text-2xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
+                <p className="text-xs text-muted-foreground">Todas las Propiedades</p>
               </div>
             </div>
             <Button variant="outline" size="sm" asChild>
@@ -322,7 +323,7 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                   defaultValue={searchParams.search || ""}
                 />
               </div>
-              <Button type="submit" className="md:w-auto bg-primary hover:bg-primary/90">
+              <Button type="submit" className="md:w-auto inmobiliaria-verde-bg hover:inmobiliaria-verde-bg-hover">
                 <Search className="w-4 h-4 mr-2" />
                 Buscar
               </Button>
