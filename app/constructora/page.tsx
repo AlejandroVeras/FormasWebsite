@@ -36,7 +36,10 @@ export default function ConstructoraPage() {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-background to-constructora-teal/5">
         <div className="container mx-auto px-6 lg:px-8 text-center">
-          <Badge variant="default" className="mb-6">
+           <Badge
+            variant="outline"
+            className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
+          >
             Parte de Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
