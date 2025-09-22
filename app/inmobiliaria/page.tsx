@@ -113,7 +113,7 @@ export default async function InmobiliariaPage() {
             variant="outline"
             className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
           >
-            Parte del Grupo Formas
+            Parte de Formas
           </Badge>
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
             Tu <span className="inmobiliaria-verde">Hogar Ideal</span> te Espera

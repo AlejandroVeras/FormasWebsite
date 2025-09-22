@@ -52,7 +52,7 @@ export default function EstructurasMetalicasPage() {
           <Badge
             variant="default"
             className="mb-6 animate-in fade-in-50 duration-1000 delay-300 estructuras-rojo-bg backdrop-blur-sm"
-          >
+          >Parte de Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
             Líderes en <span className="estructuras-rojo">Estructuras Metálicas</span>

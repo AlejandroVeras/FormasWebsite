@@ -37,7 +37,7 @@ export default function ConstructoraPage() {
       <section className="py-20 bg-gradient-to-br from-background to-constructora-teal/5">
         <div className="container mx-auto px-6 lg:px-8 text-center">
           <Badge variant="default" className="mb-6">
-            Parte del Grupo Formas
+            Parte de Formas
           </Badge>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
             Construcción <span className="constructora-teal">Integral</span>
