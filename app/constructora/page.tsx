@@ -34,9 +34,16 @@ export default function ConstructoraPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-background to-constructora-teal/5">
-        <div className="container mx-auto px-6 lg:px-8 text-center">
-           <Badge
+      <section
+        className="py-20 relative bg-gradient-to-br from-background to-constructora-teal/5"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.95)), url('/construction-site--buildings-under-construction--c.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
+          <Badge
             variant="outline"
             className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
           >
