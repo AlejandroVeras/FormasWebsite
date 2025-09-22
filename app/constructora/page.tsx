@@ -48,10 +48,10 @@ export default function ConstructoraPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover">
-              <span className="constructora-teal-bg">Ver Proyectos</span> <Building2 className="w-4 h-4 constructora-teal" />
+              Ver Proyectos <Building2 className="w-4 h-4" />
             </Button>
-            <Button variant="outline" size="lg">
-              <span className="constructora-teal">Solicitar Presupuesto</span>
+            <Button variant="outline" size="lg" className="constructora-teal-border constructora-teal">
+              Solicitar Presupuesto
             </Button>
           </div>
         </div>
@@ -242,17 +242,17 @@ export default function ConstructoraPage() {
               <h6 className="font-semibold mb-3">Nuestras Empresas</h6>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>
-                  <Link href="/estructuras-metalicas" className="hover:constructora-teal transition-colors duration-300">
+                  <Link href="/estructuras-metalicas" className="constructora-teal-hover transition-colors duration-300">
                     Estructuras Metálicas
                   </Link>
                 </li>
                 <li>
-                  <Link href="/constructora" className="hover:constructora-teal transition-colors duration-300">
+                  <Link href="/constructora" className="constructora-teal-hover transition-colors duration-300">
                     Constructora
                   </Link>
                 </li>
                 <li>
-                  <Link href="/inmobiliaria" className="hover:constructora-teal transition-colors duration-300">
+                  <Link href="/inmobiliaria" className="constructora-teal-hover transition-colors duration-300">
                     Inmobiliaria
                   </Link>
                 </li>

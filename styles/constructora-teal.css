@@ -27,6 +27,17 @@
   color: #fff !important;
 }
 
+/* Focus states for accessibility */
+.constructora-teal-focus:focus {
+  outline: 2px solid #00bfc5 !important;
+  outline-offset: 2px !important;
+}
+
+.constructora-teal-focus:focus-visible {
+  outline: 2px solid #00bfc5 !important;
+  outline-offset: 2px !important;
+}
+
 /* Enhanced teal variations for elegant contrast */
 .constructora-teal-light {
   color: #00d4da !important;

@@ -27,6 +27,17 @@
   color: #fff !important;
 }
 
+/* Focus states for accessibility */
+.inmobiliaria-verde-focus:focus {
+  outline: 2px solid #3dcf96 !important;
+  outline-offset: 2px !important;
+}
+
+.inmobiliaria-verde-focus:focus-visible {
+  outline: 2px solid #3dcf96 !important;
+  outline-offset: 2px !important;
+}
+
 /* Additional green variations for professional appearance */
 .inmobiliaria-verde-light {
   color: #5dd8a8 !important;
