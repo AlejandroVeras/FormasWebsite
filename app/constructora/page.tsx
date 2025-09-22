@@ -17,7 +17,7 @@ export default function ConstructoraPage() {
               <img 
                 src="/img/formaslogo.png" 
                 alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110 bg-white rounded-full p-1 shadow constructora-teal-border"
+                className="w-12 h-12 transition-transform hover:scale-110 bg-white"
               />
               <div>
                 <h1 className="text-2xl font-bold constructora-teal viner-hand">FORMAS</h1>
