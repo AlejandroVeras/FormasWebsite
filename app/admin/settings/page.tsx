@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -129,26 +129,31 @@ export default function SettingsPage() {
       const { data: user } = await supabase.auth.getUser()
       if (!user.user) throw new Error("Usuario no autenticado")
 
-      // Prepare updates
-      const updates = Object.entries(formData).map(([key, value]) => ({
-        key,
-        value: JSON.stringify(value),
-        updated_by: user.user.id
-      }))
+      // Guardar cada configuración con semántica de upsert (update si existe, si no insert)
+      for (const [key, value] of Object.entries(formData)) {
+        const payload = {
+          key,
+          value: JSON.stringify(value),
+          category: getCategoryForKey(key),
+          description: getDescriptionForKey(key),
+          updated_by: user.user.id,
+        }
 
-      // Update each setting
-      for (const update of updates) {
-        const { error } = await supabase
+        // Intentar actualizar por key
+        const updateResult = await supabase
           .from("site_settings")
-          .upsert({
-            ...update,
-            category: getCategoryForKey(update.key),
-            description: getDescriptionForKey(update.key)
-          }, {
-            onConflict: "key"
-          })
+          .update(payload)
+          .eq("key", key)
 
-        if (error) throw error
+        // Si no encontró documento, insertar
+        if ((updateResult as any)?.error || !(updateResult as any)?.data) {
+          const insertResult = await supabase
+            .from("site_settings")
+            .insert(payload)
+            .select()
+            .single()
+          if ((insertResult as any)?.error) throw (insertResult as any).error
+        }
       }
 
       toast({

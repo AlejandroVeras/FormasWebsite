@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star, StarOff, ArrowUp, ArrowDown } from "lucide-react"
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import Link from "next/link"
 
 interface FeaturedProperty {
@@ -17,7 +17,7 @@ interface FeaturedProperty {
 async function toggleFeatured(propertyId: string, featured: boolean, order?: number) {
   "use server"
   
-  const supabase = await createClient()
+  const supabase = await createServerClient()
   
   if (featured) {
     // Get next order number if not provided
@@ -64,7 +64,7 @@ async function toggleFeatured(propertyId: string, featured: boolean, order?: num
 async function reorderFeatured(propertyId: string, direction: "up" | "down") {
   "use server"
   
-  const supabase = await createClient()
+  const supabase = await createServerClient()
   
   // Get current property
   const { data: currentProperty } = await supabase
@@ -101,7 +101,7 @@ async function reorderFeatured(propertyId: string, direction: "up" | "down") {
 }
 
 export default async function FeaturedPropertiesSection() {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
   
   // TODO: Enable this after running the database migration (006_add_featured_properties.sql)
   // Get featured properties

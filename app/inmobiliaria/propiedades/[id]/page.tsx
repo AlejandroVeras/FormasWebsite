@@ -26,7 +26,7 @@ import {
   Camera
 } from "lucide-react"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 
@@ -35,7 +35,7 @@ interface PropertyPageProps {
 }
 
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
   const { data: property } = await supabase
     .from("properties")
     .select("*")
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 }
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
 
   const { data: property } = await supabase
     .from("properties")

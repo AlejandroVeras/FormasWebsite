@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Home, Building, MapPin, ArrowLeft, Bed, Bath, Square, Filter, Search, SlidersHorizontal, X } from "lucide-react"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import { Suspense } from "react"
 
 interface SearchParams {
@@ -27,7 +27,7 @@ interface PropiedadesPageProps {
 }
 
 async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
 
   // Pagination settings
   const ITEMS_PER_PAGE = 12
@@ -270,7 +270,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
 }
 
 export default async function PropiedadesPage({ searchParams }: PropiedadesPageProps) {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
 
   // Get unique cities for the filter
   const { data: cities } = await supabase

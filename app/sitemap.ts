@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import { MetadataRoute } from "next"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://formas.com.do"
   
-  const supabase = await createClient()
+  const supabase = await createServerClient()
   
   // Get all available properties
   const { data: properties } = await supabase

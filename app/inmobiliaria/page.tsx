@@ -5,10 +5,10 @@ import { Badge } from "@/components/ui/badge"
 import ContactForm from "@/components/contact-form"
 import { Home, Building, MapPin, Phone, Mail, ArrowLeft, Search, Bed, Bath, Square, Settings } from "lucide-react"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 
 export default async function InmobiliariaPage() {
-  const supabase = await createClient()
+  const supabase = await createServerClient()
 
   const { data: properties } = await supabase
     .from("properties")

@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { ArrowLeft, Building2, Plus, X } from "lucide-react"
+import { uploadImage } from "@/lib/storage"
 
 export default function NewPropertyPage() {
   const router = useRouter()
@@ -40,24 +41,16 @@ const [images, setImages] = useState<string[]>([]);
 const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   const files = e.target.files;
   if (!files) return;
-  const supabase = createClient();
   let uploadedImages: string[] = [];
-
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
     const fileName = `${Date.now()}_${file.name}`;
-    // Subir al bucket
-    const { data, error } = await supabase.storage
-      .from("properties-images")
-      .upload(fileName, file);
-
-    if (error) {
-      alert("Error al subir imagen: " + error.message);
-      continue;
+    try {
+      const { url } = await uploadImage(file, fileName)
+      uploadedImages.push(url)
+    } catch (e: any) {
+      alert("Error al subir imagen: " + (e?.message || "desconocido"))
     }
-    // Construir URL público
-    const imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/properties-images/${fileName}`;
-    uploadedImages.push(imageUrl);
   }
   setImages([...images, ...uploadedImages]);
 };

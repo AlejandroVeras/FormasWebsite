@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -79,19 +79,10 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
         return
       }
 
-      // Load inquiry
+      // 1) Cargar la consulta (sin joins)
       const { data: inquiry, error: inquiryError } = await supabase
         .from("property_inquiries")
-        .select(`
-          *,
-          properties:property_id (
-            title,
-            address,
-            price,
-            property_type,
-            operation_type
-          )
-        `)
+        .select("*")
         .eq("id", params.id)
         .single()
 
@@ -100,11 +91,33 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
         return
       }
 
-      setInquiry(inquiry)
+      // 2) Si tiene propiedad asociada, cargar datos de la propiedad
+      let attachedInquiry = inquiry
+      if (inquiry.property_id) {
+        const { data: prop } = await supabase
+          .from("properties")
+          .select("*")
+          .eq("id", inquiry.property_id)
+          .single()
+        if (prop) {
+          attachedInquiry = {
+            ...inquiry,
+            properties: {
+              title: prop.title,
+              address: prop.address,
+              price: prop.price,
+              property_type: prop.property_type,
+              operation_type: prop.operation_type,
+            },
+          }
+        }
+      }
+
+      setInquiry(attachedInquiry)
       setNewStatus(inquiry.status)
       setResponse(inquiry.response || "")
 
-      // Load interactions
+      // 3) Cargar interacciones
       const { data: interactions, error: interactionsError } = await supabase
         .from("inquiry_interactions")
         .select("*")

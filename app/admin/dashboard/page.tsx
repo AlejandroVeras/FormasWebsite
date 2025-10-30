@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -30,7 +30,7 @@ export default async function AdminDashboard() {
 
   const handleSignOut = async () => {
     "use server"
-    const supabase = await createClient()
+    const supabase = await createServerClient()
     await supabase.auth.signOut()
     redirect("/admin/login")
   }

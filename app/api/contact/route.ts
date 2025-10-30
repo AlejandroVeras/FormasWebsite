@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createServerClient } from "@/lib/firebase/server"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
@@ -23,14 +23,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const supabase = await createClient()
+    const supabase = await createServerClient()
 
-    // Check if Supabase is properly configured
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    // Check if Firebase is properly configured
+    const firebaseProjectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
 
-    if (!supabaseUrl || !supabaseAnonKey) {
-      // Log the inquiry locally when Supabase is not configured
+    if (!firebaseProjectId) {
+      // Log the inquiry locally when Firebase is not configured
       console.log("=== CONTACT FORM SUBMISSION ===")
       console.log("Name:", name)
       console.log("Email:", email)
@@ -43,7 +42,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { 
           success: true, 
-          message: "Consulta registrada (modo demo - Supabase no configurado)",
+          message: "Consulta registrada (modo demo - Firebase no configurado)",
           inquiry_id: "demo-" + Date.now()
         },
         { status: 201 }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -44,22 +44,33 @@ export default function QueriesPage() {
         return
       }
 
+      // 1) Cargar consultas (sin joins)
       const { data: inquiries, error } = await supabase
         .from("property_inquiries")
-        .select(`
-          *,
-          properties:property_id (
-            title,
-            address,
-            price
-          )
-        `)
+        .select("*")
         .order("created_at", { ascending: false })
 
       if (error) {
         console.error("Error loading inquiries:", error)
       } else {
-        setInquiries(inquiries || [])
+        // 2) Para cada consulta, si tiene property_id, cargar datos básicos de la propiedad
+        const withProperty = await Promise.all((inquiries || []).map(async (inq: any) => {
+          if (!inq?.property_id) return inq
+          const { data: prop } = await supabase
+            .from("properties")
+            .select("*")
+            .eq("id", inq.property_id)
+            .single()
+          return {
+            ...inq,
+            properties: prop ? {
+              title: prop.title,
+              address: prop.address,
+              price: prop.price,
+            } : undefined,
+          }
+        }))
+        setInquiries(withProperty)
       }
       setIsLoading(false)
     }
