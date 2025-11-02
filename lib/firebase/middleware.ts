@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { adminAuth } from "./admin"
+import { verifySessionCookie } from "./edge-auth"
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -27,7 +27,11 @@ export async function updateSession(request: NextRequest) {
   }
 
   try {
-    await adminAuth.verifySessionCookie(sessionCookie, true)
+    const { valid, decodedClaims } = await verifySessionCookie(sessionCookie)
+    
+    if (!valid) {
+      throw new Error('Invalid session')
+    }
     return response
   } catch (error) {
     // Invalid session cookie, redirect to login
