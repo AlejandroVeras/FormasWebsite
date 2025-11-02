@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth"
 import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-}
+  apiKey: "AIzaSyA0M8tuAOFwpt_Sk--p9D-jtbdlEM4isAk",
+  authDomain: "formaswebsite.firebaseapp.com",
+  projectId: "formaswebsite",
+  storageBucket: "formaswebsite.firebasestorage.app",
+  messagingSenderId: "699234506659",
+  appId: "1:699234506659:web:a13d913e5a3148d93e6c16"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)

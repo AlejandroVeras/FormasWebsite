@@ -2,6 +2,10 @@
 
 import type React from "react"
 
+import { auth } from "@/lib/firebase/config"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { db } from "@/lib/firebase/config"
+import { doc, setDoc } from "firebase/firestore"
 import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,45 +27,49 @@ export default function AdminRegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
-    setError(null)
+ const handleSignUp = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setIsLoading(true)
+  setError(null)
 
-    if (!VALID_INVITATION_CODES.includes(invitationCode.toUpperCase())) {
-      setError("Código de invitación inválido. Contacta al administrador principal.")
-      setIsLoading(false)
-      return
-    }
-
-    if (password !== repeatPassword) {
-      setError("Las contraseñas no coinciden")
-      setIsLoading(false)
-      return
-    }
-
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo:
-            process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/admin/dashboard`,
-          data: {
-            full_name: fullName,
-            invitation_code: invitationCode.toUpperCase(),
-          },
-        },
-      })
-      if (error) throw error
-      router.push("/admin/register-success")
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
-    } finally {
-      setIsLoading(false)
-    }
+  if (!VALID_INVITATION_CODES.includes(invitationCode.toUpperCase())) {
+    setError("Código de invitación inválido. Contacta al administrador principal.")
+    setIsLoading(false)
+    return
   }
+
+  if (password !== repeatPassword) {
+    setError("Las contraseñas no coinciden")
+    setIsLoading(false)
+    return
+  }
+
+  try {
+    // Crear usuario en Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    const user = userCredential.user
+
+    // Actualizar el perfil con el nombre completo
+    await updateProfile(user, {
+      displayName: fullName
+    })
+
+    // Crear documento del perfil de administrador en Firestore
+    await setDoc(doc(db, "admin_profiles", user.uid), {
+      full_name: fullName,
+      invitation_code: invitationCode.toUpperCase(),
+      role: "admin",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    })
+
+    router.push("/admin/register-success")
+  } catch (error: any) {
+    setError(error?.message || "Error al crear la cuenta")
+  } finally {
+    setIsLoading(false)
+  }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center p-6">

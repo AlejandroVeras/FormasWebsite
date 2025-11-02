@@ -1,5 +1,9 @@
 "use client"
 
+import { auth } from "@/lib/firebase/config"
+import { db } from "@/lib/firebase/config"
+import { collection, query, getDocs, doc, updateDoc } from "firebase/firestore"
+import { signOut } from "firebase/auth"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/firebase/client"
@@ -71,107 +75,94 @@ export default function SettingsPage() {
   })
 
   useEffect(() => {
-    const loadSettings = async () => {
-      const supabase = createClient()
-      
-      const { data: userData, error: authError } = await supabase.auth.getUser()
-      if (authError || !userData?.user) {
+  const loadSettings = async () => {
+    try {
+      const user = auth.currentUser
+      if (!user) {
         router.push("/admin/login")
         return
       }
 
-      const { data: settings, error } = await supabase
-        .from("site_settings")
-        .select("*")
-        .order("category", { ascending: true })
+      const settingsRef = collection(db, "site_settings")
+      const settingsSnapshot = await getDocs(query(settingsRef))
+      const settingsData = settingsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as SiteSetting[]
 
-      if (error) {
-        console.error("Error loading settings:", error)
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "No se pudieron cargar las configuraciones"
-        })
-      } else {
-        setSettings(settings || [])
-        
-        // Populate form data
-        const newFormData = { ...formData }
-        settings?.forEach((setting) => {
-          if (setting.key in newFormData) {
-            newFormData[setting.key as keyof typeof newFormData] = 
-              typeof setting.value === "string" ? setting.value.replace(/"/g, "") : setting.value
-          }
-        })
-        setFormData(newFormData)
-      }
+      setSettings(settingsData)
+      
+      // Populate form data
+      const newFormData = { ...formData }
+      settingsData?.forEach((setting) => {
+        if (setting.key in newFormData) {
+          newFormData[setting.key as keyof typeof formData] = setting.value
+        }
+      })
+      setFormData(newFormData)
+    } catch (error: any) {
+      console.error("Error loading settings:", error)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "No se pudieron cargar las configuraciones"
+      })
+    } finally {
       setIsLoading(false)
     }
-
-    loadSettings()
-  }, [router])
-
-  const handleSignOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push("/admin/login")
   }
+
+  loadSettings()
+}, [router, toast])
+
+const handleLogout = async () => {
+  try {
+    await signOut(auth)
+    router.push("/admin/login")
+  } catch (error: any) {
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description: "Error al cerrar sesión"
+    })
+  }
+}
 
   const handleInputChange = (key: string, value: string) => {
     setFormData(prev => ({ ...prev, [key]: value }))
   }
 
   const handleSave = async () => {
-    setIsSaving(true)
-    const supabase = createClient()
+  setIsSaving(true)
+  try {
+    const user = auth.currentUser
+    if (!user) throw new Error("No autenticado")
 
-    try {
-      const { data: user } = await supabase.auth.getUser()
-      if (!user.user) throw new Error("Usuario no autenticado")
-
-      // Guardar cada configuración con semántica de upsert (update si existe, si no insert)
-      for (const [key, value] of Object.entries(formData)) {
-        const payload = {
-          key,
-          value: JSON.stringify(value),
-          category: getCategoryForKey(key),
-          description: getDescriptionForKey(key),
-          updated_by: user.user.id,
-        }
-
-        // Intentar actualizar por key
-        const updateResult = await supabase
-          .from("site_settings")
-          .update(payload)
-          .eq("key", key)
-
-        // Si no encontró documento, insertar
-        if ((updateResult as any)?.error || !(updateResult as any)?.data) {
-          const insertResult = await supabase
-            .from("site_settings")
-            .insert(payload)
-            .select()
-            .single()
-          if ((insertResult as any)?.error) throw (insertResult as any).error
-        }
-      }
-
-      toast({
-        variant: "success",
-        title: "Configuración guardada",
-        description: "Los cambios han sido guardados exitosamente"
+    // Actualizar cada configuración en Firestore
+    for (const setting of settings) {
+      const settingRef = doc(db, "site_settings", setting.id)
+      await updateDoc(settingRef, {
+        value: formData[setting.key as keyof typeof formData],
+        updated_at: new Date().toISOString(),
+        updated_by: user.uid
       })
-    } catch (error) {
-      console.error("Error saving settings:", error)
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "No se pudieron guardar las configuraciones"
-      })
-    } finally {
-      setIsSaving(false)
     }
+
+    toast({
+      title: "Éxito",
+      description: "Configuraciones actualizadas correctamente"
+    })
+  } catch (error: any) {
+    console.error("Error saving settings:", error)
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description: "No se pudieron guardar las configuraciones"
+    })
+  } finally {
+    setIsSaving(false)
   }
+}
 
   const getCategoryForKey = (key: string): string => {
     if (key.startsWith("company_")) return "contact"
