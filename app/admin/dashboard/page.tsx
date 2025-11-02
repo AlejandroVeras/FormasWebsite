@@ -1,32 +1,35 @@
 import { redirect } from "next/navigation"
-import { createServerClient } from "@/lib/firebase/server"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Building2, Plus, Settings, LogOut, MessageSquare, Mail, Star } from "lucide-react"
 import FeaturedPropertiesSection from "@/components/admin/featured-properties-section"
 
+// Marcar esta página como dinámica para evitar la generación estática
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function AdminDashboard() {
-  const supabase = await createClient()
+  try {
+    // Obtener estadísticas
+    const [propertiesResult, inquiriesResult] = await Promise.all([
+      // Obtener propiedades
+      fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ''}/api/properties/stats`).then(res => res.json()),
+      // Obtener consultas
+      fetch(`${process.env.NEXT_PUBLIC_SITE_URL || ''}/api/inquiries/stats`).then(res => res.json())
+    ])
 
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data?.user) {
-    redirect("/admin/login")
-  }
+    const {
+      total: totalProperties = 0,
+      available: availableProperties = 0,
+      sold: soldProperties = 0
+    } = propertiesResult
 
-  // Obtener perfil del administrador
-  const { data: profile } = await supabase.from("admin_profiles").select("*").eq("id", data.user.id).single()
-
-  // Obtener estadísticas básicas de propiedades
-  const { data: properties, count: totalProperties } = await supabase.from("properties").select("*", { count: "exact" })
-
-  const availableProperties = properties?.filter((p) => p.status === "disponible").length || 0
-  const soldProperties = properties?.filter((p) => p.status === "vendido").length || 0
-
-  // Obtener estadísticas de consultas
-  const { data: inquiries, count: totalInquiries } = await supabase.from("property_inquiries").select("*", { count: "exact" })
-  const newInquiries = inquiries?.filter((i) => i.status === "nuevo").length || 0
-  const pendingInquiries = inquiries?.filter((i) => i.status === "en_proceso").length || 0
+    const {
+      total: totalInquiries = 0,
+      new: newInquiries = 0,
+      pending: pendingInquiries = 0
+    } = inquiriesResult
 
   const handleSignOut = async () => {
     "use server"
