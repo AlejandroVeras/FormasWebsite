@@ -4,17 +4,42 @@ import { getAuth } from "firebase-admin/auth"
 import { getStorage } from "firebase-admin/storage"
 
 // Initialize Firebase Admin
-if (!getApps().length) {
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n")
+function getRequiredEnvVar(name: string): string {
+  const value = process.env[name]
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`)
+  }
+  return value
+}
 
-  initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: privateKey,
-    }),
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  })
+if (!getApps().length) {
+  try {
+    const projectId = getRequiredEnvVar('FIREBASE_PROJECT_ID')
+    const clientEmail = getRequiredEnvVar('FIREBASE_CLIENT_EMAIL')
+    const privateKeyBase64 = getRequiredEnvVar('FIREBASE_PRIVATE_KEY')
+    const storageBucket = getRequiredEnvVar('FIREBASE_STORAGE_BUCKET')
+
+    // Decode and format private key
+    const privateKey = Buffer.from(privateKeyBase64, 'base64')
+      .toString('utf-8')
+      .replace(/\\n/g, '\n')
+
+    const credential = cert({
+      projectId,
+      clientEmail,
+      privateKey,
+    })
+
+    initializeApp({
+      credential,
+      storageBucket,
+    })
+
+    console.log('Firebase Admin initialized successfully')
+  } catch (error) {
+    console.error('Failed to initialize Firebase Admin:', error)
+    throw error
+  }
 }
 
 export const adminDb = getFirestore()
