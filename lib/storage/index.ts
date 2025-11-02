@@ -45,10 +45,3 @@ async function uploadAsBase64(file: File | Blob): Promise<{ url: string }>
   const url = await toDataURL(file)
   return { url }
 }
-
-
-
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
