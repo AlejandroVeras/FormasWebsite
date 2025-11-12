@@ -7,7 +7,7 @@ export async function createServerClient() {
   const sessionCookie = cookieStore.get("session")?.value
 
   let user = null
-  if (sessionCookie) {
+  if (sessionCookie && adminAuth) {
     try {
       const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true)
       user = {
@@ -19,6 +19,8 @@ export async function createServerClient() {
       // Invalid session cookie
       console.error("Error verifying session cookie:", error)
     }
+  } else if (sessionCookie && !adminAuth) {
+    console.warn("Session cookie found but Firebase Admin Auth is not initialized")
   }
 
   // Create a Firebase client with Supabase-like interface for compatibility
@@ -62,7 +64,7 @@ export async function createServerClient() {
                 throw error
               }
             },
-            // Support for filters: .eq().limit() or .eq().single()
+            // Support for filters: .eq().limit() or .eq().single() or .eq().order().limit()
             eq: (field: string, value: any) => {
               return {
                 single: async () => {
@@ -78,6 +80,36 @@ export async function createServerClient() {
                   }
                   return { data: result.data[0], error: result.error }
                 },
+                order: (orderField: string, options?: { ascending?: boolean }) => {
+                  return {
+                    limit: async (num: number) => {
+                      const result = await getAdminCollection(
+                        table,
+                        [{ field, operator: "==", value }],
+                        orderField,
+                        options?.ascending ? "asc" : "desc",
+                        num
+                      )
+                      return countMode 
+                        ? { data: result.data, count: result.count, error: result.error }
+                        : { data: result.data, error: result.error }
+                    },
+                    range: async (start: number, end: number) => {
+                      const limitCount = end - start + 1
+                      const result = await getAdminCollection(
+                        table,
+                        [{ field, operator: "==", value }],
+                        orderField,
+                        options?.ascending ? "asc" : "desc",
+                        limitCount
+                      )
+                      const slicedData = result.data.slice(start, end + 1)
+                      return countMode 
+                        ? { data: slicedData, count: result.count, error: result.error }
+                        : { data: slicedData, error: result.error }
+                    }
+                  }
+                },
                 limit: async (num: number) => {
                   const result = await getAdminCollection(
                     table,
@@ -89,8 +121,66 @@ export async function createServerClient() {
                   return countMode 
                     ? { data: result.data, count: result.count, error: result.error }
                     : { data: result.data, error: result.error }
+                },
+                range: async (start: number, end: number) => {
+                  const limitCount = end - start + 1
+                  const result = await getAdminCollection(
+                    table,
+                    [{ field, operator: "==", value }],
+                    undefined,
+                    "desc",
+                    limitCount
+                  )
+                  const slicedData = result.data.slice(start, end + 1)
+                  return countMode 
+                    ? { data: slicedData, count: result.count, error: result.error }
+                    : { data: slicedData, error: result.error }
                 }
               }
+            },
+            // Support for .order().limit() without filters
+            order: (orderField: string, options?: { ascending?: boolean }) => {
+              return {
+                limit: async (num: number) => {
+                  const result = await getAdminCollection(
+                    table,
+                    [],
+                    orderField,
+                    options?.ascending ? "asc" : "desc",
+                    num
+                  )
+                  return countMode 
+                    ? { data: result.data, count: result.count, error: result.error }
+                    : { data: result.data, error: result.error }
+                },
+                range: async (start: number, end: number) => {
+                  const limitCount = end - start + 1
+                  const result = await getAdminCollection(
+                    table,
+                    [],
+                    orderField,
+                    options?.ascending ? "asc" : "desc",
+                    limitCount
+                  )
+                  const slicedData = result.data.slice(start, end + 1)
+                  return countMode 
+                    ? { data: slicedData, count: result.count, error: result.error }
+                    : { data: slicedData, error: result.error }
+                }
+              }
+            },
+            // Support for .limit() without filters
+            limit: async (num: number) => {
+              const result = await getAdminCollection(
+                table,
+                [],
+                undefined,
+                "desc",
+                num
+              )
+              return countMode 
+                ? { data: result.data, count: result.count, error: result.error }
+                : { data: result.data, error: result.error }
             }
           }
           

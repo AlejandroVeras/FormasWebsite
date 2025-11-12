@@ -10,20 +10,46 @@ import { createServerClient } from "@/lib/firebase/server"
 export default async function InmobiliariaPage() {
   const firebase = await createServerClient()
 
-  const { data: properties } = await firebase
-    .from("properties")
-    .select("*")
-    .eq("status", "disponible")
-    .order("created_at", { ascending: false })
-    .limit(6)
+  let properties = []
+  let featuredProperties = []
 
-  // Get featured properties for the hero section
-  const { data: featuredProperties } = await firebase
-    .from("properties")
-    .select("*")
-    .eq("status", "disponible")
-    .order("created_at", { ascending: false })
-    .limit(3)
+  try {
+    // Get properties
+    const propertiesResult = await firebase
+      .from("properties")
+      .select("*")
+      .eq("status", "disponible")
+      .order("created_at", { ascending: false })
+      .limit(6)
+    
+    if (propertiesResult?.error) {
+      console.error("Error loading properties:", propertiesResult.error)
+      properties = []
+    } else {
+      properties = propertiesResult?.data || []
+    }
+
+    // Get featured properties for the hero section
+    const featuredResult = await firebase
+      .from("properties")
+      .select("*")
+      .eq("status", "disponible")
+      .order("created_at", { ascending: false })
+      .limit(3)
+    
+    if (featuredResult?.error) {
+      console.error("Error loading featured properties:", featuredResult.error)
+      featuredProperties = []
+    } else {
+      featuredProperties = featuredResult?.data || []
+    }
+  } catch (error: any) {
+    console.error("Error loading properties:", error)
+    console.error("Error details:", error.message, error.stack)
+    // Continue with empty arrays if there's an error
+    properties = []
+    featuredProperties = []
+  }
   // Once featured properties are enabled, use this query instead:
   // const { data: featuredProperties } = await firebase
   //   .from("properties")

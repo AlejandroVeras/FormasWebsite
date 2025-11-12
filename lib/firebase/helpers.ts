@@ -144,6 +144,12 @@ export async function getAdminCollection(
   count?: number
 ) {
   try {
+    // Check if adminDb is initialized
+    if (!adminDb) {
+      console.warn('Firebase Admin DB is not initialized. Returning empty data.')
+      return { data: [], error: { message: 'Firebase Admin not initialized. Please check environment variables.' }, count: 0 }
+    }
+
     let q: any = adminDb.collection(collectionName)
 
     // Apply filters
@@ -167,17 +173,114 @@ export async function getAdminCollection(
       }
     })
 
-    // Apply ordering
-    if (orderByField) {
-      q = q.orderBy(orderByField, orderDirection)
+    // Try to apply ordering and limit in Firestore query
+    // If this fails (e.g., missing index), we'll fetch all and sort in memory
+    let snapshot: any
+    try {
+      // Apply ordering
+      if (orderByField) {
+        q = q.orderBy(orderByField, orderDirection)
+      }
+
+      // Apply limit
+      if (count) {
+        q = q.limit(count)
+      }
+
+      snapshot = await q.get()
+    } catch (queryError: any) {
+      // If query fails (likely due to missing composite index), try without ordering
+      console.warn(`Query with orderBy failed, trying without orderBy:`, queryError?.message)
+      
+      // If it's an index error and we have filters + orderBy, try fetching all and sorting in memory
+      if (orderByField && (queryError?.message?.includes("index") || queryError?.code === "failed-precondition" || queryError?.code === 9)) {
+        console.warn(`⚠️ Firestore composite index missing. Fetching all documents and sorting in memory.`)
+        console.warn(`This is a fallback. Please create a composite index in Firebase Console for better performance.`)
+        
+        try {
+          if (!adminDb) {
+            throw new Error('Firebase Admin DB is not initialized')
+          }
+          
+          // Rebuild query without orderBy
+          let fallbackQuery: any = adminDb.collection(collectionName)
+          
+          // Apply filters only
+          filters.forEach(({ field, operator, value }) => {
+            if (operator === "==") {
+              fallbackQuery = fallbackQuery.where(field, "==", value)
+            }
+          })
+          
+          // Fetch all matching documents
+          snapshot = await fallbackQuery.get()
+          
+          // Sort in memory
+          let docs = snapshot.docs.map((doc: any) => {
+            const docData = doc.data()
+            return {
+              id: doc.id,
+              ...docData,
+              created_at: docData.created_at?.toDate?.()?.toISOString() || docData.created_at,
+              updated_at: docData.updated_at?.toDate?.()?.toISOString() || docData.updated_at,
+            }
+          })
+          
+          // Sort by orderByField
+          if (orderByField) {
+            docs.sort((a: any, b: any) => {
+              const aValue = a[orderByField]
+              const bValue = b[orderByField]
+              
+              if (aValue === undefined || aValue === null) return 1
+              if (bValue === undefined || bValue === null) return -1
+              
+              // Handle date strings
+              if (orderByField === "created_at" || orderByField === "updated_at") {
+                const aDate = new Date(aValue).getTime()
+                const bDate = new Date(bValue).getTime()
+                return orderDirection === "asc" ? aDate - bDate : bDate - aDate
+              }
+              
+              if (orderDirection === "asc") {
+                return aValue > bValue ? 1 : aValue < bValue ? -1 : 0
+              } else {
+                return aValue < bValue ? 1 : aValue > bValue ? -1 : 0
+              }
+            })
+          }
+          
+          // Apply limit
+          if (count) {
+            docs = docs.slice(0, count)
+          }
+          
+          return { data: docs, error: null, count: docs.length }
+        } catch (fallbackError: any) {
+          // If fallback also fails, return empty data
+          console.error(`Fallback query also failed:`, fallbackError?.message || fallbackError)
+          return { data: [], error: { message: fallbackError?.message || 'Query failed' }, count: 0 }
+        }
+      } else {
+        // If it's not an index error or we don't have orderBy, return error instead of throwing
+        // This prevents the page from crashing
+        console.error(`Query error (not index-related):`, queryError?.message || queryError)
+        return { 
+          data: [], 
+          error: { 
+            message: queryError?.message || 'Query failed', 
+            code: queryError?.code || 'unknown'
+          }, 
+          count: 0 
+        }
+      }
     }
 
-    // Apply limit
-    if (count) {
-      q = q.limit(count)
+    // Process snapshot normally (only reached if query succeeded)
+    if (!snapshot) {
+      return { data: [], error: { message: 'No snapshot available' }, count: 0 }
     }
 
-    const snapshot = await q.get()
     const data = snapshot.docs.map((doc: any) => {
       const docData = doc.data()
       return {
@@ -190,12 +293,41 @@ export async function getAdminCollection(
 
     return { data, error: null, count: snapshot.size }
   } catch (error: any) {
-    return { data: [], error: { message: error.message }, count: 0 }
+    console.error(`Error getting collection ${collectionName}:`, error?.message || error)
+    console.error(`Error code:`, error?.code)
+    console.error(`Error stack:`, error?.stack)
+    
+    // If it's an index error, log it clearly
+    if (error?.message?.includes("index") || error?.code === "failed-precondition" || error?.code === 9) {
+      console.error(`⚠️ Firestore composite index required!`)
+      console.error(`Collection: ${collectionName}`)
+      console.error(`Filters:`, JSON.stringify(filters, null, 2))
+      console.error(`OrderBy: ${orderByField} (${orderDirection})`)
+      console.error(`Please create a composite index in Firebase Console:`)
+      console.error(`- Collection: ${collectionName}`)
+      if (filters.length > 0 && orderByField) {
+        console.error(`- Fields: ${filters.map(f => `${f.field} (Ascending)`).join(', ')}, ${orderByField} (${orderDirection === 'asc' ? 'Ascending' : 'Descending'})`)
+      }
+    }
+    
+    // Return empty data instead of throwing to prevent page crash
+    return { 
+      data: [], 
+      error: { 
+        message: error?.message || 'Unknown error', 
+        code: error?.code || 'unknown',
+        details: error?.details || null
+      }, 
+      count: 0 
+    }
   }
 }
 
 export async function getAdminDocument(collectionName: string, docId: string) {
   try {
+    if (!adminDb) {
+      return { data: null, error: { message: 'Firebase Admin not initialized' } }
+    }
     const docRef = adminDb.collection(collectionName).doc(docId)
     const docSnap = await docRef.get()
 
@@ -219,6 +351,9 @@ export async function getAdminDocument(collectionName: string, docId: string) {
 
 export async function createAdminDocument(collectionName: string, data: any) {
   try {
+    if (!adminDb) {
+      return { data: null, error: { message: 'Firebase Admin not initialized' } }
+    }
     const now = adminDb.serverTimestamp()
     const docRef = adminDb.collection(collectionName).doc()
     
@@ -239,12 +374,15 @@ export async function createAdminDocument(collectionName: string, data: any) {
 
     return { data: result, error: null }
   } catch (error: any) {
-    return { data: null, error: { message: error.message } }
+    return { data: null, error: { message: error?.message || 'Unknown error' } }
   }
 }
 
 export async function updateAdminDocument(collectionName: string, docId: string, updates: any) {
   try {
+    if (!adminDb) {
+      return { data: null, error: { message: 'Firebase Admin not initialized' } }
+    }
     const docRef = adminDb.collection(collectionName).doc(docId)
     await docRef.update({
       ...updates,
@@ -268,11 +406,14 @@ export async function updateAdminDocument(collectionName: string, docId: string,
 
 export async function deleteAdminDocument(collectionName: string, docId: string) {
   try {
+    if (!adminDb) {
+      return { error: { message: 'Firebase Admin not initialized' } }
+    }
     const docRef = adminDb.collection(collectionName).doc(docId)
     await docRef.delete()
     return { error: null }
   } catch (error: any) {
-    return { error: { message: error.message } }
+    return { error: { message: error?.message || 'Unknown error' } }
   }
 }
 
