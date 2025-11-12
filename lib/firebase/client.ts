@@ -24,20 +24,38 @@ export function createClient() {
       },
       signInWithPassword: async ({ email, password }: { email: string; password: string }) => {
         try {
+          console.log("signInWithPassword: Starting authentication...")
           const userCredential = await signInWithEmailAndPassword(auth, email, password)
+          console.log("signInWithPassword: Firebase Auth successful, getting ID token...")
+          
           // Create session cookie (handled by API route)
           const idToken = await userCredential.user.getIdToken()
+          console.log("signInWithPassword: Got ID token, creating session cookie...")
+          
           const response = await fetch("/api/auth/session", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ idToken }),
+            credentials: "include", // Important: include credentials to ensure cookie is set
           })
+          
+          console.log("signInWithPassword: Session API response status:", response.status)
           
           if (!response.ok) {
             const errorData = await response.json().catch(() => ({ error: "Failed to create session" }))
+            console.error("signInWithPassword: Session API error:", errorData)
             throw new Error(errorData.error || `Failed to create session: ${response.status}`)
           }
           
+          const responseData = await response.json()
+          console.log("signInWithPassword: Session cookie created successfully:", responseData)
+          
+          // Verify that the response indicates success
+          if (!responseData.success) {
+            throw new Error("Failed to create session: Unexpected response")
+          }
+          
+          console.log("signInWithPassword: Authentication complete")
           return { data: { user: userCredential.user }, error: null }
         } catch (error: any) {
           console.error("Sign in error:", error)

@@ -24,17 +24,36 @@ export default function AdminLoginPage() {
     setError(null)
 
     try {
+      console.log("Starting login process...")
       const firebase = createClient()
       const result = await firebase.auth.signInWithPassword({ email, password })
       
+      console.log("Login result:", result)
+      
       if (result.error) {
+        console.error("Login error:", result.error)
         setError(result.error.message || "Error al iniciar sesión")
         setIsLoading(false)
         return
       }
 
+      if (!result.data?.user) {
+        console.error("No user data returned")
+        setError("Error al iniciar sesión: No se pudo obtener los datos del usuario")
+        setIsLoading(false)
+        return
+      }
+
+      console.log("Login successful, session cookie should be set")
+      
+      // Wait a moment to ensure the cookie is set in the browser
+      // This gives the browser time to process the Set-Cookie header
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
       // Successfully logged in and session cookie is created
-      // Use window.location.href to ensure a full page reload so middleware can verify the session
+      // Force a full page navigation to ensure middleware can verify the session
+      // Using window.location.href ensures cookies are included in the request
+      console.log("Redirecting to dashboard...")
       window.location.href = "/admin/dashboard"
     } catch (error: any) {
       console.error("Login error:", error)

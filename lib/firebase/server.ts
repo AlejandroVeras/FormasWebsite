@@ -6,21 +6,29 @@ export async function createServerClient() {
   const cookieStore = await cookies()
   const sessionCookie = cookieStore.get("session")?.value
 
+  console.log("createServerClient: sessionCookie exists:", !!sessionCookie)
+  console.log("createServerClient: adminAuth exists:", !!adminAuth)
+
   let user = null
   if (sessionCookie && adminAuth) {
     try {
+      console.log("Verifying session cookie...")
       const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true)
+      console.log("Session cookie verified successfully, uid:", decodedClaims.uid)
       user = {
         id: decodedClaims.uid,
         email: decodedClaims.email,
         ...decodedClaims,
       }
-    } catch (error) {
+    } catch (error: any) {
       // Invalid session cookie
-      console.error("Error verifying session cookie:", error)
+      console.error("Error verifying session cookie:", error?.message || error)
+      console.error("Session cookie verification failed, error details:", error)
     }
   } else if (sessionCookie && !adminAuth) {
     console.warn("Session cookie found but Firebase Admin Auth is not initialized")
+  } else if (!sessionCookie) {
+    console.warn("No session cookie found")
   }
 
   // Create a Firebase client with Supabase-like interface for compatibility
