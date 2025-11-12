@@ -29,7 +29,9 @@ export async function createServerClient() {
         error: user ? null : { message: "Not authenticated" },
       }),
       signOut: async () => {
-        // Clear session cookie in middleware
+        // Clear session cookie
+        const cookieStore = await cookies()
+        cookieStore.delete("session")
         return { error: null }
       },
     },
@@ -37,9 +39,45 @@ export async function createServerClient() {
       return {
         select: (columns?: string, options?: { count?: "exact" }) => {
           const countMode = options?.count === "exact"
-          return {
+          
+          // Create a thenable object that can be used directly or with filters
+          const selectQuery = {
+            // Make it thenable for direct await: await supabase.from("table").select()
+            then: async (resolve: any, reject: any) => {
+              try {
+                const result = await getAdminCollection(
+                  table,
+                  [],
+                  undefined,
+                  "desc",
+                  undefined
+                )
+                const resolved = countMode 
+                  ? { data: result.data, count: result.count, error: result.error }
+                  : { data: result.data, error: result.error }
+                resolve(resolved)
+                return resolved
+              } catch (error) {
+                reject(error)
+                throw error
+              }
+            },
+            // Support for filters: .eq().limit() or .eq().single()
             eq: (field: string, value: any) => {
               return {
+                single: async () => {
+                  const result = await getAdminCollection(
+                    table,
+                    [{ field, operator: "==", value }],
+                    undefined,
+                    "desc",
+                    1
+                  )
+                  if (result.data.length === 0) {
+                    return { data: null, error: { message: "Document not found" } }
+                  }
+                  return { data: result.data[0], error: result.error }
+                },
                 limit: async (num: number) => {
                   const result = await getAdminCollection(
                     table,
@@ -55,6 +93,8 @@ export async function createServerClient() {
               }
             }
           }
+          
+          return selectQuery as any
         },
         insert: (data: any[] | any) => {
           return {
