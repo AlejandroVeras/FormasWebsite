@@ -40,15 +40,15 @@ export default function PropertiesPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const supabase = createClient()
+      const firebase = createClient()
       
-      const { data: userData, error: authError } = await supabase.auth.getUser()
+      const { data: userData, error: authError } = await firebase.auth.getUser()
       if (authError || !userData?.user) {
         router.push("/admin/login")
         return
       }
 
-      const { data: properties, error } = await supabase
+      const { data: properties, error } = await firebase
         .from("properties")
         .select("*")
         .order("created_at", { ascending: false })
@@ -65,8 +65,8 @@ export default function PropertiesPage() {
   }, [router])
 
   const handleSignOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    const firebase = createClient()
+    await firebase.auth.signOut()
     router.push("/admin/login")
   }
 

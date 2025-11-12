@@ -40,9 +40,9 @@ export function DeletePropertyDialog({
     setIsDeleting(true)
     
     try {
-      const supabase = createClient()
+      const firebase = createClient()
       
-      const { error } = await supabase
+      const { error } = await firebase
         .from("properties")
         .delete()
         .eq("id", propertyId)

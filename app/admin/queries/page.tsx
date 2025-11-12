@@ -36,16 +36,16 @@ export default function QueriesPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const supabase = createClient()
+      const firebase = createClient()
       
-      const { data: userData, error: authError } = await supabase.auth.getUser()
+      const { data: userData, error: authError } = await firebase.auth.getUser()
       if (authError || !userData?.user) {
         router.push("/admin/login")
         return
       }
 
       // 1) Cargar consultas (sin joins)
-      const { data: inquiries, error } = await supabase
+      const { data: inquiries, error } = await firebase
         .from("property_inquiries")
         .select("*")
         .order("created_at", { ascending: false })
@@ -56,7 +56,7 @@ export default function QueriesPage() {
         // 2) Para cada consulta, si tiene property_id, cargar datos básicos de la propiedad
         const withProperty = await Promise.all((inquiries || []).map(async (inq: any) => {
           if (!inq?.property_id) return inq
-          const { data: prop } = await supabase
+          const { data: prop } = await firebase
             .from("properties")
             .select("*")
             .eq("id", inq.property_id)
@@ -79,8 +79,8 @@ export default function QueriesPage() {
   }, [router])
 
   const handleSignOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    const firebase = createClient()
+    await firebase.auth.signOut()
     router.push("/admin/login")
   }
 

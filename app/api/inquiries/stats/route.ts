@@ -2,17 +2,17 @@ import { createServerClient } from "@/lib/firebase/server"
 import { NextResponse } from "next/server"
 
 export async function GET() {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
 
   try {
     // Verificar autenticación
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    const { data: { user }, error: authError } = await firebase.auth.getUser()
     if (authError || !user) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 })
     }
 
     // Obtener consultas
-    const { data: inquiries = [] } = await supabase.from("property_inquiries").select("status")
+    const { data: inquiries = [] } = await firebase.from("property_inquiries").select("status")
 
     // Calcular estadísticas
     const total = inquiries.length

@@ -4,10 +4,10 @@ import { MetadataRoute } from "next"
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://formas.com.do"
   
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
   
   // Get all available properties
-  const { data: properties } = await supabase
+  const { data: properties } = await firebase
     .from("properties")
     .select("id, updated_at")
     .eq("status", "disponible")

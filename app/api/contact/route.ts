@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const supabase = await createServerClient()
+    const firebase = await createServerClient()
 
     // Check if Firebase is properly configured
     const firebaseProjectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert inquiry into database
-    const { data, error } = await supabase
+    const { data, error } = await firebase
       .from("property_inquiries")
       .insert({
         property_id: property_id || null,
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 
     // If inquiry is related to a specific property, create an interaction
     if (property_id && data) {
-      await supabase
+      await firebase
         .from("inquiry_interactions")
         .insert({
           inquiry_id: data.id,

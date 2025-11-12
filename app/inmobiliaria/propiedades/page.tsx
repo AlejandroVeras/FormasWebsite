@@ -27,7 +27,7 @@ interface PropiedadesPageProps {
 }
 
 async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
 
   // Pagination settings
   const ITEMS_PER_PAGE = 12
@@ -36,7 +36,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
 
   try {
     // Build basic query
-    const baseQuery = supabase
+    const baseQuery = firebase
       .from("properties")
       .select("*", { count: "exact" })
       .eq("status", "disponible")
@@ -270,10 +270,10 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
 }
 
 export default async function PropiedadesPage({ searchParams }: PropiedadesPageProps) {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
 
   // Get unique cities for the filter
-  const { data: cities } = await supabase
+  const { data: cities } = await firebase
     .from("properties")
     .select("city")
     .eq("status", "disponible")

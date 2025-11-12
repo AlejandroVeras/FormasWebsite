@@ -74,10 +74,10 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true)
     setError(null)
 
-    const supabase = createClient()
+    const firebase = createClient()
 
     try {
-      const { data: user } = await supabase.auth.getUser()
+      const { data: user } = await firebase.auth.getUser()
       if (!user.user) {
         throw new Error("Usuario no autenticado")
       }
@@ -99,7 +99,7 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         created_by: user.user.id,
       }
 
-      const { error } = await supabase.from("properties").insert([propertyData])
+      const { error } = await firebase.from("properties").insert([propertyData])
 
       if (error) throw error
 

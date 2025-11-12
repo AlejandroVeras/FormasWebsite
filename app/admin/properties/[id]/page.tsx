@@ -41,15 +41,15 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
   useEffect(() => {
     const loadProperty = async () => {
-      const supabase = createClient()
+      const firebase = createClient()
       
-      const { data: userData, error: authError } = await supabase.auth.getUser()
+      const { data: userData, error: authError } = await firebase.auth.getUser()
       if (authError || !userData?.user) {
         router.push("/admin/login")
         return
       }
 
-      const { data: property, error } = await supabase
+      const { data: property, error } = await firebase
         .from("properties")
         .select("*")
         .eq("id", params.id)

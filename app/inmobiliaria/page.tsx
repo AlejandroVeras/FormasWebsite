@@ -8,9 +8,9 @@ import Link from "next/link"
 import { createServerClient } from "@/lib/firebase/server"
 
 export default async function InmobiliariaPage() {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
 
-  const { data: properties } = await supabase
+  const { data: properties } = await firebase
     .from("properties")
     .select("*")
     .eq("status", "disponible")
@@ -18,15 +18,14 @@ export default async function InmobiliariaPage() {
     .limit(6)
 
   // Get featured properties for the hero section
-  // TODO: Enable this after running the database migration (006_add_featured_properties.sql)
-  const { data: featuredProperties } = await supabase
+  const { data: featuredProperties } = await firebase
     .from("properties")
     .select("*")
     .eq("status", "disponible")
     .order("created_at", { ascending: false })
     .limit(3)
-  // Once migration is complete, use this query instead:
-  // const { data: featuredProperties } = await supabase
+  // Once featured properties are enabled, use this query instead:
+  // const { data: featuredProperties } = await firebase
   //   .from("properties")
   //   .select("*")
   //   .eq("featured", true)

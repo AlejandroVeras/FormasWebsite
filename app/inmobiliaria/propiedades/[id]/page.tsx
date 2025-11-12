@@ -35,8 +35,8 @@ interface PropertyPageProps {
 }
 
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
-  const supabase = await createServerClient()
-  const { data: property } = await supabase
+  const firebase = await createServerClient()
+  const { data: property } = await firebase
     .from("properties")
     .select("*")
     .eq("id", params.id)
@@ -61,9 +61,9 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 }
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
 
-  const { data: property } = await supabase
+  const { data: property } = await firebase
     .from("properties")
     .select("*")
     .eq("id", params.id)

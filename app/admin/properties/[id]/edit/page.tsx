@@ -66,10 +66,10 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
   // Load property data
   useEffect(() => {
     const loadProperty = async () => {
-      const supabase = createClient()
+      const firebase = createClient()
       
       try {
-        const { data: property, error } = await supabase
+        const { data: property, error } = await firebase
           .from("properties")
           .select("*")
           .eq("id", params.id)
@@ -147,10 +147,10 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
     setIsLoading(true)
     setError(null)
 
-    const supabase = createClient()
+    const firebase = createClient()
 
     try {
-      const { data: user } = await supabase.auth.getUser()
+      const { data: user } = await firebase.auth.getUser()
       if (!user.user) {
         throw new Error("Usuario no autenticado")
       }
@@ -171,7 +171,7 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
         images: images,
       }
 
-      const { error } = await supabase
+      const { error } = await firebase
         .from("properties")
         .update(propertyData)
         .eq("id", params.id)

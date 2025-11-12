@@ -21,7 +21,7 @@ export async function createServerClient() {
     }
   }
 
-  // Create a Supabase-like interface
+  // Create a Firebase client with Supabase-like interface for compatibility
   return {
     auth: {
       getUser: async () => ({
@@ -42,7 +42,7 @@ export async function createServerClient() {
           
           // Create a thenable object that can be used directly or with filters
           const selectQuery = {
-            // Make it thenable for direct await: await supabase.from("table").select()
+            // Make it thenable for direct await: await firebase.from("table").select()
             then: async (resolve: any, reject: any) => {
               try {
                 const result = await getAdminCollection(

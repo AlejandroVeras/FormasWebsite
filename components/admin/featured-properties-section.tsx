@@ -17,12 +17,12 @@ interface FeaturedProperty {
 async function toggleFeatured(propertyId: string, featured: boolean, order?: number) {
   "use server"
   
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
   
   if (featured) {
     // Get next order number if not provided
     if (order === undefined) {
-      const { data: maxOrderProperty } = await supabase
+      const { data: maxOrderProperty } = await firebase
         .from("properties")
         .select("featured_order")
         .eq("featured", true)
@@ -33,18 +33,18 @@ async function toggleFeatured(propertyId: string, featured: boolean, order?: num
       order = (maxOrderProperty?.featured_order || 0) + 1
     }
     
-    await supabase
+    await firebase
       .from("properties")
       .update({ featured: true, featured_order: order })
       .eq("id", propertyId)
   } else {
-    await supabase
+    await firebase
       .from("properties")
       .update({ featured: false, featured_order: null })
       .eq("id", propertyId)
     
     // Reorder remaining featured properties
-    const { data: featuredProperties } = await supabase
+    const { data: featuredProperties } = await firebase
       .from("properties")
       .select("id, featured_order")
       .eq("featured", true)
@@ -52,7 +52,7 @@ async function toggleFeatured(propertyId: string, featured: boolean, order?: num
     
     if (featuredProperties) {
       for (let i = 0; i < featuredProperties.length; i++) {
-        await supabase
+        await firebase
           .from("properties")
           .update({ featured_order: i + 1 })
           .eq("id", featuredProperties[i].id)
@@ -64,10 +64,10 @@ async function toggleFeatured(propertyId: string, featured: boolean, order?: num
 async function reorderFeatured(propertyId: string, direction: "up" | "down") {
   "use server"
   
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
   
   // Get current property
-  const { data: currentProperty } = await supabase
+  const { data: currentProperty } = await firebase
     .from("properties")
     .select("featured_order")
     .eq("id", propertyId)
@@ -79,7 +79,7 @@ async function reorderFeatured(propertyId: string, direction: "up" | "down") {
   const newOrder = direction === "up" ? currentOrder - 1 : currentOrder + 1
   
   // Get property to swap with
-  const { data: swapProperty } = await supabase
+  const { data: swapProperty } = await firebase
     .from("properties")
     .select("id")
     .eq("featured", true)
@@ -88,12 +88,12 @@ async function reorderFeatured(propertyId: string, direction: "up" | "down") {
   
   if (swapProperty) {
     // Swap orders
-    await supabase
+    await firebase
       .from("properties")
       .update({ featured_order: newOrder })
       .eq("id", propertyId)
     
-    await supabase
+    await firebase
       .from("properties")
       .update({ featured_order: currentOrder })
       .eq("id", swapProperty.id)
@@ -101,18 +101,10 @@ async function reorderFeatured(propertyId: string, direction: "up" | "down") {
 }
 
 export default async function FeaturedPropertiesSection() {
-  const supabase = await createServerClient()
+  const firebase = await createServerClient()
   
-  // TODO: Enable this after running the database migration (006_add_featured_properties.sql)
   // Get featured properties
-  // const { data: featuredProperties } = await supabase
-  //   .from("properties")
-  //   .select("id, title, price, operation_type, featured_order, images")
-  //   .eq("featured", true)
-  //   .order("featured_order")
-  
-  // Temporary: Get recent properties until migration is run
-  const { data: featuredProperties } = await supabase
+  const { data: featuredProperties } = await firebase
     .from("properties")
     .select("id, title, price, operation_type, images")
     .eq("status", "disponible")
@@ -120,7 +112,7 @@ export default async function FeaturedPropertiesSection() {
     .limit(3)
   
   // Get available properties that are not featured
-  const { data: availableProperties } = await supabase
+  const { data: availableProperties } = await firebase
     .from("properties")
     .select("id, title, price, operation_type, images")
     .eq("status", "disponible")

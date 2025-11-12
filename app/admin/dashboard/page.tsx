@@ -27,8 +27,8 @@ async function handleSignOut() {
 
 export default async function AdminDashboard() {
   // Verificar autenticación
-  const supabase = await createServerClient()
-  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  const firebase = await createServerClient()
+  const { data: { user }, error: authError } = await firebase.auth.getUser()
 
   if (authError || !user) {
     redirect("/admin/login")
@@ -37,7 +37,7 @@ export default async function AdminDashboard() {
   // Obtener perfil del usuario
   let profile = null
   try {
-    const profileResult = await supabase
+    const profileResult = await firebase
       .from('admin_profiles')
       .select('full_name')
       .eq('id', user.id)

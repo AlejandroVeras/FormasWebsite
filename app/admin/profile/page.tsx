@@ -19,10 +19,10 @@ export default function AdminProfilePage() {
   // Cargar datos del perfil al montar
   useEffect(() => {
     const fetchProfile = async () => {
-      const supabase = createClient()
-      const { data: user } = await supabase.auth.getUser()
+      const firebase = createClient()
+      const { data: user } = await firebase.auth.getUser()
       if (!user.user) return
-      const { data, error } = await supabase
+      const { data, error } = await firebase
         .from("admin_profiles")
         .select("*")
         .eq("id", user.user.id)
@@ -45,10 +45,10 @@ export default function AdminProfilePage() {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
-    const supabase = createClient()
-    const { data: user } = await supabase.auth.getUser()
+    const firebase = createClient()
+    const { data: user } = await firebase.auth.getUser()
     if (!user.user) return setError("No autenticado")
-    const { error } = await supabase
+    const { error } = await firebase
       .from("admin_profiles")
       .update({
         full_name: profile.full_name,

@@ -71,16 +71,16 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
 
   useEffect(() => {
     const loadData = async () => {
-      const supabase = createClient()
+      const firebase = createClient()
       
-      const { data: userData, error: authError } = await supabase.auth.getUser()
+      const { data: userData, error: authError } = await firebase.auth.getUser()
       if (authError || !userData?.user) {
         router.push("/admin/login")
         return
       }
 
       // 1) Cargar la consulta (sin joins)
-      const { data: inquiry, error: inquiryError } = await supabase
+      const { data: inquiry, error: inquiryError } = await firebase
         .from("property_inquiries")
         .select("*")
         .eq("id", params.id)
@@ -94,7 +94,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       // 2) Si tiene propiedad asociada, cargar datos de la propiedad
       let attachedInquiry = inquiry
       if (inquiry.property_id) {
-        const { data: prop } = await supabase
+        const { data: prop } = await firebase
           .from("properties")
           .select("*")
           .eq("id", inquiry.property_id)
@@ -118,7 +118,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       setResponse(inquiry.response || "")
 
       // 3) Cargar interacciones
-      const { data: interactions, error: interactionsError } = await supabase
+      const { data: interactions, error: interactionsError } = await firebase
         .from("inquiry_interactions")
         .select("*")
         .eq("inquiry_id", params.id)
@@ -202,10 +202,10 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
     if (!inquiry) return
 
     setIsUpdating(true)
-    const supabase = createClient()
+    const firebase = createClient()
 
     try {
-      const { error } = await supabase
+      const { error } = await firebase
         .from("property_inquiries")
         .update({ status: newStatus })
         .eq("id", inquiry.id)
@@ -215,7 +215,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       setInquiry({ ...inquiry, status: newStatus })
       
       // Reload interactions to show the status change
-      const { data: updatedInteractions } = await supabase
+      const { data: updatedInteractions } = await firebase
         .from("inquiry_interactions")
         .select("*")
         .eq("inquiry_id", params.id)
@@ -236,14 +236,14 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
     if (!inquiry || !response.trim()) return
 
     setIsUpdating(true)
-    const supabase = createClient()
+    const firebase = createClient()
 
     try {
-      const { data: user } = await supabase.auth.getUser()
+      const { data: user } = await firebase.auth.getUser()
       if (!user.user) throw new Error("Usuario no autenticado")
 
       // Update inquiry with response
-      const { error: updateError } = await supabase
+      const { error: updateError } = await firebase
         .from("property_inquiries")
         .update({
           response: response,
@@ -256,7 +256,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       if (updateError) throw updateError
 
       // Create interaction record
-      const { error: interactionError } = await supabase
+      const { error: interactionError } = await firebase
         .from("inquiry_interactions")
         .insert({
           inquiry_id: inquiry.id,
@@ -284,7 +284,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       })
 
       // Reload interactions
-      const { data: updatedInteractions } = await supabase
+      const { data: updatedInteractions } = await firebase
         .from("inquiry_interactions")
         .select("*")
         .eq("inquiry_id", params.id)
@@ -306,13 +306,13 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
   const handleAddInteraction = async () => {
     if (!inquiry || !newInteraction.trim()) return
 
-    const supabase = createClient()
+    const firebase = createClient()
 
     try {
-      const { data: user } = await supabase.auth.getUser()
+      const { data: user } = await firebase.auth.getUser()
       if (!user.user) throw new Error("Usuario no autenticado")
 
-      const { error } = await supabase
+      const { error } = await firebase
         .from("inquiry_interactions")
         .insert({
           inquiry_id: inquiry.id,
@@ -324,7 +324,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
       if (error) throw error
 
       // Reload interactions
-      const { data: updatedInteractions } = await supabase
+      const { data: updatedInteractions } = await firebase
         .from("inquiry_interactions")
         .select("*")
         .eq("inquiry_id", params.id)
