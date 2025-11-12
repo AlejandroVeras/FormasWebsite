@@ -27,12 +27,18 @@ async function handleSignOut() {
 
 export default async function AdminDashboard() {
   // Verificar autenticación
+  console.log("Dashboard: Starting authentication check...")
   const firebase = await createServerClient()
   const { data: { user }, error: authError } = await firebase.auth.getUser()
 
+  console.log("Dashboard: Auth check result - user exists:", !!user, "error:", authError?.message || "none")
+
   if (authError || !user) {
+    console.log("Dashboard: No user or auth error, redirecting to login")
     redirect("/admin/login")
   }
+
+  console.log("Dashboard: User authenticated, uid:", user.id)
 
   // Obtener perfil del usuario
   let profile = null
@@ -56,12 +62,49 @@ export default async function AdminDashboard() {
   let pendingInquiries = 0
 
   try {
+    // Get the base URL for API calls
+    // In server components, we can't use window.location, so we'll use the environment variable
+    // or construct it from Vercel's environment variable if available
+    let baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+    if (!baseUrl && process.env.VERCEL_URL) {
+      baseUrl = `https://${process.env.VERCEL_URL}`
+    }
+    if (!baseUrl) {
+      baseUrl = 'http://localhost:3000'
+    }
+    
+    console.log("Dashboard: Fetching stats from:", baseUrl)
+    
     const [propertiesResult, inquiriesResult] = await Promise.all([
       // Obtener propiedades
-      fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/properties/stats`).then(res => res.json()),
+      fetch(`${baseUrl}/api/properties/stats`, {
+        cache: 'no-store', // Ensure fresh data
+      }).then(res => {
+        if (!res.ok) {
+          console.error("Dashboard: Properties stats fetch failed:", res.status)
+          return { total: 0, available: 0, sold: 0 }
+        }
+        return res.json()
+      }).catch(err => {
+        console.error("Dashboard: Properties stats fetch error:", err)
+        return { total: 0, available: 0, sold: 0 }
+      }),
       // Obtener consultas
-      fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/inquiries/stats`).then(res => res.json())
+      fetch(`${baseUrl}/api/inquiries/stats`, {
+        cache: 'no-store', // Ensure fresh data
+      }).then(res => {
+        if (!res.ok) {
+          console.error("Dashboard: Inquiries stats fetch failed:", res.status)
+          return { total: 0, new: 0, pending: 0 }
+        }
+        return res.json()
+      }).catch(err => {
+        console.error("Dashboard: Inquiries stats fetch error:", err)
+        return { total: 0, new: 0, pending: 0 }
+      })
     ])
+    
+    console.log("Dashboard: Stats fetched successfully")
 
     totalProperties = propertiesResult?.total ?? 0
     availableProperties = propertiesResult?.available ?? 0

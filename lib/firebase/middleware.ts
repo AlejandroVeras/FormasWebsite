@@ -39,21 +39,22 @@ export async function updateSession(request: NextRequest) {
   if (!process.env.FIREBASE_PROJECT_ID) {
     console.warn("Middleware: FIREBASE_PROJECT_ID not available in Edge Runtime, allowing request to pass to server")
     console.warn("Middleware: Available env vars:", Object.keys(process.env).filter(k => k.includes('FIREBASE')))
-    // Let the request pass - the server will verify it
+    // Let the request pass - the server will verify it using Firebase Admin SDK
     return response
   }
 
+  // Try to verify the session cookie in the middleware
   try {
-    console.log("Middleware: Verifying session cookie...")
+    console.log("Middleware: Verifying session cookie with project ID:", process.env.FIREBASE_PROJECT_ID)
     const { valid, decodedClaims } = await verifySessionCookie(sessionCookie)
     
     console.log("Middleware: Session cookie verification result:", valid)
     
     if (!valid) {
-      console.log("Middleware: Session cookie is invalid, redirecting to login")
-      // Delete the invalid cookie
-      response = NextResponse.redirect(new URL("/admin/login", request.url))
-      response.cookies.delete("session")
+      console.log("Middleware: Session cookie is invalid according to middleware verification")
+      console.log("Middleware: Allowing request to pass to server for verification (server may have different env vars)")
+      // Instead of redirecting immediately, let the server verify it
+      // The server uses Firebase Admin SDK which may work even if Edge Runtime verification fails
       return response
     }
     
@@ -61,13 +62,11 @@ export async function updateSession(request: NextRequest) {
     console.log("Middleware: User ID:", decodedClaims?.uid)
     return response
   } catch (error: any) {
-    // Error verifying session cookie, redirect to login
-    console.error("Middleware: Error verifying session:", error?.message || error)
-    console.error("Middleware: Error stack:", error?.stack)
-    const url = request.nextUrl.clone()
-    url.pathname = "/admin/login"
-    response = NextResponse.redirect(url)
-    response.cookies.delete("session")
+    // Error verifying session cookie in middleware
+    // Don't redirect immediately - let the server verify it instead
+    console.warn("Middleware: Error verifying session in middleware:", error?.message || error)
+    console.warn("Middleware: Allowing request to pass to server for verification")
+    // Let the request pass to the server - it will verify and redirect if needed
     return response
   }
 }
