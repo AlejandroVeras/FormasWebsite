@@ -2,8 +2,6 @@
 
 import type React from "react"
 
-import { auth } from "@/lib/firebase/config"
-import { signInWithEmailAndPassword } from "firebase/auth"
 import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,20 +18,30 @@ export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
- const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault()
-  setIsLoading(true)
-  setError(null)
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError(null)
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password)
-    router.push("/admin/dashboard")
-  } catch (error: any) {
-    setError(error?.message || "Error al iniciar sesión")
-  } finally {
-    setIsLoading(false)
+    try {
+      const firebase = createClient()
+      const result = await firebase.auth.signInWithPassword({ email, password })
+      
+      if (result.error) {
+        setError(result.error.message || "Error al iniciar sesión")
+        setIsLoading(false)
+        return
+      }
+
+      // Successfully logged in and session cookie is created
+      // Use window.location.href to ensure a full page reload so middleware can verify the session
+      window.location.href = "/admin/dashboard"
+    } catch (error: any) {
+      console.error("Login error:", error)
+      setError(error?.message || "Error al iniciar sesión")
+      setIsLoading(false)
+    }
   }
-}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center p-6">

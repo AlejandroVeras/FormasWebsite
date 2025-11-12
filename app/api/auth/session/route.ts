@@ -3,15 +3,31 @@ import { adminAuth } from "@/lib/firebase/admin"
 
 export async function POST(request: NextRequest) {
   try {
+    if (!adminAuth) {
+      console.error("Firebase Admin Auth is not initialized")
+      return NextResponse.json(
+        { error: "Authentication service is not available" },
+        { status: 500 }
+      )
+    }
+
     const { idToken } = await request.json()
     
+    if (!idToken) {
+      return NextResponse.json(
+        { error: "ID token is required" },
+        { status: 400 }
+      )
+    }
+    
     // Verify ID token and create session cookie
-    const expiresIn = 60 * 60 * 24 * 5 * 1000 // 5 days
+    // expiresIn is in seconds (5 days = 432000 seconds)
+    const expiresIn = 60 * 60 * 24 * 5 // 5 days in seconds
     const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn })
     
     const response = NextResponse.json({ success: true })
     response.cookies.set("session", sessionCookie, {
-      maxAge: expiresIn,
+      maxAge: expiresIn, // Already in seconds
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -20,7 +36,11 @@ export async function POST(request: NextRequest) {
     
     return response
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 401 })
+    console.error("Error creating session cookie:", error)
+    return NextResponse.json(
+      { error: error?.message || "Failed to create session" },
+      { status: 401 }
+    )
   }
 }
 

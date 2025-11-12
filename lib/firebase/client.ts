@@ -32,11 +32,16 @@ export function createClient() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ idToken }),
           })
-          if (!response.ok) throw new Error("Failed to create session")
+          
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ error: "Failed to create session" }))
+            throw new Error(errorData.error || `Failed to create session: ${response.status}`)
+          }
           
           return { data: { user: userCredential.user }, error: null }
         } catch (error: any) {
-          return { data: { user: null }, error: { message: error.message } }
+          console.error("Sign in error:", error)
+          return { data: { user: null }, error: { message: error.message || "Error al iniciar sesión" } }
         }
       },
       signUp: async ({ email, password, options }: { email: string; password: string; options?: any }) => {

@@ -8,6 +8,14 @@ const JWKS = createRemoteJWKSet(
 
 export async function verifySessionCookie(sessionCookie: string) {
   try {
+    if (!FIREBASE_PROJECT_ID) {
+      console.error('FIREBASE_PROJECT_ID is not defined. Cannot verify session cookie.')
+      return {
+        valid: false,
+        decodedClaims: null,
+      }
+    }
+
     const decoded = await jwtVerify(sessionCookie, JWKS, {
       issuer: `https://session.firebase.google.com/${FIREBASE_PROJECT_ID}`,
       audience: FIREBASE_PROJECT_ID,
