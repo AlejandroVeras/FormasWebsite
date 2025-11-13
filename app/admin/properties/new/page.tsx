@@ -77,10 +77,16 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const firebase = createClient()
 
     try {
+      // Verify user is authenticated in Firebase Auth (client-side)
       const { data: user } = await firebase.auth.getUser()
-      if (!user.user) {
-        throw new Error("Usuario no autenticado")
+      console.log("User data from Firebase Auth:", user)
+      
+      if (!user?.user) {
+        console.error("User not authenticated in Firebase Auth")
+        throw new Error("Usuario no autenticado. Por favor, inicia sesión nuevamente.")
       }
+
+      console.log("User authenticated, UID:", user.user.uid || user.user.id)
 
       const propertyData = {
         title: formData.title,
@@ -99,10 +105,26 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         created_by: user.user.id,
       }
 
-      const { error } = await firebase.from("properties").insert([propertyData])
+      console.log("Creating property with data:", propertyData)
+      
+      // Use API route instead of direct Firestore client
+      // This ensures the user is authenticated via session cookie
+      const response = await fetch("/api/properties", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(propertyData),
+      })
 
-      if (error) throw error
+      const result = await response.json()
 
+      if (!response.ok) {
+        console.error("Error creating property:", result.error)
+        throw new Error(result.error || "Error al crear la propiedad")
+      }
+
+      console.log("Property created successfully:", result.data)
       router.push("/admin/properties")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error al crear la propiedad")
