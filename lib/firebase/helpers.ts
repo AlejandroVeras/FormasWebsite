@@ -1,4 +1,5 @@
 import { collection, doc, query, where, orderBy, limit, getDocs, getDoc, addDoc, updateDoc, deleteDoc, Timestamp, QueryConstraint, startAfter, QueryDocumentSnapshot } from "firebase/firestore"
+import { FieldValue } from "firebase-admin/firestore"
 import { db } from "./config"
 import { adminDb } from "./admin"
 
@@ -354,7 +355,8 @@ export async function createAdminDocument(collectionName: string, data: any) {
     if (!adminDb) {
       return { data: null, error: { message: 'Firebase Admin not initialized' } }
     }
-    const now = adminDb.serverTimestamp()
+    // Use FieldValue.serverTimestamp() for server-side timestamps
+    const now = FieldValue.serverTimestamp()
     const docRef = adminDb.collection(collectionName).doc()
     
     await docRef.set({
@@ -374,6 +376,7 @@ export async function createAdminDocument(collectionName: string, data: any) {
 
     return { data: result, error: null }
   } catch (error: any) {
+    console.error("Error creating admin document:", error)
     return { data: null, error: { message: error?.message || 'Unknown error' } }
   }
 }
@@ -386,7 +389,7 @@ export async function updateAdminDocument(collectionName: string, docId: string,
     const docRef = adminDb.collection(collectionName).doc(docId)
     await docRef.update({
       ...updates,
-      updated_at: adminDb.serverTimestamp(),
+      updated_at: FieldValue.serverTimestamp(),
     })
 
     const updatedDoc = await docRef.get()
