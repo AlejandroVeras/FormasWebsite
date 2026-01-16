@@ -134,38 +134,40 @@ export default async function InmobiliariaPage() {
         }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <Badge
-            variant="outline"
-            className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
-          >
-            Parte de Formas
-          </Badge>
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500 leading-tight">
-            Tu <span className="formas-turquesa viner-hand">Hogar Ideal</span> te Espera
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-100 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed">
-            Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la confianza y experiencia de más de 25 años del Grupo Formas.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
-            <Button
-              size="lg"
-              className="gap-2 formas-turquesa-bg hover:scale-105 transition-transform"
-              asChild
-            >
-              <Link href="#propiedades">
-                <span className="formas-turquesa-bg">Ver Propiedades</span> <Search className="w-4 h-4 formas-turquesa" />
-              </Link>
-            </Button>
-            <Button
+          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-10 sm:p-14 md:p-16 shadow-2xl border border-white/20">
+            <Badge
               variant="outline"
-              size="lg"
-              className="hover:scale-105 transition-transform formas-turquesa formas-turquesa-border"
-              asChild
+              className="mb-6 border-formas-turquesa/30 text-formas-turquesa bg-formas-turquesa/5 animate-in fade-in-50 duration-1000 delay-300 inline-block"
             >
-              <a href="#contacto" className="scroll-smooth formas-turquesa">
-                Vender mi Propiedad
-              </a>
-            </Button>
+              Parte de Formas
+            </Badge>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-balance text-gray-900 animate-in slide-in-from-bottom-8 duration-1000 delay-500 leading-tight tracking-tight">
+              Tu <span className="formas-turquesa viner-hand text-5xl sm:text-6xl md:text-7xl">Hogar Ideal</span> te Espera
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed font-medium">
+              Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la confianza y experiencia de más de 25 años del Grupo Formas.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
+              <Button
+                size="lg"
+                className="gap-2 formas-turquesa-bg hover:scale-105 transition-transform font-semibold"
+                asChild
+              >
+                <Link href="#propiedades">
+                  <span className="formas-turquesa-bg">Ver Propiedades</span> <Search className="w-4 h-4 formas-turquesa" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="hover:scale-105 transition-transform formas-turquesa formas-turquesa-border font-semibold hover:bg-formas-turquesa/10"
+                asChild
+              >
+                <a href="#contacto" className="scroll-smooth formas-turquesa">
+                  Vender mi Propiedad
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

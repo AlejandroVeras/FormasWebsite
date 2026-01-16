@@ -48,29 +48,31 @@ export default function EstructurasMetalicasPage() {
         }}
       >
         <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
-          <Badge
-            variant="default"
-            className="mb-6 animate-in fade-in-50 duration-1000 delay-300 estructuras-rojo-bg backdrop-blur-sm"
-          >Parte de Formas
-          </Badge>
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500 leading-tight">
-            Líderes en <span className="estructuras-rojo viner-hand">Estructuras Metálicas</span>
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-100 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed">
-            Más de 25 años de experiencia diseñando, fabricando e instalando estructuras metálicas de la más alta calidad
-            para proyectos industriales y comerciales en toda la República Dominicana.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
-            <Button size="lg" className="gap-2 hover:scale-105 transition-transform">
-              Ver Proyectos <Building2 className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="hover:scale-105 transition-transform bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-            >
-              Solicitar Cotización
-            </Button>
+          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-12 sm:p-16 shadow-2xl border border-white/20">
+            <Badge
+              variant="default"
+              className="mb-6 animate-in fade-in-50 duration-1000 delay-300 estructuras-rojo-bg backdrop-blur-sm inline-block"
+            >Parte de Formas
+            </Badge>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-balance text-gray-900 animate-in slide-in-from-bottom-8 duration-1000 delay-500 leading-tight tracking-tight">
+              Líderes en <span className="estructuras-rojo viner-hand text-5xl sm:text-6xl md:text-7xl">Estructuras Metálicas</span>
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed font-medium">
+              Más de 25 años de experiencia diseñando, fabricando e instalando estructuras metálicas de la más alta calidad
+              para proyectos industriales y comerciales en toda la República Dominicana.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
+              <Button size="lg" className="gap-2 hover:scale-105 transition-transform estructuras-rojo-bg font-semibold">
+                Ver Proyectos <Building2 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="hover:scale-105 transition-transform estructuras-rojo estructuras-rojo-border font-semibold hover:bg-estructuras-rojo/10"
+              >
+                Solicitar Cotización
+              </Button>
+            </div>
           </div>
         </div>
       </section>
