@@ -101,6 +101,13 @@ export default async function InmobiliariaPage() {
                 <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">INMOBILIARIA</p>
               </div>
             </div>
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <a href="#propiedades" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Propiedades</a>
+              <a href="#servicios" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Servicios</a>
+              <a href="#contacto" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Contacto</a>
+            </nav>
+            {/* Actions */}
             <div className="flex items-center gap-1 sm:gap-2 animate-in slide-in-from-right-5 duration-700">
               <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex">
                 <Link href="/admin/login" className="gap-2">

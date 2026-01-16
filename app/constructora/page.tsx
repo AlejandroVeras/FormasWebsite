@@ -23,7 +23,14 @@ export default function ConstructoraPage() {
                 <p className="text-xs font-medium constructora-teal/70 tracking-wider">CONSTRUCTORA</p>
               </div>
             </div>
-            <Button variant="outline" size="sm" asChild>
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <a href="#servicios" className="text-gray-700 hover:constructora-teal transition-colors font-medium">Servicios</a>
+              <a href="#proceso" className="text-gray-700 hover:constructora-teal transition-colors font-medium">Proceso</a>
+              <a href="#contacto" className="text-gray-700 hover:constructora-teal transition-colors font-medium">Contacto</a>
+            </nav>
+            {/* Actions */}
+            <Button variant="outline" size="sm" asChild className="hover:scale-105 transition-transform">
               <Link href="/" className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> Volver al Grupo
               </Link>

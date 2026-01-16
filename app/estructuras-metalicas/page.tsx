@@ -22,6 +22,13 @@ export default function EstructurasMetalicasPage() {
                 <p className="text-xs font-medium estructuras-rojo/70 tracking-wider">ESTRUCTURAS METÁLICAS</p>
               </div>
             </div>
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <a href="#servicios" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Servicios</a>
+              <a href="#por-que" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Por qué elegirnos</a>
+              <a href="#contacto" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Contacto</a>
+            </nav>
+            {/* Actions */}
             <Button
               variant="outline"
               size="sm"
