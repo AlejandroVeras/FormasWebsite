@@ -22,11 +22,6 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
-              <img 
-                src="/img/formaslogo.png" 
-                alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110"
-              />
               <div>
                 <img 
                   src="/img/formaslogotnombre.png" 
@@ -108,7 +103,7 @@ export default function HomePage() {
             Grupo Empresarial desde 1995
           </Badge>
           <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance animate-in fade-in slide-in-from-top-5 duration-700 delay-200 leading-tight">
-            Grupo <img src="/img/formaslogotnombre.png" alt="FORMAS" className="h-20 w-auto inline" />
+            Grupo <img src="/img/formastext.png" alt="FORMAS" className="h-24 w-auto inline" />
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty animate-in fade-in slide-in-from-top-5 duration-700 delay-300">
             Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
@@ -391,11 +386,6 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
-                <img 
-                  src="/img/formaslogo.png" 
-                  alt="Formas Logo" 
-                  className="w-8 h-8"
-                />
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 

@@ -92,12 +92,6 @@ export default async function InmobiliariaPage() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
-              <img 
-                src="/img/formaslogo.png" 
-                alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110 bg-white"
-                style={{ border: '2px solid #00bfc5' }}
-              />
               <div>
                 <img 
                   src="/img/formaslogotnombre.png" 

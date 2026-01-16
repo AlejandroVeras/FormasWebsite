@@ -14,11 +14,6 @@ export default function ConstructoraPage() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <img 
-                src="/img/formaslogo.png" 
-                alt="Formas Logo" 
-                className="w-12 h-12 transition-transform hover:scale-110 bg-white"
-              />
               <div>
                 <img 
                   src="/img/formaslogotnombre.png" 
