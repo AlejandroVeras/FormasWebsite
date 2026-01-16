@@ -34,8 +34,8 @@ export default function HomePage() {
 
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4 sm:py-6">
-          <div className="flex items-center justify-between gap-2">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-3 sm:py-4 lg:py-6">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* Logo */}
             <div className="flex items-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-left-5 duration-700 flex-shrink-0">
               <div>
@@ -47,8 +47,9 @@ export default function HomePage() {
                 <p className="text-xs text-primary/70 font-medium tracking-wider hidden sm:block">Grupo Empresarial</p>
               </div>
             </div>
-            {/* NavBar */}
-            <nav className="hidden md:flex items-center gap-4 lg:gap-6 animate-in fade-in slide-in-from-right-5 duration-700 delay-200">
+            
+            {/* NavBar Desktop */}
+            <nav className="hidden md:flex items-center gap-3 lg:gap-6 animate-in fade-in slide-in-from-right-5 duration-700 delay-200">
               {/* Otros links normales */}
               <a
                 href="#inicio"
@@ -68,11 +69,12 @@ export default function HomePage() {
               >
                 Contacto
               </a>
-                {/* Botón EMPRESAS destacado */}
+              
+              {/* Botón EMPRESAS Desktop */}
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
                   <button
-                    className="flex items-center gap-2 px-3 sm:px-5 py-2 rounded-lg bg-primary text-white font-semibold shadow-md border-2 border-primary hover:bg-primary/90 hover:scale-105 transition-all duration-200 focus:outline-none text-sm sm:text-base"
+                    className="flex items-center gap-2 px-4 lg:px-5 py-2 rounded-lg bg-primary text-white font-semibold shadow-md border-2 border-primary hover:bg-primary/90 hover:scale-105 transition-all duration-200 focus:outline-none text-xs sm:text-sm lg:text-base"
                     style={{ boxShadow: "0 2px 10px rgba(0,128,0,0.08)" }}
                   >
                     Empresas
@@ -81,26 +83,61 @@ export default function HomePage() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content
                   sideOffset={8}
-                  className="bg-white border border-primary rounded-lg shadow-lg mt-2 p-2 min-w-[200px] z-50"
+                  className="bg-white border border-primary rounded-lg shadow-lg mt-2 p-2 min-w-[180px] sm:min-w-[200px] z-50"
                 >
                   <DropdownMenu.Item asChild>
-                    <Link href="/estructuras-metalicas" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                    <Link href="/estructuras-metalicas" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-sm">
                       Estructuras Metálicas
                     </Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Item asChild>
-                    <Link href="/inmobiliaria" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                    <Link href="/inmobiliaria" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-sm">
                       Inmobiliaria
                     </Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Item asChild>
-                    <Link href="/constructora" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition">
+                    <Link href="/constructora" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-sm">
                       Constructora
                     </Link>
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
             </nav>
+
+            {/* Botón EMPRESAS Mobile */}
+            <div className="md:hidden">
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  <button
+                    className="flex items-center gap-1 px-3 py-2 rounded-lg bg-primary text-white font-semibold shadow-md border-2 border-primary hover:bg-primary/90 transition-all duration-200 focus:outline-none text-xs"
+                    style={{ boxShadow: "0 2px 10px rgba(0,128,0,0.08)" }}
+                  >
+                    <Building2 className="w-4 h-4" />
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content
+                  sideOffset={8}
+                  className="bg-white border border-primary rounded-lg shadow-lg mt-2 p-2 min-w-[150px] z-50"
+                >
+                  <DropdownMenu.Item asChild>
+                    <Link href="/estructuras-metalicas" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-xs">
+                      Estructuras
+                    </Link>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link href="/inmobiliaria" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-xs">
+                      Inmobiliaria
+                    </Link>
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link href="/constructora" className="block px-3 py-2 rounded hover:bg-primary/10 text-primary font-medium transition text-xs">
+                      Constructora
+                    </Link>
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+            </div>
           </div>
         </div>
       </header>
