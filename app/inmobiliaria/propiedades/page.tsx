@@ -295,7 +295,11 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                 <Home className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-10 w-auto transition-transform hover:scale-110"
+                />
                 <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">TODAS LAS PROPIEDADES</p>
               </div>
             </div>

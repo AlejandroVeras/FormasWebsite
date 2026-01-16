@@ -1,0 +1,15 @@
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+      .formas-text {
+        font-family: 'Caveat', cursive;
+        font-size: 64px;
+        font-weight: 700;
+        font-style: italic;
+        letter-spacing: 2px;
+      }
+    </style>
+  </defs>
+  <text x="10" y="60" class="formas-text" fill="currentColor">FORMAS</text>
+</svg>

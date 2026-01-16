@@ -28,7 +28,11 @@ export default function HomePage() {
                 className="w-12 h-12 transition-transform hover:scale-110"
               />
               <div>
-                <h1 className="text-3xl font-bold text-primary viner-hand">FORMAS</h1>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-10 w-auto transition-transform hover:scale-110"
+                />
                 <p className="text-xs text-primary/70 font-medium tracking-wider">Grupo Empresarial</p>
               </div>
             </div>
@@ -104,7 +108,7 @@ export default function HomePage() {
             Grupo Empresarial desde 1995
           </Badge>
           <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance animate-in fade-in slide-in-from-top-5 duration-700 delay-200 leading-tight">
-            Grupo <span className="text-primary viner-hand">FORMAS</span>
+            Grupo <img src="/img/formaslogotnombre.png" alt="FORMAS" className="h-20 w-auto inline" />
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty animate-in fade-in slide-in-from-top-5 duration-700 delay-300">
             Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
@@ -392,7 +396,11 @@ export default function HomePage() {
                   alt="Formas Logo" 
                   className="w-8 h-8"
                 />
-                <span className="text-xl font-bold text-primary viner-hand">FORMAS</span>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-6 w-auto"
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.

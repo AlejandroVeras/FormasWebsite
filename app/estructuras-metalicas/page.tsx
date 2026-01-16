@@ -19,9 +19,11 @@ export default function EstructurasMetalicasPage() {
                 className="w-12 h-12 transition-transform hover:scale-110"
               />
               <div>
-                <h1 className="text-3xl font-bold estructuras-rojo mb-1">
-                  <span className="viner-hand estructuras-rojo">FORMAS</span>
-                </h1>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-10 w-auto transition-transform hover:scale-110"
+                />
                 <p className="text-xs font-medium estructuras-rojo/70 tracking-wider">ESTRUCTURAS METÁLICAS</p>
               </div>
             </div>
@@ -229,7 +231,11 @@ export default function EstructurasMetalicasPage() {
                   alt="Formas Logo" 
                   className="w-8 h-8"
                 />
-                <span className="text-xl font-bold estructuras-rojo viner-hand">FORMAS</span>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-6 w-auto"
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.

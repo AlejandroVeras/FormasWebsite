@@ -20,7 +20,11 @@ export default function ConstructoraPage() {
                 className="w-12 h-12 transition-transform hover:scale-110 bg-white"
               />
               <div>
-                <h1 className="text-3xl font-bold constructora-teal viner-hand">FORMAS</h1>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-10 w-auto transition-transform hover:scale-110"
+                />
                 <p className="text-xs font-medium constructora-teal/70 tracking-wider">CONSTRUCTORA</p>
               </div>
             </div>
@@ -241,7 +245,11 @@ export default function ConstructoraPage() {
                 <div className="w-8 h-8 constructora-teal-bg rounded-lg flex items-center justify-center">
                   <Building2 className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold constructora-teal viner-hand">FORMAS</span>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-6 w-auto"
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.

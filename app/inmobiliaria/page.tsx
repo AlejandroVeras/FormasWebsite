@@ -99,7 +99,11 @@ export default async function InmobiliariaPage() {
                 style={{ border: '2px solid #00bfc5' }}
               />
               <div>
-                <h1 className="text-3xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
+                <img 
+                  src="/img/formaslogotnombre.png" 
+                  alt="Formas" 
+                  className="h-10 w-auto transition-transform hover:scale-110"
+                />
                 <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">INMOBILIARIA</p>
               </div>
             </div>
