@@ -9,31 +9,40 @@ export default function EstructurasMetalicasPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-6 lg:px-32 py-6">
+      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <div className="container mx-auto px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700">
-              <div>
+            <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700 group">
+              <div className="hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 
                   className="h-10 w-auto transition-transform hover:scale-110"
                 />
-                <p className="text-xs font-medium estructuras-rojo/70 tracking-wider">ESTRUCTURAS METÁLICAS</p>
+                <p className="text-xs font-semibold estructuras-rojo/70 tracking-widest mt-1">ESTRUCTURAS METÁLICAS</p>
               </div>
             </div>
             {/* Navigation */}
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#servicios" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Servicios</a>
-              <a href="#por-que" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Por qué elegirnos</a>
-              <a href="#contacto" className="text-gray-700 hover:estructuras-rojo transition-colors font-medium">Contacto</a>
+            <nav className="hidden md:flex items-center gap-1">
+              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+                Servicios
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
+              <a href="#por-que" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+                Por qué elegirnos
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
+              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+                Contacto
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
             </nav>
             {/* Actions */}
             <Button
               variant="outline"
               size="sm"
               asChild
-              className="animate-in slide-in-from-right-5 duration-700 hover:scale-105 transition-transform bg-transparent"
+              className="animate-in slide-in-from-right-5 duration-700 hover:scale-105 transition-transform border-estructuras-rojo/30 hover:bg-estructuras-rojo/10 text-estructuras-rojo hover:text-estructuras-rojo font-semibold"
             >
               <Link href="/" className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> Volver al Grupo

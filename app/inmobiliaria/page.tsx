@@ -87,29 +87,38 @@ export default async function InmobiliariaPage() {
   return (
   <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b bg-white/30 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4 sm:py-6">
+      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700">
-              <div>
+            <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700 group">
+              <div className="hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 
                   className="h-10 w-auto transition-transform hover:scale-110"
                 />
-                <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">INMOBILIARIA</p>
+                <p className="text-xs font-semibold inmobiliaria-verde/70 tracking-widest mt-1">INMOBILIARIA</p>
               </div>
             </div>
             {/* Navigation */}
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#propiedades" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Propiedades</a>
-              <a href="#servicios" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Servicios</a>
-              <a href="#contacto" className="text-gray-700 hover:inmobiliaria-verde transition-colors font-medium">Contacto</a>
+            <nav className="hidden md:flex items-center gap-1">
+              <a href="#propiedades" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+                Propiedades
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
+              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+                Servicios
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
+              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+                Contacto
+                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+              </a>
             </nav>
             {/* Actions */}
-            <div className="flex items-center gap-1 sm:gap-2 animate-in slide-in-from-right-5 duration-700">
-              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex">
+            <div className="flex items-center gap-2 animate-in slide-in-from-right-5 duration-700">
+              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex text-gray-700 hover:text-inmobiliaria-verde font-semibold">
                 <Link href="/admin/login" className="gap-2">
                   <Settings className="w-4 h-4" /> Admin
                 </Link>
@@ -118,7 +127,7 @@ export default async function InmobiliariaPage() {
                 variant="outline"
                 size="sm"
                 asChild
-                className="hover:scale-105 transition-transform bg-transparent"
+                className="hover:scale-105 transition-transform border-inmobiliaria-verde/30 hover:bg-inmobiliaria-verde/10 text-inmobiliaria-verde hover:text-inmobiliaria-verde font-semibold"
               >
                 <Link href="/" className="gap-2">
                   <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
