@@ -9,7 +9,7 @@ export default function EstructurasMetalicasPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className=\"border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance\">
+      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance">
         <div className="container mx-auto px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700 group">
@@ -24,13 +24,13 @@ export default function EstructurasMetalicasPage() {
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href=\"#servicios\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
+              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Servicios
               </a>
-              <a href=\"#por-que\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
+              <a href="#por-que" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Por qué elegirnos
               </a>
-              <a href=\"#contacto\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
+              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Contacto
               </a>
             </nav>

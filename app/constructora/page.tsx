@@ -7,9 +7,9 @@ import Link from "next/link"
 
 export default function ConstructoraPage() {
   return (
-  <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className=\"border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm header-entrance\">
+      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm header-entrance">
         <div className="container mx-auto px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -25,13 +25,13 @@ export default function ConstructoraPage() {
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href=\"#servicios\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
+              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Servicios
               </a>
-              <a href=\"#proceso\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
+              <a href="#proceso" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Proceso
               </a>
-              <a href=\"#contacto\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
+              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Contacto
               </a>
             </nav>
