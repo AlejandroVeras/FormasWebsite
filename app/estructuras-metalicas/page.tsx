@@ -9,7 +9,7 @@ export default function EstructurasMetalicasPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <header className=\"border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance\">
         <div className="container mx-auto px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700 group">
@@ -24,17 +24,14 @@ export default function EstructurasMetalicasPage() {
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#servicios\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
                 Servicios
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#por-que" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#por-que\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
                 Por qué elegirnos
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#contacto\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red\">
                 Contacto
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-estructuras-rojo scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
             </nav>
             {/* Actions */}

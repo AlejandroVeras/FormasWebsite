@@ -67,3 +67,41 @@
   background-color: #ffffff !important;
   color: #333 !important;
 }
+
+/* Navigation link animations */
+.nav-link-green {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link-green::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #3dcf96;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-green:hover::after {
+  width: 70%;
+}
+
+/* Header animations */
+@keyframes headerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-entrance {
+  animation: headerSlide 0.5s ease-out;
+}

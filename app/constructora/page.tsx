@@ -9,7 +9,7 @@ export default function ConstructoraPage() {
   return (
   <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+      <header className=\"border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm header-entrance\">
         <div className="container mx-auto px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -25,17 +25,14 @@ export default function ConstructoraPage() {
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#servicios\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
                 Servicios
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-constructora-teal scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#proceso" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#proceso\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
                 Proceso
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-constructora-teal scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#contacto\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link\">
                 Contacto
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-constructora-teal scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
             </nav>
             {/* Actions */}
@@ -52,9 +49,10 @@ export default function ConstructoraPage() {
       <section
         className="py-20 relative bg-gradient-to-br from-background to-constructora-teal/5"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.95)), url('/construction-site--buildings-under-construction--c.jpg')`,
+          backgroundImage: `linear-gradient(135deg, rgba(255,255,255,0.75), rgba(0,191,197,0.15)), url('/img/constructora.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
         }}
       >
         <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">

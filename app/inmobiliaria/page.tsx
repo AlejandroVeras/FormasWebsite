@@ -87,7 +87,7 @@ export default async function InmobiliariaPage() {
   return (
   <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <header className=\"border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance\">
         <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -103,17 +103,14 @@ export default async function InmobiliariaPage() {
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#propiedades" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#propiedades\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green\">
                 Propiedades
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#servicios\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green\">
                 Servicios
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 relative group">
+              <a href=\"#contacto\" className=\"px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green\">
                 Contacto
-                <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-inmobiliaria-verde scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
               </a>
             </nav>
             {/* Actions */}
