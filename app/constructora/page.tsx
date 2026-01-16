@@ -20,8 +20,8 @@ export default function ConstructoraPage() {
                 className="w-12 h-12 transition-transform hover:scale-110 bg-white"
               />
               <div>
-                <h1 className="text-2xl font-bold constructora-teal viner-hand">FORMAS</h1>
-                <p className="text-xs text-gray-700">Constructora</p>
+                <h1 className="text-3xl font-bold constructora-teal viner-hand">FORMAS</h1>
+                <p className="text-xs font-medium constructora-teal/70 tracking-wider">CONSTRUCTORA</p>
               </div>
             </div>
             <Button variant="outline" size="sm" asChild>
@@ -49,12 +49,12 @@ export default function ConstructoraPage() {
           >
             Parte de Formas
           </Badge>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Construcción <span className="constructora-teal">Integral</span>
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
+            Construcción <span className="constructora-teal viner-hand">Integral</span>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-            Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos ideas en
-            realidades construidas con la más alta calidad.
+          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty leading-relaxed">
+            Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos tus ideas en
+            realidades construidas con la más alta calidad y compromiso con la excelencia.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover">
@@ -71,55 +71,55 @@ export default function ConstructoraPage() {
       <section className="py-20">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Construcción completa desde la planificación hasta la entrega final
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Nuestros Servicios</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+              Soluciones integrales de construcción desde la planificación inicial hasta la entrega final de tu proyecto
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-all duration-300">
               <CardHeader>
-                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Home className="w-7 h-7 text-white" />
                 </div>
-                <CardTitle className="text-lg">Residencial</CardTitle>
+                <CardTitle className="text-lg font-bold">Residencial</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">Casas, apartamentos y condominios de alta calidad</p>
               </CardContent>
             </Card>
 
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-all duration-300">
               <CardHeader>
-                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Building2 className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Building2 className="w-7 h-7 text-white" />
                 </div>
-                <CardTitle className="text-lg">Comercial</CardTitle>
+                <CardTitle className="text-lg font-bold">Comercial</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">Oficinas, centros comerciales y locales comerciales</p>
               </CardContent>
             </Card>
 
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-all duration-300">
               <CardHeader>
-                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-7 h-7 text-white" />
                 </div>
-                <CardTitle className="text-lg">Industrial</CardTitle>
+                <CardTitle className="text-lg font-bold">Industrial</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">Plantas industriales y edificaciones especializadas</p>
               </CardContent>
             </Card>
 
-            <Card className="text-center">
+            <Card className="text-center hover:shadow-lg transition-all duration-300">
               <CardHeader>
-                <div className="w-12 h-12 constructora-teal-light-bg rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-6 h-6 text-white" />
+                <div className="w-14 h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-7 h-7 text-white" />
                 </div>
-                <CardTitle className="text-lg">Remodelaciones</CardTitle>
+                <CardTitle className="text-lg font-bold">Remodelaciones</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">Renovaciones y ampliaciones de espacios existentes</p>
@@ -133,8 +133,8 @@ export default function ConstructoraPage() {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16">
-            <h3 className="text-3xl font-bold mb-4">Nuestro Proceso</h3>
-            <p className="text-muted-foreground text-lg">Metodología probada para garantizar el éxito de tu proyecto</p>
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Nuestro Proceso</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">Metodología probada y estructurada para garantizar el éxito y calidad en cada etapa de tu proyecto</p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
@@ -177,8 +177,8 @@ export default function ConstructoraPage() {
         <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold mb-4">Solicita tu Presupuesto</h3>
-              <p className="text-muted-foreground">Cuéntanos sobre tu proyecto de construcción</p>
+              <h3 className="text-4xl font-bold mb-4">Solicita tu Presupuesto</h3>
+              <p className="text-muted-foreground text-lg">Cuéntanos sobre tu proyecto y nos encantará ayudarte a hacerlo realidad</p>
             </div>
 
             <Card>
@@ -241,7 +241,7 @@ export default function ConstructoraPage() {
                 <div className="w-8 h-8 constructora-teal-bg rounded-lg flex items-center justify-center">
                   <Building2 className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold constructora-teal">FORMAS</span>
+                <span className="text-xl font-bold constructora-teal viner-hand">FORMAS</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Grupo empresarial construyendo el futuro de Santiago con calidad, experiencia y compromiso.

@@ -28,7 +28,8 @@ export default function HomePage() {
                 className="w-12 h-12 transition-transform hover:scale-110"
               />
               <div>
-                <h1 className="text-2xl font-bold text-primary viner-hand">FORMAS</h1>
+                <h1 className="text-3xl font-bold text-primary viner-hand">FORMAS</h1>
+                <p className="text-xs text-primary/70 font-medium tracking-wider">Grupo Empresarial</p>
               </div>
             </div>
             {/* NavBar */}
@@ -102,8 +103,8 @@ export default function HomePage() {
           <Badge variant="secondary" className="mb-6 animate-in fade-in slide-in-from-top-5 duration-700">
             Grupo Empresarial desde 1995
           </Badge>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance animate-in fade-in slide-in-from-top-5 duration-700 delay-200">
-            Grupo <span className="text-primary">FORMAS</span>
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance animate-in fade-in slide-in-from-top-5 duration-700 delay-200 leading-tight">
+            Grupo <span className="text-primary viner-hand">FORMAS</span>
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty animate-in fade-in slide-in-from-top-5 duration-700 delay-300">
             Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
@@ -131,15 +132,15 @@ export default function HomePage() {
       <section id="empresas" className="py-20">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in slide-in-from-top-5 duration-700">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">Nuestras Empresas</h3>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Tres empresas independientes que forman el Grupo Formas, cada una especializada en su área
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Nuestras Empresas</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+              Tres empresas especializadas e independientes que conforman el Grupo Formas, cada una un referente en su industria
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Estructuras Metálicas - Principal */}
-            <Card className="relative overflow-hidden border-primary/20 bg-gradient-to-br from-card to-primary/5 hover:shadow-lg transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-left-5 duration-700 delay-200">
+            <Card className="relative overflow-hidden border-2 border-primary/30 bg-gradient-to-br from-card to-primary/10 hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-left-5 duration-700 delay-200">
               <div
                 className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -150,10 +151,10 @@ export default function HomePage() {
                 <Badge variant="default">Empresa Principal</Badge>
               </div>
               <CardHeader className="pb-4 relative z-10">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Wrench className="w-6 h-6 text-primary" />
+                <div className="w-14 h-14 bg-primary/15 rounded-xl flex items-center justify-center mb-4">
+                  <Wrench className="w-7 h-7 text-primary" />
                 </div>
-                <CardTitle className="text-xl">Formas Estructuras en Acero </CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2">Formas Estructuras en Acero</CardTitle>
                 <CardDescription>
                   Empresa especializada en diseño, fabricación e instalación de estructuras en acero
                 </CardDescription>
@@ -172,7 +173,7 @@ export default function HomePage() {
             </Card>
 
             {/* Constructora */}
-            <Card className="hover:shadow-lg transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-300 relative overflow-hidden">
+            <Card className="relative overflow-hidden border-2 border-secondary/30 hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-300">
               <div
                 className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -180,10 +181,10 @@ export default function HomePage() {
                 }}
               />
               <CardHeader className="pb-4 relative z-10">
-                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Building2 className="w-6 h-6 text-secondary" />
+                <div className="w-14 h-14 bg-secondary/15 rounded-xl flex items-center justify-center mb-4">
+                  <Building2 className="w-7 h-7 text-secondary" />
                 </div>
-                <CardTitle className="text-xl">Constructora Formas</CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2">Constructora Formas</CardTitle>
                 <CardDescription>
                   Empresa de construcción integral para proyectos residenciales, comerciales e industriales
                 </CardDescription>
@@ -206,7 +207,7 @@ export default function HomePage() {
             </Card>
 
             {/* Inmobiliaria */}
-            <Card className="hover:shadow-lg transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-right-5 duration-700 delay-400 relative overflow-hidden">
+            <Card className="relative overflow-hidden border-2 border-accent/30 hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-in fade-in slide-in-from-right-5 duration-700 delay-400">
               <div
                 className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
                 style={{
@@ -214,10 +215,10 @@ export default function HomePage() {
                 }}
               />
               <CardHeader className="pb-4 relative z-10">
-                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                  <Home className="w-6 h-6 text-accent" />
+                <div className="w-14 h-14 bg-accent/15 rounded-xl flex items-center justify-center mb-4">
+                  <Home className="w-7 h-7 text-accent" />
                 </div>
-                <CardTitle className="text-xl">Informas</CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2">Formas Inmobiliaria</CardTitle>
                 <CardDescription>
                   Empresa inmobiliaria especializada en desarrollo, venta y alquiler de propiedades
                 </CardDescription>
@@ -247,7 +248,7 @@ export default function HomePage() {
         <div className="container mx-auto px-8 lg:px-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
-              <h3 className="text-3xl font-bold mb-6">Más de 25 años construyendo confianza</h3>
+              <h3 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">Más de 25 años construyendo confianza</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 El Grupo Formas nació en Santiago con la visión de ser líder en el sector construcción de la República
                 Dominicana. Nuestra empresa principal de estructuras metálicas es el corazón del grupo, complementada
@@ -293,8 +294,8 @@ export default function HomePage() {
       <section id="contacto" className="py-20">
         <div className="container mx-auto px-8 lg:px-32">
           <div className="text-center mb-16 animate-in fade-in slide-in-from-top-5 duration-700">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">Contáctanos</h3>
-            <p className="text-muted-foreground text-lg">Estamos listos para hacer realidad tu próximo proyecto</p>
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Contáctanos</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">Estamos listos para hacer realidad tu próximo proyecto y acompañarte en cada etapa</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">

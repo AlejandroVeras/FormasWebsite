@@ -99,8 +99,8 @@ export default async function InmobiliariaPage() {
                 style={{ border: '2px solid #00bfc5' }}
               />
               <div>
-                <h1 className="text-2xl font-bold" style={{ color: '#00bfc5', fontFamily: 'Viner Hand ITC, cursive' }}>FORMAS</h1>
-                <p className="text-xs text-gray-700 hidden sm:block">Inmobiliaria</p>
+                <h1 className="text-3xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
+                <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">INMOBILIARIA</p>
               </div>
             </div>
             <div className="flex items-center gap-1 sm:gap-2 animate-in slide-in-from-right-5 duration-700">
@@ -141,12 +141,11 @@ export default async function InmobiliariaPage() {
           >
             Parte de Formas
           </Badge>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500">
-            Tu <span className="formas-turquesa">Hogar Ideal</span> te Espera
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 text-balance text-white animate-in slide-in-from-bottom-8 duration-1000 delay-500 leading-tight">
+            Tu <span className="formas-turquesa viner-hand">Hogar Ideal</span> te Espera
           </h2>
-          <p className="text-lg sm:text-xl text-gray-200 mb-8 max-w-2xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700">
-            Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la
-            confianza y experiencia del Grupo Formas.
+          <p className="text-base sm:text-lg md:text-xl text-gray-100 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed">
+            Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la confianza y experiencia de más de 25 años del Grupo Formas.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
             <Button
@@ -176,9 +175,9 @@ export default async function InmobiliariaPage() {
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-8 lg:px-16">
           <div className="text-center mb-12 sm:mb-16 animate-in fade-in-50 duration-1000">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h3>
-            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-              Servicios inmobiliarios completos para todas tus necesidades
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Nuestros Servicios</h3>
+            <p className="text-muted-foreground text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+              Soluciones inmobiliarias completas para todas tus necesidades, desde búsqueda hasta cierre
             </p>
           </div>
 
@@ -265,8 +264,8 @@ export default async function InmobiliariaPage() {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
-            <h3 className="text-3xl font-bold mb-4">Propiedades Destacadas</h3>
-            <p className="text-muted-foreground text-lg">Algunas de nuestras mejores opciones disponibles</p>
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Propiedades Destacadas</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">Explora nuestras mejores opciones disponibles, cuidadosamente seleccionadas para ti</p>
           </div>
 
           {featuredProperties && featuredProperties.length > 0 ? (
@@ -459,10 +458,10 @@ export default async function InmobiliariaPage() {
       <section id="propiedades" className="py-20 bg-muted/30">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
-            <h3 className="text-3xl font-bold mb-4">Propiedades Disponibles</h3>
-            <p className="text-muted-foreground text-lg">
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Propiedades Disponibles</h3>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
               {properties && properties.length > 0
-                ? `Descubre nuestras ${properties.length} propiedades destacadas`
+                ? `Descubre nuestras ${properties.length} propiedades destacadas con las mejores ubicaciones`
                 : "Próximamente tendremos propiedades disponibles"}
             </p>
           </div>
@@ -577,8 +576,8 @@ export default async function InmobiliariaPage() {
         <div className="container mx-auto px-8 lg:px-16">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8 animate-in fade-in-50 duration-1000">
-              <h3 className="text-3xl font-bold mb-4">¿Buscas una Propiedad?</h3>
-              <p className="text-muted-foreground">Cuéntanos qué necesitas y te ayudaremos a encontrarla</p>
+              <h3 className="text-4xl font-bold mb-4">¿Buscas una Propiedad?</h3>
+              <p className="text-muted-foreground text-lg">Cuéntanos qué necesitas y te ayudaremos a encontrar tu hogar ideal</p>
             </div>
 
             <div className="animate-in slide-in-from-bottom-8 duration-1000 delay-300">

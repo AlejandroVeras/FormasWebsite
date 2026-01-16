@@ -94,7 +94,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
     return (
       <>
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">
             {count || 0} Propiedades Encontradas
           </h2>
           <p className="text-muted-foreground">
@@ -295,8 +295,8 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                 <Home className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
-                <p className="text-xs text-muted-foreground">Todas las Propiedades</p>
+                <h1 className="text-3xl font-bold inmobiliaria-verde viner-hand">FORMAS</h1>
+                <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">TODAS LAS PROPIEDADES</p>
               </div>
             </div>
             <Button variant="outline" size="sm" asChild>
