@@ -10,27 +10,27 @@ export default function EstructurasMetalicasPage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance">
-        <div className="container mx-auto px-6 lg:px-32 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 animate-in slide-in-from-left-5 duration-700 group">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 animate-in slide-in-from-left-5 duration-700 group flex-shrink-0">
               <div className="hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 
-                  className="h-10 w-auto transition-transform hover:scale-110"
+                  className="h-8 sm:h-10 w-auto transition-transform hover:scale-110"
                 />
-                <p className="text-xs font-semibold estructuras-rojo/70 tracking-widest mt-1">ESTRUCTURAS METÁLICAS</p>
+                <p className="text-xs font-semibold estructuras-rojo/70 tracking-widest mt-1 hidden sm:block">ESTRUCTURAS METÁLICAS</p>
               </div>
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
+              <a href="#servicios" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Servicios
               </a>
-              <a href="#por-que" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
+              <a href="#por-que" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Por qué elegirnos
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
+              <a href="#contacto" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-estructuras-rojo hover:bg-estructuras-rojo/5 rounded-lg transition-all duration-300 nav-link-red">
                 Contacto
               </a>
             </nav>
@@ -39,10 +39,10 @@ export default function EstructurasMetalicasPage() {
               variant="outline"
               size="sm"
               asChild
-              className="animate-in slide-in-from-right-5 duration-700 hover:scale-105 transition-transform border-estructuras-rojo/30 hover:bg-estructuras-rojo/10 text-estructuras-rojo hover:text-estructuras-rojo font-semibold"
+              className="animate-in slide-in-from-right-5 duration-700 hover:scale-105 transition-transform border-estructuras-rojo/30 hover:bg-estructuras-rojo/10 text-estructuras-rojo hover:text-estructuras-rojo font-semibold text-xs sm:text-sm"
             >
-              <Link href="/" className="gap-2">
-                <ArrowLeft className="w-4 h-4" /> Volver al Grupo
+              <Link href="/" className="gap-1 sm:gap-2">
+                <ArrowLeft className="w-3 sm:w-4 h-3 sm:h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
               </Link>
             </Button>
           </div>

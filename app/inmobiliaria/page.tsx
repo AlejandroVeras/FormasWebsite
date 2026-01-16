@@ -88,46 +88,46 @@ export default async function InmobiliariaPage() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300 header-entrance">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-4">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
             {/* Logo */}
-            <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-5 duration-700 group">
+            <div className="flex items-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-left-5 duration-700 group flex-shrink-0">
               <div className="hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 
-                  className="h-10 w-auto transition-transform hover:scale-110"
+                  className="h-8 sm:h-10 w-auto transition-transform hover:scale-110"
                 />
-                <p className="text-xs font-semibold inmobiliaria-verde/70 tracking-widest mt-1">INMOBILIARIA</p>
+                <p className="text-xs font-semibold inmobiliaria-verde/70 tracking-widest mt-1 hidden sm:block">INMOBILIARIA</p>
               </div>
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#propiedades" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
+              <a href="#propiedades" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
                 Propiedades
               </a>
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
+              <a href="#servicios" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
                 Servicios
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
+              <a href="#contacto" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-inmobiliaria-verde hover:bg-inmobiliaria-verde/5 rounded-lg transition-all duration-300 nav-link-green">
                 Contacto
               </a>
             </nav>
             {/* Actions */}
             <div className="flex items-center gap-2 animate-in slide-in-from-right-5 duration-700">
-              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex text-gray-700 hover:text-inmobiliaria-verde font-semibold">
+              <Button variant="ghost" size="sm" asChild className="hover:scale-105 transition-transform hidden sm:flex text-gray-700 hover:text-inmobiliaria-verde font-semibold text-xs sm:text-sm">
                 <Link href="/admin/login" className="gap-2">
-                  <Settings className="w-4 h-4" /> Admin
+                  <Settings className="w-3 sm:w-4 h-3 sm:h-4" /> Admin
                 </Link>
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 asChild
-                className="hover:scale-105 transition-transform border-inmobiliaria-verde/30 hover:bg-inmobiliaria-verde/10 text-inmobiliaria-verde hover:text-inmobiliaria-verde font-semibold"
+                className="hover:scale-105 transition-transform border-inmobiliaria-verde/30 hover:bg-inmobiliaria-verde/10 text-inmobiliaria-verde hover:text-inmobiliaria-verde font-semibold text-xs sm:text-sm"
               >
-                <Link href="/" className="gap-2">
-                  <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
+                <Link href="/" className="gap-1 sm:gap-2">
+                  <ArrowLeft className="w-3 sm:w-4 h-3 sm:h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
                 </Link>
               </Button>
             </div>

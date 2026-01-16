@@ -10,35 +10,35 @@ export default function ConstructoraPage() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="border-b border-gray-200/50 bg-gradient-to-r from-white/98 via-white/96 to-white/98 backdrop-blur-md sticky top-0 z-50 shadow-sm header-entrance">
-        <div className="container mx-auto px-6 lg:px-32 py-4">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-32 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
             {/* Logo */}
-            <div className="flex items-center gap-3 group">
+            <div className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
               <div className="hover:scale-105 transition-transform duration-300">
                 <img 
                   src="/img/formaslogotnombre.png" 
                   alt="Formas" 
-                  className="h-10 w-auto transition-transform hover:scale-110"
+                  className="h-8 sm:h-10 w-auto transition-transform hover:scale-110"
                 />
-                <p className="text-xs font-semibold constructora-teal/70 tracking-widest mt-1">CONSTRUCTORA</p>
+                <p className="text-xs font-semibold constructora-teal/70 tracking-widest mt-1 hidden sm:block">CONSTRUCTORA</p>
               </div>
             </div>
             {/* Navigation */}
             <nav className="hidden md:flex items-center gap-1">
-              <a href="#servicios" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
+              <a href="#servicios" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Servicios
               </a>
-              <a href="#proceso" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
+              <a href="#proceso" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Proceso
               </a>
-              <a href="#contacto" className="px-4 py-2 text-gray-700 font-medium text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
+              <a href="#contacto" className="px-2 sm:px-4 py-2 text-gray-700 font-medium text-xs sm:text-sm hover:text-constructora-teal hover:bg-constructora-teal/5 rounded-lg transition-all duration-300 nav-link">
                 Contacto
               </a>
             </nav>
             {/* Actions */}
-            <Button variant="outline" size="sm" asChild className="hover:scale-105 transition-transform border-constructora-teal/30 hover:bg-constructora-teal/10 text-constructora-teal hover:text-constructora-teal font-semibold">
-              <Link href="/" className="gap-2">
-                <ArrowLeft className="w-4 h-4" /> Volver al Grupo
+            <Button variant="outline" size="sm" asChild className="hover:scale-105 transition-transform border-constructora-teal/30 hover:bg-constructora-teal/10 text-constructora-teal hover:text-constructora-teal font-semibold text-xs sm:text-sm">
+              <Link href="/" className="gap-1 sm:gap-2">
+                <ArrowLeft className="w-3 sm:w-4 h-3 sm:h-4" /> <span className="hidden sm:inline">Volver al Grupo</span><span className="sm:hidden">Volver</span>
               </Link>
             </Button>
           </div>
@@ -47,7 +47,7 @@ export default function ConstructoraPage() {
 
       {/* Hero Section */}
       <section
-        className="py-20 relative bg-gradient-to-br from-background to-constructora-teal/5"
+        className="py-12 sm:py-20 relative bg-gradient-to-br from-background to-constructora-teal/5"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(255,255,255,0.75), rgba(0,191,197,0.15)), url('/img/constructora.jpg')`,
           backgroundSize: 'cover',
@@ -55,26 +55,26 @@ export default function ConstructoraPage() {
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
-          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-12 sm:p-16 shadow-2xl border border-white/20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-6 sm:p-10 md:p-12 lg:p-16 shadow-2xl border border-white/20">
             <Badge
               variant="outline"
-              className="mb-6 border-constructora-teal/30 text-constructora-teal bg-constructora-teal/5 animate-in fade-in-50 duration-1000 delay-300 inline-block"
+              className="mb-4 sm:mb-6 border-constructora-teal/30 text-constructora-teal bg-constructora-teal/5 animate-in fade-in-50 duration-1000 delay-300 inline-block text-xs sm:text-sm"
             >
               Parte de Formas
             </Badge>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-balance leading-tight text-gray-900 tracking-tight">
-              Construcción <span className="constructora-teal viner-hand text-5xl sm:text-6xl md:text-7xl">Integral</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 text-balance leading-tight text-gray-900 tracking-tight">
+              Construcción <span className="constructora-teal viner-hand text-3xl sm:text-4xl md:text-5xl lg:text-7xl">Integral</span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-pretty leading-relaxed font-medium">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-6 sm:mb-8 max-w-3xl mx-auto text-pretty leading-relaxed font-medium">
               Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos tus ideas en
               realidades construidas con la más alta calidad y compromiso con la excelencia.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover font-semibold">
-                Ver Proyectos <Building2 className="w-4 h-4" />
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Button size="sm" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover font-semibold sm:size-lg text-xs sm:text-base">
+                Ver Proyectos <Building2 className="w-3 sm:w-4 h-3 sm:h-4" />
               </Button>
-              <Button variant="outline" size="lg" className="constructora-teal-border constructora-teal font-semibold hover:bg-constructora-teal/10">
+              <Button variant="outline" size="sm" className="constructora-teal-border constructora-teal font-semibold hover:bg-constructora-teal/10 sm:size-lg text-xs sm:text-base">
                 Solicitar Presupuesto
               </Button>
             </div>
@@ -83,20 +83,20 @@ export default function ConstructoraPage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-8 lg:px-16">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl md:text-5xl font-bold mb-4">Nuestros Servicios</h3>
-            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+      <section className="py-12 sm:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-16">
+          <div className="text-center mb-12 sm:mb-16">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4">Nuestros Servicios</h3>
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed">
               Soluciones integrales de construcción desde la planificación inicial hasta la entrega final de tu proyecto
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <Card className="text-center hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-14 h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Home className="w-7 h-7 text-white" />
+              <CardHeader className="pb-3 sm:pb-4">
+                <div className="w-12 sm:w-14 h-12 sm:h-14 constructora-teal-light-bg rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <Home className="w-6 sm:w-7 h-6 sm:h-7 text-white" />
                 </div>
                 <CardTitle className="text-lg font-bold">Residencial</CardTitle>
               </CardHeader>
