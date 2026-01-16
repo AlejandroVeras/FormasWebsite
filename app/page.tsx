@@ -6,8 +6,24 @@ import { Badge } from "@/components/ui/badge"
 import { Building2, Home, Wrench, MapPin, Phone, Mail, ArrowRight, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu"
+import { useState, useEffect } from "react"
 
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const backgroundImages = [
+    '/img/estructurasacero.jpg',
+    '/img/constructora.jpg',
+    '/img/inmobiliaria.jpg',
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % backgroundImages.length)
+    }, 5000) // Cambiar cada 5 segundos
+
+    return () => clearInterval(interval)
+  }, [backgroundImages.length])
   return (
     <div className="min-h-screen bg-background">
       <style jsx global>{`
@@ -91,38 +107,67 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="py-20 bg-gradient-to-br from-background to-muted relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/industrial-construction-site-with-metal-structures.jpg')`,
-          }}
-        />
-        <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
-          <Badge variant="secondary" className="mb-6 animate-in fade-in slide-in-from-top-5 duration-700">
-            Grupo Empresarial desde 1995
-          </Badge>
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance animate-in fade-in slide-in-from-top-5 duration-700 delay-200 leading-tight">
-            Grupo <img src="/img/formastext.png" alt="FORMAS" className="h-24 w-auto inline" />
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty animate-in fade-in slide-in-from-top-5 duration-700 delay-300">
-            Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
-            estructuras metálicas e inmobiliaria en Santiago, República Dominicana.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-500">
-            <Button size="lg" className="gap-2 hover:scale-105 transition-transform duration-300" asChild>
-              <Link href="#empresas">
-                Conocer Nuestras Empresas <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="hover:scale-105 transition-transform duration-300 bg-transparent"
-              asChild
-            >
-              <Link href="#contacto">Contactar Ahora</Link>
-            </Button>
+      <section id="inicio" className="relative overflow-hidden min-h-screen flex items-center justify-center">
+        {/* Fondo con imágenes que se cambian automáticamente */}
+        <div className="absolute inset-0 z-0">
+          {backgroundImages.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.35)), url('${image}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Contenido */}
+        <div className="container mx-auto px-6 lg:px-8 text-center relative z-10 py-20">
+          <div className="max-w-3xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-12 sm:p-16 shadow-2xl border border-white/30">
+            <Badge className="mb-6 bg-primary/20 text-primary border border-primary/40 animate-in fade-in-50 duration-1000 delay-300 inline-block">
+              Grupo Empresarial desde 1995
+            </Badge>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-balance leading-tight text-gray-900 tracking-tight animate-in fade-in slide-in-from-top-5 duration-700">
+              Grupo <img src="/img/formastext.png" alt="FORMAS" className="h-16 sm:h-20 w-auto inline" />
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-2xl mx-auto text-pretty leading-relaxed font-medium animate-in fade-in slide-in-from-top-5 duration-700 delay-200">
+              Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
+              estructuras metálicas e inmobiliaria en Santiago, República Dominicana.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-500">
+              <Button size="lg" className="gap-2 hover:scale-105 transition-transform duration-300 bg-primary hover:bg-primary/90 font-semibold" asChild>
+                <Link href="#empresas">
+                  Conocer Nuestras Empresas <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="hover:scale-105 transition-transform duration-300 border-primary/40 text-primary hover:bg-primary/10 font-semibold"
+                asChild
+              >
+                <Link href="#contacto">Contactar Ahora</Link>
+              </Button>
+            </div>
+
+            {/* Indicadores de slide */}
+            <div className="flex justify-center gap-2 mt-8">
+              {backgroundImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentSlide ? 'bg-primary w-8' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Ir a slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
