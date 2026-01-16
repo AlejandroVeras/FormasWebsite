@@ -42,26 +42,28 @@ export default function ConstructoraPage() {
         }}
       >
         <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
-          <Badge
-            variant="outline"
-            className="mb-6 border-white/30 text-white bg-white/10 backdrop-blur-sm animate-in fade-in-50 duration-1000 delay-300"
-          >
-            Parte de Formas
-          </Badge>
-          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
-            Construcción <span className="constructora-teal viner-hand">Integral</span>
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty leading-relaxed">
-            Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos tus ideas en
-            realidades construidas con la más alta calidad y compromiso con la excelencia.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover">
-              Ver Proyectos <Building2 className="w-4 h-4" />
-            </Button>
-            <Button variant="outline" size="lg" className="constructora-teal-border constructora-teal">
-              Solicitar Presupuesto
-            </Button>
+          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-12 sm:p-16 shadow-2xl border border-white/20">
+            <Badge
+              variant="outline"
+              className="mb-6 border-constructora-teal/30 text-constructora-teal bg-constructora-teal/5 animate-in fade-in-50 duration-1000 delay-300 inline-block"
+            >
+              Parte de Formas
+            </Badge>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-balance leading-tight text-gray-900 tracking-tight">
+              Construcción <span className="constructora-teal viner-hand text-5xl sm:text-6xl md:text-7xl">Integral</span>
+            </h2>
+            <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-pretty leading-relaxed font-medium">
+              Especialistas en construcción de proyectos residenciales, comerciales e industriales. Transformamos tus ideas en
+              realidades construidas con la más alta calidad y compromiso con la excelencia.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" className="gap-2 constructora-teal-bg hover:constructora-teal-bg-hover font-semibold">
+                Ver Proyectos <Building2 className="w-4 h-4" />
+              </Button>
+              <Button variant="outline" size="lg" className="constructora-teal-border constructora-teal font-semibold hover:bg-constructora-teal/10">
+                Solicitar Presupuesto
+              </Button>
+            </div>
           </div>
         </div>
       </section>
