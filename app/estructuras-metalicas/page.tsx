@@ -38,12 +38,13 @@ export default function EstructurasMetalicasPage() {
 
       {/* Hero Section */}
       <section
-        className="py-20 bg-gradient-to-br from-background to-primary/5 relative overflow-hidden"
+        className="py-20 relative overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/steel-metal-structures--industrial-beams--welding-.jpg')`,
+          backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.65) 0%, rgba(254, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.65) 100%), url('/img/estructurasacero.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <div className="container mx-auto px-6 lg:px-8 text-center relative z-10">
