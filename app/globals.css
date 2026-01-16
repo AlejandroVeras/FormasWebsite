@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@300;400;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -130,10 +131,12 @@
   }
   /* 
    * Company name font styling
-   * Using 'Kalam' as web-safe alternative to 'Viner Hand ITC'
-   * Falls back to cursive and fantasy for better browser support
+   * Using 'Caveat' as alternative elegante a 'Viner Hand ITC'
+   * Font de Google Fonts con estilo handwriting
    */
   .viner-hand {
-    font-family: 'Kalam', cursive, 'Viner Hand ITC', fantasy;
+    font-family: 'Caveat', 'Kalam', cursive, 'Viner Hand ITC', fantasy;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 }
