@@ -39,15 +39,15 @@ export default function HomePage() {
             {/* Logo */}
             <div className="flex items-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-left-5 duration-700 flex-shrink-0">
               <div>
-                <img 
-                  src="/img/formaslogotnombre.png" 
-                  alt="Formas" 
+                <img
+                  src="/img/formaslogotnombre.png"
+                  alt="Formas"
                   className="h-8 sm:h-10 w-auto transition-transform hover:scale-110"
                 />
                 <p className="text-xs text-primary/70 font-medium tracking-wider hidden sm:block">Grupo Empresarial</p>
               </div>
             </div>
-            
+
             {/* NavBar Desktop */}
             <nav className="hidden md:flex items-center gap-3 lg:gap-6 animate-in fade-in slide-in-from-right-5 duration-700 delay-200">
               {/* Otros links normales */}
@@ -69,7 +69,7 @@ export default function HomePage() {
               >
                 Contacto
               </a>
-              
+
               {/* Botón EMPRESAS Desktop */}
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
@@ -149,9 +149,8 @@ export default function HomePage() {
           {backgroundImages.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
               style={{
                 backgroundImage: `linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.35)), url('${image}')`,
                 backgroundSize: 'cover',
@@ -165,15 +164,15 @@ export default function HomePage() {
         {/* Contenido */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 py-12 sm:py-20">
           <div className="max-w-3xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-10 md:p-12 lg:p-16 shadow-2xl border border-white/30">
-            <Badge className="mb-4 sm:mb-6 bg-primary/20 text-primary border border-primary/40 animate-in fade-in-50 duration-1000 delay-300 inline-block text-xs sm:text-sm">
-              Grupo Empresarial desde 1995
+            <Badge className="mb-4 sm:mb-6 bg-black/90 text-white border border-black/60 animate-in fade-in-50 duration-1000 delay-300 inline-block text-xs sm:text-sm uppercase font-bold tracking-widest">
+              GRUPO EMPRESARIAL DESDE 1995
             </Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-balance leading-tight text-gray-900 tracking-tight animate-in fade-in slide-in-from-top-5 duration-700">
-              Grupo <img src="/img/formastext.png" alt="FORMAS" className="h-12 sm:h-16 lg:h-20 w-auto inline" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-balance leading-tight text-gray-900 tracking-tight animate-in fade-in slide-in-from-top-5 duration-700">
+              <span className="font-light">Grupo</span> <img src="/img/formastext.png" alt="FORMAS" className="h-12 sm:h-16 lg:h-20 w-auto inline" />
             </h2>
             <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-6 sm:mb-8 max-w-2xl mx-auto text-pretty leading-relaxed font-medium animate-in fade-in slide-in-from-top-5 duration-700 delay-200">
               Tres empresas especializadas bajo un mismo grupo, ofreciendo soluciones integrales en construcción,
-              estructuras metálicas e inmobiliaria en Santiago, República Dominicana.
+              estructuras metálicas e inmobiliaria en República Dominicana y otros países.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-in fade-in slide-in-from-bottom-5 duration-700 delay-500">
               <Button size="sm" className="gap-2 hover:scale-105 transition-transform duration-300 bg-primary hover:bg-primary/90 font-semibold sm:size-lg" asChild>
@@ -197,9 +196,8 @@ export default function HomePage() {
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === currentSlide ? 'bg-primary w-6 sm:w-8' : 'bg-gray-300 hover:bg-gray-400'
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-primary w-6 sm:w-8' : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
                   aria-label={`Ir a slide ${index + 1}`}
                 />
               ))}
@@ -234,7 +232,7 @@ export default function HomePage() {
                 <div className="w-12 sm:w-14 h-12 sm:h-14 bg-primary/15 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
                   <Wrench className="w-6 sm:w-7 h-6 sm:h-7 text-primary" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">Formas Estructuras en Acero</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">Formas División Acero</CardTitle>
                 <CardDescription>
                   Empresa especializada en diseño, fabricación e instalación de estructuras en acero
                 </CardDescription>
@@ -244,7 +242,7 @@ export default function HomePage() {
                   <li>• Naves industriales</li>
                   <li>• Estructuras comerciales</li>
                   <li>• Techos metálicos</li>
-                  <li className="text-xs sm:text-sm">• Escaleras y barandas</li>
+                  <li className="text-xs sm:text-sm">• Edificios en Acero</li>
                 </ul>
                 <Button className="w-full hover:scale-105 transition-transform duration-300 text-xs sm:text-sm" variant="default" asChild>
                   <Link href="/estructuras-metalicas">Visitar Empresa</Link>
@@ -274,7 +272,7 @@ export default function HomePage() {
                   <li>• Edificios residenciales</li>
                   <li>• Centros comerciales</li>
                   <li>• Obras civiles</li>
-                  <li>• Remodelaciones</li>
+                  <li>• Parques Industriales</li>
                 </ul>
                 <Button
                   className="w-full bg-transparent hover:scale-105 transition-transform duration-300 text-xs sm:text-sm"
@@ -298,14 +296,14 @@ export default function HomePage() {
                 <div className="w-12 sm:w-14 h-12 sm:h-14 bg-accent/15 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
                   <Home className="w-6 sm:w-7 h-6 sm:h-7 text-accent" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">Formas Inmobiliaria</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">Inmobiliaria Formas</CardTitle>
                 <CardDescription className="text-xs sm:text-sm">
-                  Empresa inmobiliaria especializada en desarrollo, venta y alquiler de propiedades
+                  Especializada en desarrollo de proyectos, venta y alquiler de propiedades
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative z-10">
                 <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
-                  <li>• Apartamentos y casas</li>
+                  <li>• Apartamentos y Viviendas</li>
                   <li>• Locales comerciales</li>
                   <li>• Terrenos</li>
                   <li>• Asesoría inmobiliaria</li>
@@ -328,7 +326,7 @@ export default function HomePage() {
         <div className="container mx-auto px-8 lg:px-32">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">Más de 25 años construyendo confianza</h3>
+              <h3 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">35 Años con pasos firmes</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 El Grupo Formas nació en Santiago con la visión de ser líder en el sector construcción de la República
                 Dominicana. Nuestra empresa principal de estructuras metálicas es el corazón del grupo, complementada
@@ -340,7 +338,7 @@ export default function HomePage() {
                   <p className="text-sm text-muted-foreground">Proyectos Completados</p>
                 </div>
                 <div className="hover:scale-105 transition-transform duration-300">
-                  <h4 className="text-2xl font-bold text-primary mb-2">25+</h4>
+                  <h4 className="text-2xl font-bold text-primary mb-2">35+</h4>
                   <p className="text-sm text-muted-foreground">Años de Experiencia</p>
                 </div>
               </div>
@@ -467,9 +465,9 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="animate-in fade-in slide-in-from-left-5 duration-700">
               <div className="flex items-center gap-3 mb-4">
-                <img 
-                  src="/img/formaslogotnombre.png" 
-                  alt="Formas" 
+                <img
+                  src="/img/formaslogotnombre.png"
+                  alt="Formas"
                   className="h-6 w-auto"
                 />
               </div>
