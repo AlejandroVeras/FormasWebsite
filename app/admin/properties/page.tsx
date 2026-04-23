@@ -40,23 +40,24 @@ export default function PropertiesPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const firebase = createClient()
-      
-      const { data: userData, error: authError } = await firebase.auth.getUser()
-      if (authError || !userData?.user) {
-        router.push("/admin/login")
-        return
-      }
+      try {
+        const response = await fetch("/api/admin/properties")
+        
+        if (response.status === 401) {
+          router.push("/admin/login")
+          return
+        }
 
-      const { data: properties, error } = await firebase
-        .from("properties")
-        .select("*")
-        .order("created_at", { ascending: false })
+        if (!response.ok) {
+          console.error("Error loading properties:", response.statusText)
+          setIsLoading(false)
+          return
+        }
 
-      if (error) {
+        const result = await response.json()
+        setProperties(result.data || [])
+      } catch (error) {
         console.error("Error loading properties:", error)
-      } else {
-        setProperties(properties || [])
       }
       setIsLoading(false)
     }

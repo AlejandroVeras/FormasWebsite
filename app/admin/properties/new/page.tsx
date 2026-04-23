@@ -13,13 +13,15 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { ArrowLeft, Building2, Plus, X } from "lucide-react"
+import { ArrowLeft, Building2, Plus, X, Upload, Loader2 } from "lucide-react"
 import { uploadImage } from "@/lib/storage"
 
 export default function NewPropertyPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [features, setFeatures] = useState<string[]>([])
   const [newFeature, setNewFeature] = useState("")
 
@@ -38,22 +40,25 @@ export default function NewPropertyPage() {
   })
 const [images, setImages] = useState<string[]>([]);
 
-const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const files = e.target.files;
-  if (!files) return;
-  let uploadedImages: string[] = [];
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const fileName = `${Date.now()}_${file.name}`;
-    try {
-      const { url } = await uploadImage(file, fileName)
-      uploadedImages.push(url)
-    } catch (e: any) {
-      alert("Error al subir imagen: " + (e?.message || "desconocido"))
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    setIsUploadingImages(true)
+    let uploadedImages: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileName = `${Date.now()}_${file.name}`;
+      try {
+        const { url } = await uploadImage(file, fileName)
+        uploadedImages.push(url)
+      } catch (e: any) {
+        setError("Error al subir imagen: " + (e?.message || "desconocido"))
+      }
     }
-  }
-  setImages([...images, ...uploadedImages]);
-};
+    setImages([...images, ...uploadedImages]);
+    setIsUploadingImages(false)
+    e.target.value = ""
+  };
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
@@ -308,21 +313,55 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                   />
                 </div>
               </div>
-<div>
-  <Label>Imágenes</Label>
-  <input
-    type="file"
-    multiple
-    accept="image/*"
-    onChange={handleImageUpload}
-    className="block mt-2"
-  />
-  <div className="flex gap-2 mt-2">
-    {images.map((url) => (
-      <img key={url} src={url} alt="Preview" className="w-20 h-20 object-cover rounded" />
-    ))}
-  </div>
-</div>
+              <div>
+                <Label>Imágenes de la Propiedad</Label>
+                <div className="mt-2">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                    {images.map((url, index) => (
+                      <div key={url} className="relative group">
+                        <img src={url} alt={`Preview ${index + 1}`} className="w-full h-24 object-cover rounded-lg border" />
+                        <button
+                          type="button"
+                          onClick={() => setImages(images.filter(i => i !== url))}
+                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                        {index === 0 && (
+                          <span className="absolute bottom-1 left-1 bg-green-600 text-white text-xs px-2 py-0.5 rounded">
+                            Principal
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="image-upload-new"
+                      disabled={isUploadingImages}
+                    />
+                    <label
+                      htmlFor="image-upload-new"
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-colors ${
+                        isUploadingImages
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-gray-100 hover:bg-gray-200"
+                      }`}
+                    >
+                      {isUploadingImages ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> Subiendo imágenes...</>
+                      ) : (
+                        <><Upload className="w-4 h-4" /> Agregar Imágenes</>
+                      )}
+                    </label>
+                  </div>
+                </div>
+              </div>
               {/* Características */}
               <div>
                 <Label>Características</Label>
@@ -353,8 +392,10 @@ const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 
               {/* Botones */}
               <div className="flex gap-4 pt-6">
-                <Button type="submit" className="bg-green-600 hover:bg-green-700" disabled={isLoading}>
-                  {isLoading ? "Guardando..." : "Guardar Propiedad"}
+                <Button type="submit" className="bg-green-600 hover:bg-green-700" disabled={isLoading || isUploadingImages}>
+                  {isLoading ? (
+                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Guardando...</>
+                  ) : "Guardar Propiedad"}
                 </Button>
                 <Button type="button" variant="outline" asChild>
                   <Link href="/admin/properties">Cancelar</Link>

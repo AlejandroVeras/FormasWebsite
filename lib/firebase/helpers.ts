@@ -153,8 +153,12 @@ export async function getAdminCollection(
 
     let q: any = adminDb.collection(collectionName)
 
-    // Apply filters
-    filters.forEach(({ field, operator, value }) => {
+    // Separate id filters (can't use where on doc ID) from regular filters
+    const idFilters = filters.filter(f => f.field === "id")
+    const regularFilters = filters.filter(f => f.field !== "id")
+
+    // Apply regular filters
+    regularFilters.forEach(({ field, operator, value }) => {
       if (operator === "==") {
         q = q.where(field, "==", value)
       } else if (operator === "!=") {
@@ -282,7 +286,7 @@ export async function getAdminCollection(
       return { data: [], error: { message: 'No snapshot available' }, count: 0 }
     }
 
-    const data = snapshot.docs.map((doc: any) => {
+    let data = snapshot.docs.map((doc: any) => {
       const docData = doc.data()
       return {
         id: doc.id,
@@ -292,7 +296,17 @@ export async function getAdminCollection(
       }
     })
 
-    return { data, error: null, count: snapshot.size }
+    // Apply id filters in memory (since Firestore doc IDs can't be filtered with where)
+    if (idFilters.length > 0) {
+      data = data.filter((item: any) => {
+        return idFilters.every(f => {
+          if (f.operator === "==") return item.id === f.value
+          return true
+        })
+      })
+    }
+
+    return { data, error: null, count: data.length }
   } catch (error: any) {
     console.error(`Error getting collection ${collectionName}:`, error?.message || error)
     console.error(`Error code:`, error?.code)

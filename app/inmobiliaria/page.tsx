@@ -3,61 +3,34 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import ContactForm from "@/components/contact-form"
-import { Home, Building, MapPin, Phone, Mail, ArrowLeft, Search, Bed, Bath, Square, Settings } from "lucide-react"
+import { Home, Building, MapPin, Phone, Mail, ArrowLeft, Search, Bed, Bath, Square, Settings, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { createServerClient } from "@/lib/firebase/server"
 
 export default async function InmobiliariaPage() {
   const firebase = await createServerClient()
 
-  let properties = []
-  let featuredProperties = []
+  let properties: any[] = []
 
   try {
-    // Get properties
+    // Get available properties (single query for both sections)
     const propertiesResult = await firebase
       .from("properties")
       .select("*")
       .eq("status", "disponible")
       .order("created_at", { ascending: false })
       .limit(6)
-    
+
     if (propertiesResult?.error) {
       console.error("Error loading properties:", propertiesResult.error)
       properties = []
     } else {
       properties = propertiesResult?.data || []
     }
-
-    // Get featured properties for the hero section
-    const featuredResult = await firebase
-      .from("properties")
-      .select("*")
-      .eq("status", "disponible")
-      .order("created_at", { ascending: false })
-      .limit(3)
-    
-    if (featuredResult?.error) {
-      console.error("Error loading featured properties:", featuredResult.error)
-      featuredProperties = []
-    } else {
-      featuredProperties = featuredResult?.data || []
-    }
   } catch (error: any) {
     console.error("Error loading properties:", error)
-    console.error("Error details:", error.message, error.stack)
-    // Continue with empty arrays if there's an error
     properties = []
-    featuredProperties = []
   }
-  // Once featured properties are enabled, use this query instead:
-  // const { data: featuredProperties } = await firebase
-  //   .from("properties")
-  //   .select("*")
-  //   .eq("featured", true)
-  //   .eq("status", "disponible")
-  //   .order("featured_order")
-  //   .limit(3)
 
   const formatPrice = (price: number, operationType: string) => {
     const formattedPrice = new Intl.NumberFormat("es-DO", {
@@ -93,9 +66,9 @@ export default async function InmobiliariaPage() {
             {/* Logo */}
             <div className="flex items-center gap-2 sm:gap-3 animate-in fade-in slide-in-from-left-5 duration-700 group flex-shrink-0">
               <div className="hover:scale-105 transition-transform duration-300">
-                <img 
-                  src="/img/formaslogotnombre.png" 
-                  alt="Formas" 
+                <img
+                  src="/img/formaslogotnombre.png"
+                  alt="Formas"
                   className="h-8 sm:h-10 w-auto transition-transform hover:scale-110"
                 />
                 <p className="text-xs font-semibold inmobiliaria-verde/70 tracking-widest mt-1 hidden sm:block">INMOBILIARIA</p>
@@ -158,7 +131,7 @@ export default async function InmobiliariaPage() {
               Tu <span className="formas-turquesa viner-hand text-5xl sm:text-6xl md:text-7xl">Hogar Ideal</span> te Espera
             </h2>
             <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-pretty animate-in slide-in-from-bottom-8 duration-1000 delay-700 leading-relaxed font-medium">
-              Encuentra la propiedad perfecta en Santiago. Ofrecemos venta, alquiler y asesoría inmobiliaria con la confianza y experiencia de más de 25 años del Grupo Formas.
+              Encuentra la propiedad perfecta. Ofrecemos venta, alquiler y asesoría inmobiliaria con la confianza y experiencia de más de 35 años del Grupo Formas.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in slide-in-from-bottom-8 duration-1000 delay-1000">
               <Button
@@ -186,7 +159,7 @@ export default async function InmobiliariaPage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 sm:py-20">
+      <section id="servicios" className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-8 lg:px-16">
           <div className="text-center mb-12 sm:mb-16 animate-in fade-in-50 duration-1000">
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Nuestros Servicios</h3>
@@ -208,6 +181,7 @@ export default async function InmobiliariaPage() {
                   "• Terrenos para desarrollo",
                 ],
                 buttonText: "Ver Propiedades en Venta",
+                href: "/inmobiliaria/propiedades?operation_type=venta",
                 delay: "delay-200",
               },
               {
@@ -221,6 +195,7 @@ export default async function InmobiliariaPage() {
                   "• Espacios comerciales",
                 ],
                 buttonText: "Ver Propiedades en Alquiler",
+                href: "/inmobiliaria/propiedades?operation_type=alquiler",
                 delay: "delay-400",
               },
               {
@@ -234,6 +209,7 @@ export default async function InmobiliariaPage() {
                   "• Gestión de documentos",
                 ],
                 buttonText: "Solicitar Asesoría",
+                href: "#contacto",
                 delay: "delay-600",
               },
             ].map((service, index) => (
@@ -259,13 +235,7 @@ export default async function InmobiliariaPage() {
                     variant={index === 0 ? "default" : "outline"}
                     asChild
                   >
-                    {index === 0 ? (
-                      <Link href="/inmobiliaria/propiedades?operation_type=venta">{service.buttonText}</Link>
-                    ) : index === 1 ? (
-                      <Link href="/inmobiliaria/propiedades?operation_type=alquiler">{service.buttonText}</Link>
-                    ) : (
-                      <a href="#contacto" className="scroll-smooth">{service.buttonText}</a>
-                    )}
+                    <Link href={service.href}>{service.buttonText}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -274,302 +244,120 @@ export default async function InmobiliariaPage() {
         </div>
       </section>
 
-      {/* Featured Properties */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-8 lg:px-16">
-          <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
-            <h3 className="text-4xl md:text-5xl font-bold mb-4">Propiedades Destacadas</h3>
-            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">Explora nuestras mejores opciones disponibles, cuidadosamente seleccionadas para ti</p>
-          </div>
-
-          {featuredProperties && featuredProperties.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-8">
-              {featuredProperties.map((property, index) => {
-                const PropertyIcon = getPropertyIcon(property.property_type)
-                return (
-                  <Card key={property.id} className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}>
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
-                      {property.images && property.images[0] ? (
-                        <img
-                          src={property.images[0] || "/placeholder.svg"}
-                          alt={property.title}
-                          className="w-full h-full object-cover transition-transform hover:scale-110"
-                        />
-                      ) : (
-                        <PropertyIcon className="w-16 h-16 formas-turquesa/50" />
-                      )}
-                      <Badge
-                        variant={property.operation_type === "venta" ? "secondary" : "outline"}
-                        className="absolute top-2 right-2"
-                      >
-                        {property.operation_type}
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold text-lg">{property.title}</h4>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {property.address}, {property.city}
-                      </p>
-                      <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                        {property.bedrooms && (
-                          <div className="flex items-center gap-1">
-                            <Bed className="w-4 h-4" />
-                            <span>{property.bedrooms}</span>
-                          </div>
-                        )}
-                        {property.bathrooms && (
-                          <div className="flex items-center gap-1">
-                            <Bath className="w-4 h-4" />
-                            <span>{property.bathrooms}</span>
-                          </div>
-                        )}
-                        {property.area_m2 && (
-                          <div className="flex items-center gap-1">
-                            <Square className="w-4 h-4" />
-                            <span>{property.area_m2}m²</span>
-                          </div>
-                        )}
-                      </div>
-                      {property.features && property.features.length > 0 && (
-                        <div className="mb-4">
-                          <div className="flex flex-wrap gap-1">
-                            {property.features.slice(0, 3).map((feature, idx) => (
-                              <Badge key={idx} variant="outline" className="text-xs">
-                                {feature}
-                              </Badge>
-                            ))}
-                            {property.features.length > 3 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{property.features.length - 3}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold formas-turquesa">
-                          {formatPrice(property.price, property.operation_type)}
-                        </span>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="hover:scale-105 transition-transform bg-transparent"
-                          asChild
-                        >
-                          <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                            Ver Detalles
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Fallback: Show sample cards when no featured properties */}
-              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-200">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Home className="w-16 h-16 formas-turquesa/50" />
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold">Apartamento Moderno</h4>
-                    <Badge variant="secondary">Venta</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">Bella Vista, Santiago</p>
-                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <Bed className="w-4 h-4" />
-                      <span>3</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Bath className="w-4 h-4" />
-                      <span>2</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Square className="w-4 h-4" />
-                      <span>120m²</span>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$185,000</span>
-                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                      Ver Detalles
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-400">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Building className="w-16 h-16 formas-turquesa" />
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold">Casa Familiar</h4>
-                    <Badge variant="secondary">Venta</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">Los Jardines, Santiago</p>
-                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <Bed className="w-4 h-4" />
-                      <span>4</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Bath className="w-4 h-4" />
-                      <span>3</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Square className="w-4 h-4" />
-                      <span>250m²</span>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$320,000</span>
-                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                      Ver Detalles
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-600">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <Home className="w-16 h-16 formas-turquesa/50" />
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold">Local Comercial</h4>
-                    <Badge variant="outline">Alquiler</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">Centro de Santiago</p>
-                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <Square className="w-4 h-4" />
-                      <span>80m²</span>
-                    </div>
-                    <span>Planta baja</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold formas-turquesa">$1,200/mes</span>
-                    <Button size="sm" variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                      Ver Detalles
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Propiedades Disponibles */}
+      {/* Properties Section — Single unified section */}
       <section id="propiedades" className="py-20 bg-muted/30">
         <div className="container mx-auto px-8 lg:px-16">
           <div className="text-center mb-16 animate-in fade-in-50 duration-1000">
             <h3 className="text-4xl md:text-5xl font-bold mb-4">Propiedades Disponibles</h3>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
-              {properties && properties.length > 0
-                ? `Descubre nuestras ${properties.length} propiedades destacadas con las mejores ubicaciones`
+              {properties.length > 0
+                ? "Explora nuestras mejores opciones disponibles, cuidadosamente seleccionadas para ti"
                 : "Próximamente tendremos propiedades disponibles"}
             </p>
           </div>
 
           {properties && properties.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((property, index) => {
-                const PropertyIcon = getPropertyIcon(property.property_type)
-                return (
-                  <Card
-                    key={property.id}
-                    className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}
-                  >
-                    <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
-                      {property.images && property.images[0] ? (
-                        <img
-                          src={property.images[0] || "/placeholder.svg"}
-                          alt={property.title}
-                          className="w-full h-full object-cover transition-transform hover:scale-110"
-                        />
-                      ) : (
-                        <PropertyIcon className="w-16 h-16 formas-turquesa" />
-                      )}
-                      <Badge
-                        variant={property.operation_type === "venta" ? "secondary" : "outline"}
-                        className="absolute top-2 right-2"
-                      >
-                        {property.operation_type}
-                      </Badge>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold text-lg">{property.title}</h4>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {property.address}, {property.city}
-                      </p>
-                      <div className="flex gap-4 text-sm text-muted-foreground mb-4">
-                        {property.bedrooms && (
-                          <div className="flex items-center gap-1">
-                            <Bed className="w-4 h-4" />
-                            <span>{property.bedrooms}</span>
-                          </div>
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {properties.map((property: any, index: number) => {
+                  const PropertyIcon = getPropertyIcon(property.property_type)
+                  return (
+                    <Card key={property.id} className={`overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105 animate-in slide-in-from-bottom-8 duration-1000 delay-${(index + 1) * 200}`}>
+                      <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
+                        {property.images && property.images[0] ? (
+                          <img
+                            src={property.images[0] || "/placeholder.svg"}
+                            alt={property.title}
+                            className="w-full h-full object-cover transition-transform hover:scale-110"
+                          />
+                        ) : (
+                          <PropertyIcon className="w-16 h-16 formas-turquesa/50" />
                         )}
-                        {property.bathrooms && (
-                          <div className="flex items-center gap-1">
-                            <Bath className="w-4 h-4" />
-                            <span>{property.bathrooms}</span>
-                          </div>
-                        )}
-                        {property.area_m2 && (
-                          <div className="flex items-center gap-1">
-                            <Square className="w-4 h-4" />
-                            <span>{property.area_m2}m²</span>
-                          </div>
-                        )}
-                      </div>
-                      {property.features && property.features.length > 0 && (
-                        <div className="mb-4">
-                          <div className="flex flex-wrap gap-1">
-                            {property.features.slice(0, 3).map((feature, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {feature}
-                              </Badge>
-                            ))}
-                            {property.features.length > 3 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{property.features.length - 3}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center">
-                        <span className="text-xl font-bold formas-turquesa">
-                          {formatPrice(property.price, property.operation_type)}
-                        </span>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="hover:scale-105 transition-transform bg-transparent"
-                          asChild
+                        <Badge
+                          variant={property.operation_type === "venta" ? "secondary" : "outline"}
+                          className="absolute top-2 right-2 capitalize"
                         >
-                          <Link href={`/inmobiliaria/propiedades/${property.id}`}>
-                            Ver Detalles
-                          </Link>
-                        </Button>
+                          {property.operation_type}
+                        </Badge>
                       </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-semibold text-lg line-clamp-1">{property.title}</h4>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4 flex items-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {property.address}, {property.city}
+                        </p>
+                        <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                          {property.bedrooms && (
+                            <div className="flex items-center gap-1">
+                              <Bed className="w-4 h-4" />
+                              <span>{property.bedrooms}</span>
+                            </div>
+                          )}
+                          {property.bathrooms && (
+                            <div className="flex items-center gap-1">
+                              <Bath className="w-4 h-4" />
+                              <span>{property.bathrooms}</span>
+                            </div>
+                          )}
+                          {property.area_m2 && (
+                            <div className="flex items-center gap-1">
+                              <Square className="w-4 h-4" />
+                              <span>{property.area_m2}m²</span>
+                            </div>
+                          )}
+                        </div>
+                        {property.features && property.features.length > 0 && (
+                          <div className="mb-4">
+                            <div className="flex flex-wrap gap-1">
+                              {property.features.slice(0, 3).map((feature: string, idx: number) => (
+                                <Badge key={idx} variant="outline" className="text-xs">
+                                  {feature}
+                                </Badge>
+                              ))}
+                              {property.features.length > 3 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{property.features.length - 3}
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        <div className="flex justify-between items-center">
+                          <span className="text-xl font-bold formas-turquesa">
+                            {formatPrice(property.price, property.operation_type)}
+                          </span>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="hover:scale-105 transition-transform bg-transparent"
+                            asChild
+                          >
+                            <Link href={`/inmobiliaria/propiedades/${property.id}`}>
+                              Ver Detalles
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
+              </div>
+
+              {/* View All Button */}
+              <div className="text-center mt-12">
+                <Button
+                  size="lg"
+                  className="formas-turquesa-bg hover:scale-105 transition-transform font-semibold gap-2"
+                  asChild
+                >
+                  <Link href="/inmobiliaria/propiedades">
+                    Ver Todas las Propiedades <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12 animate-in fade-in-50 duration-1000">
               <Home className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
@@ -577,8 +365,8 @@ export default async function InmobiliariaPage() {
               <p className="text-muted-foreground mb-6">
                 Estamos preparando un excelente catálogo de propiedades para ti
               </p>
-              <Button variant="outline" className="hover:scale-105 transition-transform bg-transparent">
-                Notificarme cuando estén disponibles
+              <Button variant="outline" className="hover:scale-105 transition-transform bg-transparent" asChild>
+                <a href="#contacto">Notificarme cuando estén disponibles</a>
               </Button>
             </div>
           )}

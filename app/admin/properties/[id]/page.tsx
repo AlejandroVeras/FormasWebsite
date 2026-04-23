@@ -26,6 +26,7 @@ interface Property {
   features: string[]
   images: string[]
   created_at: string
+  updated_at: string
 }
 
 interface PropertyPageProps {
@@ -41,27 +42,31 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
   useEffect(() => {
     const loadProperty = async () => {
-      const firebase = createClient()
-      
-      const { data: userData, error: authError } = await firebase.auth.getUser()
-      if (authError || !userData?.user) {
-        router.push("/admin/login")
-        return
-      }
+      try {
+        const response = await fetch(`/api/properties/${params.id}`)
+        
+        if (response.status === 401) {
+          router.push("/admin/login")
+          return
+        }
 
-      const { data: property, error } = await firebase
-        .from("properties")
-        .select("*")
-        .eq("id", params.id)
-        .single()
+        if (!response.ok) {
+          router.push("/admin/properties")
+          return
+        }
 
-      if (error || !property) {
+        const result = await response.json()
+        if (!result.data) {
+          router.push("/admin/properties")
+          return
+        }
+
+        setProperty(result.data)
+        setIsLoading(false)
+      } catch (error) {
+        console.error("Error loading property:", error)
         router.push("/admin/properties")
-        return
       }
-
-      setProperty(property)
-      setIsLoading(false)
     }
 
     loadProperty()

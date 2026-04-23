@@ -35,18 +35,48 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
   try {
-    // Build basic query
-    const baseQuery = firebase
+    // Build query with ALL filters using the new chainable API
+    let query: any = firebase
       .from("properties")
       .select("*", { count: "exact" })
       .eq("status", "disponible")
 
-    // Apply operation type filter if present
-    const finalQuery = searchParams.operation_type && searchParams.operation_type !== "all" 
-      ? baseQuery.eq("operation_type", searchParams.operation_type)
-      : baseQuery
+    // Apply operation type filter
+    if (searchParams.operation_type && searchParams.operation_type !== "all") {
+      query = query.eq("operation_type", searchParams.operation_type)
+    }
 
-    const { data: properties, count } = await finalQuery
+    // Apply property type filter
+    if (searchParams.property_type && searchParams.property_type !== "all") {
+      query = query.eq("property_type", searchParams.property_type)
+    }
+
+    // Apply city filter
+    if (searchParams.city && searchParams.city !== "all") {
+      query = query.eq("city", searchParams.city)
+    }
+
+    // Apply min price filter
+    if (searchParams.min_price) {
+      query = query.gte("price", Number(searchParams.min_price))
+    }
+
+    // Apply max price filter
+    if (searchParams.max_price) {
+      query = query.lte("price", Number(searchParams.max_price))
+    }
+
+    // Apply bedrooms filter (minimum)
+    if (searchParams.bedrooms && searchParams.bedrooms !== "all") {
+      query = query.gte("bedrooms", Number(searchParams.bedrooms))
+    }
+
+    // Apply text search filter
+    if (searchParams.search) {
+      query = query.ilike("title", `%${searchParams.search}%`)
+    }
+
+    const { data: properties, count } = await query
       .order("created_at", { ascending: false })
       .range(offset, offset + ITEMS_PER_PAGE - 1)
 
@@ -95,12 +125,12 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
       <>
         <div className="mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            {count || 0} Propiedades Encontradas
+            {count || 0} Propiedad{(count || 0) !== 1 ? "es" : ""} Encontrada{(count || 0) !== 1 ? "s" : ""}
           </h2>
           <p className="text-muted-foreground">
-            {Object.keys(searchParams).length > 0 
+            {Object.keys(searchParams).filter(k => searchParams[k as keyof SearchParams] && searchParams[k as keyof SearchParams] !== "all").length > 0
               ? "Resultados filtrados según tus criterios de búsqueda"
-              : "Encuentra la propiedad perfecta para ti en Santiago"
+              : "Encuentra la propiedad perfecta para ti"
             }
           </p>
           {totalPages > 1 && (
@@ -113,7 +143,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
         {properties && properties.length > 0 ? (
           <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {properties.map((property) => {
+              {properties.map((property: any) => {
                 const PropertyIcon = getPropertyIcon(property.property_type)
                 return (
                   <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
@@ -186,7 +216,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                 )
               })}
             </div>
-            
+
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-12 flex justify-center">
@@ -197,18 +227,18 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                         <PaginationPrevious href={generatePageUrl(currentPage - 1)} />
                       </PaginationItem>
                     )}
-                    
+
                     {/* Page numbers */}
                     {(() => {
                       const pages = []
                       const showPages = 5
                       let startPage = Math.max(1, currentPage - Math.floor(showPages / 2))
                       let endPage = Math.min(totalPages, startPage + showPages - 1)
-                      
+
                       if (endPage - startPage < showPages - 1) {
                         startPage = Math.max(1, endPage - showPages + 1)
                       }
-                      
+
                       for (let i = startPage; i <= endPage; i++) {
                         pages.push(
                           <PaginationItem key={i}>
@@ -223,7 +253,7 @@ async function PropertyList({ searchParams }: { searchParams: SearchParams }) {
                       }
                       return pages
                     })()}
-                    
+
                     {currentPage < totalPages && (
                       <PaginationItem>
                         <PaginationNext href={generatePageUrl(currentPage + 1)} />
@@ -277,12 +307,15 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
     .from("properties")
     .select("city")
     .eq("status", "disponible")
-    .order("city")
+    .order("city", { ascending: true })
+    .limit(100)
 
-  const uniqueCities = [...new Set(cities?.map(c => c.city) || [])].filter(Boolean)
+  const uniqueCities = [...new Set(cities?.map((c: any) => c.city) || [])].filter(Boolean)
 
   // Check if any filters are active
-  const hasActiveFilters = Object.keys(searchParams).length > 0
+  const hasActiveFilters = Object.entries(searchParams).some(
+    ([key, value]) => value && value !== "all" && key !== "page"
+  )
 
   return (
     <div className="min-h-screen bg-background">
@@ -295,9 +328,9 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                 <Home className="w-6 h-6 text-white" />
               </div>
               <div>
-                <img 
-                  src="/img/formaslogotnombre.png" 
-                  alt="Formas" 
+                <img
+                  src="/img/formaslogotnombre.png"
+                  alt="Formas"
                   className="h-10 w-auto transition-transform hover:scale-110"
                 />
                 <p className="text-xs font-medium inmobiliaria-verde/70 tracking-wider">TODAS LAS PROPIEDADES</p>
@@ -320,9 +353,9 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input 
+                <Input
                   name="search"
-                  placeholder="Buscar por ubicación, tipo de propiedad, características..." 
+                  placeholder="Buscar por título de propiedad..."
                   className="bg-background pl-10"
                   defaultValue={searchParams.search || ""}
                 />
@@ -366,7 +399,7 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Todas las ciudades</SelectItem>
-                  {uniqueCities.map((city) => (
+                  {uniqueCities.map((city: string) => (
                     <SelectItem key={city} value={city}>{city}</SelectItem>
                   ))}
                 </SelectContent>
@@ -386,14 +419,14 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
               </Select>
 
               <div className="grid grid-cols-2 gap-1">
-                <Input 
+                <Input
                   name="min_price"
                   type="number"
                   placeholder="Precio mín"
                   className="bg-background text-sm"
                   defaultValue={searchParams.min_price || ""}
                 />
-                <Input 
+                <Input
                   name="max_price"
                   type="number"
                   placeholder="Precio máx"
@@ -422,8 +455,8 @@ export default async function PropiedadesPage({ searchParams }: PropiedadesPageP
               <div className="flex flex-wrap gap-2 pt-2">
                 <span className="text-sm text-muted-foreground">Filtros activos:</span>
                 {Object.entries(searchParams).map(([key, value]) => {
-                  if (!value || value === "all") return null
-                  
+                  if (!value || value === "all" || key === "page") return null
+
                   let displayValue = value
                   if (key === "property_type") displayValue = `Tipo: ${value}`
                   if (key === "operation_type") displayValue = `Operación: ${value}`

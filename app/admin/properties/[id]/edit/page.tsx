@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { ArrowLeft, Building2, Plus, X, Upload, Trash2 } from "lucide-react"
+import { ArrowLeft, Building2, Plus, X, Upload, Loader2 } from "lucide-react"
 import { uploadImage } from "@/lib/storage"
 
 interface Property {
@@ -43,7 +43,9 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingProperty, setIsLoadingProperty] = useState(true)
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [features, setFeatures] = useState<string[]>([])
   const [newFeature, setNewFeature] = useState("")
   const [images, setImages] = useState<string[]>([])
@@ -66,16 +68,16 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
   // Load property data
   useEffect(() => {
     const loadProperty = async () => {
-      const firebase = createClient()
-      
       try {
-        const { data: property, error } = await firebase
-          .from("properties")
-          .select("*")
-          .eq("id", params.id)
-          .single()
+        const response = await fetch(`/api/properties/${params.id}`)
+        
+        if (!response.ok) {
+          throw new Error("Propiedad no encontrada")
+        }
 
-        if (error) throw error
+        const result = await response.json()
+        const property = result.data
+
         if (!property) throw new Error("Propiedad no encontrada")
 
         setProperty(property)
@@ -109,7 +111,9 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
     const files = e.target.files
     if (!files) return
 
+    setIsUploadingImages(true)
     const uploadedImages: string[] = []
+    
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       const fileName = `${Date.now()}_${file.name}`
@@ -117,10 +121,15 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
         const { url } = await uploadImage(file, fileName)
         uploadedImages.push(url)
       } catch (e: any) {
-        alert("Error al subir imagen: " + (e?.message || "desconocido"))
+        setError("Error al subir imagen: " + (e?.message || "desconocido"))
       }
     }
+    
     setImages([...images, ...uploadedImages])
+    setIsUploadingImages(false)
+    
+    // Reset file input
+    e.target.value = ""
   }
 
   const removeImage = (imageToRemove: string) => {
@@ -146,15 +155,9 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
-
-    const firebase = createClient()
+    setSuccessMessage(null)
 
     try {
-      const { data: user } = await firebase.auth.getUser()
-      if (!user.user) {
-        throw new Error("Usuario no autenticado")
-      }
-
       const propertyData = {
         title: formData.title,
         description: formData.description,
@@ -171,14 +174,25 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
         images: images,
       }
 
-      const { error } = await firebase
-        .from("properties")
-        .update(propertyData)
-        .eq("id", params.id)
+      // Use API route for server-side update
+      const response = await fetch(`/api/properties/${params.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(propertyData),
+      })
 
-      if (error) throw error
+      const result = await response.json()
 
-      router.push(`/admin/properties/${params.id}`)
+      if (!response.ok) {
+        throw new Error(result.error || "Error al actualizar la propiedad")
+      }
+
+      setSuccessMessage("Propiedad actualizada exitosamente")
+      setTimeout(() => {
+        router.push(`/admin/properties/${params.id}`)
+      }, 1000)
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error al actualizar la propiedad")
     } finally {
@@ -396,6 +410,11 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
                         >
                           <X className="w-3 h-3" />
                         </button>
+                        {index === 0 && (
+                          <span className="absolute bottom-1 left-1 bg-green-600 text-white text-xs px-2 py-0.5 rounded">
+                            Principal
+                          </span>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -407,13 +426,27 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
                       onChange={handleImageUpload}
                       className="hidden"
                       id="image-upload"
+                      disabled={isUploadingImages}
                     />
                     <Label
                       htmlFor="image-upload"
-                      className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg cursor-pointer transition-colors"
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-colors ${
+                        isUploadingImages
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                          : "bg-gray-100 hover:bg-gray-200"
+                      }`}
                     >
-                      <Upload className="w-4 h-4" />
-                      Agregar Imágenes
+                      {isUploadingImages ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Subiendo imágenes...
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="w-4 h-4" />
+                          Agregar Imágenes
+                        </>
+                      )}
                     </Label>
                   </div>
                 </div>
@@ -449,12 +482,29 @@ export default function EditPropertyPage({ params }: EditPropertyPageProps) {
                 </div>
               </div>
 
-              {error && <p className="text-sm text-red-500">{error}</p>}
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-sm text-red-600">{error}</p>
+                </div>
+              )}
+
+              {successMessage && (
+                <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-600">{successMessage}</p>
+                </div>
+              )}
 
               {/* Botones */}
               <div className="flex gap-4 pt-6">
-                <Button type="submit" className="bg-green-600 hover:bg-green-700" disabled={isLoading}>
-                  {isLoading ? "Guardando..." : "Guardar Cambios"}
+                <Button type="submit" className="bg-green-600 hover:bg-green-700" disabled={isLoading || isUploadingImages}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Guardando...
+                    </>
+                  ) : (
+                    "Guardar Cambios"
+                  )}
                 </Button>
                 <Button type="button" variant="outline" asChild>
                   <Link href={`/admin/properties/${params.id}`}>Cancelar</Link>

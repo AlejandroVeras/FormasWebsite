@@ -40,14 +40,14 @@ export function DeletePropertyDialog({
     setIsDeleting(true)
     
     try {
-      const firebase = createClient()
-      
-      const { error } = await firebase
-        .from("properties")
-        .delete()
-        .eq("id", propertyId)
+      const response = await fetch(`/api/properties/${propertyId}`, {
+        method: "DELETE",
+      })
 
-      if (error) throw error
+      if (!response.ok) {
+        const result = await response.json()
+        throw new Error(result.error || "Error al eliminar")
+      }
 
       // Navigate to properties list
       router.push("/admin/properties")

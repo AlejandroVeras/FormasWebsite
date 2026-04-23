@@ -335,6 +335,21 @@ export function createClient() {
               }
               return { data, error: null }
             },
+            then: (resolve: any, reject: any) => {
+              const q = query(
+                collection(db, table),
+                orderBy(fieldOrder, options?.ascending ? "asc" : "desc"),
+              )
+              getDocs(q).then((snapshot) => {
+                const data = snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  ...doc.data(),
+                  created_at: doc.data().created_at?.toDate?.()?.toISOString() || doc.data().created_at,
+                  updated_at: doc.data().updated_at?.toDate?.()?.toISOString() || doc.data().updated_at,
+                }))
+                resolve(countMode ? { data, count: snapshot.size, error: null } : { data, error: null })
+              }).catch(reject)
+            },
           }),
           limit: async (num: number) => {
             const q = query(

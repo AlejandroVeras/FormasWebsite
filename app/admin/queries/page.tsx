@@ -36,41 +36,24 @@ export default function QueriesPage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const firebase = createClient()
-      
-      const { data: userData, error: authError } = await firebase.auth.getUser()
-      if (authError || !userData?.user) {
-        router.push("/admin/login")
-        return
-      }
+      try {
+        const response = await fetch("/api/admin/inquiries")
+        
+        if (response.status === 401) {
+          router.push("/admin/login")
+          return
+        }
 
-      // 1) Cargar consultas (sin joins)
-      const { data: inquiries, error } = await firebase
-        .from("property_inquiries")
-        .select("*")
-        .order("created_at", { ascending: false })
+        if (!response.ok) {
+          console.error("Error loading inquiries:", response.statusText)
+          setIsLoading(false)
+          return
+        }
 
-      if (error) {
+        const result = await response.json()
+        setInquiries(result.data || [])
+      } catch (error) {
         console.error("Error loading inquiries:", error)
-      } else {
-        // 2) Para cada consulta, si tiene property_id, cargar datos básicos de la propiedad
-        const withProperty = await Promise.all((inquiries || []).map(async (inq: any) => {
-          if (!inq?.property_id) return inq
-          const { data: prop } = await firebase
-            .from("properties")
-            .select("*")
-            .eq("id", inq.property_id)
-            .single()
-          return {
-            ...inq,
-            properties: prop ? {
-              title: prop.title,
-              address: prop.address,
-              price: prop.price,
-            } : undefined,
-          }
-        }))
-        setInquiries(withProperty)
       }
       setIsLoading(false)
     }

@@ -2,11 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/firebase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -21,7 +19,8 @@ import {
   User, 
   MessageSquare,
   Send,
-  History
+  History,
+  Loader2
 } from "lucide-react"
 
 interface PropertyInquiry {
@@ -68,116 +67,82 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
   const [response, setResponse] = useState("")
   const [newStatus, setNewStatus] = useState("")
   const [newInteraction, setNewInteraction] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
 
   useEffect(() => {
     const loadData = async () => {
-      const firebase = createClient()
-      
-      const { data: userData, error: authError } = await firebase.auth.getUser()
-      if (authError || !userData?.user) {
-        router.push("/admin/login")
-        return
-      }
-
-      // 1) Cargar la consulta (sin joins)
-      const { data: inquiry, error: inquiryError } = await firebase
-        .from("property_inquiries")
-        .select("*")
-        .eq("id", params.id)
-        .single()
-
-      if (inquiryError || !inquiry) {
-        router.push("/admin/queries")
-        return
-      }
-
-      // 2) Si tiene propiedad asociada, cargar datos de la propiedad
-      let attachedInquiry = inquiry
-      if (inquiry.property_id) {
-        const { data: prop } = await firebase
-          .from("properties")
-          .select("*")
-          .eq("id", inquiry.property_id)
-          .single()
-        if (prop) {
-          attachedInquiry = {
-            ...inquiry,
-            properties: {
-              title: prop.title,
-              address: prop.address,
-              price: prop.price,
-              property_type: prop.property_type,
-              operation_type: prop.operation_type,
-            },
-          }
+      try {
+        const res = await fetch(`/api/admin/inquiries/${params.id}`)
+        
+        if (res.status === 401) {
+          router.push("/admin/login")
+          return
         }
+
+        if (!res.ok) {
+          router.push("/admin/queries")
+          return
+        }
+
+        const result = await res.json()
+        
+        if (!result.data) {
+          router.push("/admin/queries")
+          return
+        }
+
+        setInquiry(result.data)
+        setNewStatus(result.data.status)
+        setResponse(result.data.response || "")
+        setInteractions(result.interactions || [])
+        setIsLoading(false)
+      } catch (error) {
+        console.error("Error loading inquiry:", error)
+        router.push("/admin/queries")
       }
-
-      setInquiry(attachedInquiry)
-      setNewStatus(inquiry.status)
-      setResponse(inquiry.response || "")
-
-      // 3) Cargar interacciones
-      const { data: interactions, error: interactionsError } = await firebase
-        .from("inquiry_interactions")
-        .select("*")
-        .eq("inquiry_id", params.id)
-        .order("created_at", { ascending: false })
-
-      if (!interactionsError) {
-        setInteractions(interactions || [])
-      }
-
-      setIsLoading(false)
     }
 
     loadData()
   }, [params.id, router])
 
+  const reloadInteractions = async () => {
+    try {
+      const res = await fetch(`/api/admin/inquiries/${params.id}`)
+      if (res.ok) {
+        const result = await res.json()
+        setInteractions(result.interactions || [])
+      }
+    } catch {}
+  }
+
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "nuevo":
-        return "bg-blue-100 text-blue-800"
-      case "en_proceso":
-        return "bg-yellow-100 text-yellow-800"
-      case "completado":
-        return "bg-green-100 text-green-800"
-      case "cerrado":
-        return "bg-gray-100 text-gray-800"
-      default:
-        return "bg-gray-100 text-gray-800"
+      case "nuevo": return "bg-blue-100 text-blue-800"
+      case "en_proceso": return "bg-yellow-100 text-yellow-800"
+      case "completado": return "bg-green-100 text-green-800"
+      case "cerrado": return "bg-gray-100 text-gray-800"
+      default: return "bg-gray-100 text-gray-800"
     }
   }
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case "nuevo":
-        return "Nuevo"
-      case "en_proceso":
-        return "En Proceso"
-      case "completado":
-        return "Completado"
-      case "cerrado":
-        return "Cerrado"
-      default:
-        return status
+      case "nuevo": return "Nuevo"
+      case "en_proceso": return "En Proceso"
+      case "completado": return "Completado"
+      case "cerrado": return "Cerrado"
+      default: return status
     }
   }
 
   const getInteractionIcon = (type: string) => {
     switch (type) {
-      case "email_sent":
-        return <Mail className="w-4 h-4 text-blue-500" />
-      case "phone_call":
-        return <Phone className="w-4 h-4 text-green-500" />
-      case "meeting":
-        return <User className="w-4 h-4 text-purple-500" />
-      case "note":
-        return <MessageSquare className="w-4 h-4 text-gray-500" />
-      case "status_change":
-        return <History className="w-4 h-4 text-orange-500" />
-      default:
-        return <MessageSquare className="w-4 h-4 text-gray-500" />
+      case "email_sent": return <Mail className="w-4 h-4 text-blue-500" />
+      case "phone_call": return <Phone className="w-4 h-4 text-green-500" />
+      case "meeting": return <User className="w-4 h-4 text-purple-500" />
+      case "note": return <MessageSquare className="w-4 h-4 text-gray-500" />
+      case "status_change": return <History className="w-4 h-4 text-orange-500" />
+      default: return <MessageSquare className="w-4 h-4 text-gray-500" />
     }
   }
 
@@ -198,32 +163,27 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
     })
   }
 
+  const showSuccess = (msg: string) => {
+    setSuccessMessage(msg)
+    setTimeout(() => setSuccessMessage(""), 3000)
+  }
+
   const handleUpdateStatus = async () => {
     if (!inquiry) return
-
     setIsUpdating(true)
-    const firebase = createClient()
 
     try {
-      const { error } = await firebase
-        .from("property_inquiries")
-        .update({ status: newStatus })
-        .eq("id", inquiry.id)
+      const res = await fetch(`/api/admin/inquiries/${inquiry.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      })
 
-      if (error) throw error
+      if (!res.ok) throw new Error("Error al actualizar")
 
       setInquiry({ ...inquiry, status: newStatus })
-      
-      // Reload interactions to show the status change
-      const { data: updatedInteractions } = await firebase
-        .from("inquiry_interactions")
-        .select("*")
-        .eq("inquiry_id", params.id)
-        .order("created_at", { ascending: false })
-
-      if (updatedInteractions) {
-        setInteractions(updatedInteractions)
-      }
+      showSuccess("Estado actualizado correctamente")
+      await reloadInteractions()
     } catch (error) {
       console.error("Error updating status:", error)
       alert("Error al actualizar el estado")
@@ -234,67 +194,43 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
 
   const handleSendResponse = async () => {
     if (!inquiry || !response.trim()) return
-
     setIsUpdating(true)
-    const firebase = createClient()
 
     try {
-      const { data: user } = await firebase.auth.getUser()
-      if (!user.user) throw new Error("Usuario no autenticado")
+      const updatedStatus = newStatus === "nuevo" ? "en_proceso" : newStatus
 
-      // Update inquiry with response
-      const { error: updateError } = await firebase
-        .from("property_inquiries")
-        .update({
+      const res = await fetch(`/api/admin/inquiries/${inquiry.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           response: response,
           responded_at: new Date().toISOString(),
-          responded_by: user.user.id,
-          status: newStatus === "nuevo" ? "en_proceso" : newStatus
-        })
-        .eq("id", inquiry.id)
-
-      if (updateError) throw updateError
-
-      // Create interaction record
-      const { error: interactionError } = await firebase
-        .from("inquiry_interactions")
-        .insert({
-          inquiry_id: inquiry.id,
-          type: "email_sent",
-          description: "Respuesta enviada por email",
-          details: {
-            response: response,
-            email_to: inquiry.email
-          },
-          created_by: user.user.id
-        })
-
-      if (interactionError) throw interactionError
-
-      // Here you would typically send the actual email
-      // For now, we'll just simulate it
-      alert("Respuesta guardada. En una implementación real, se enviaría el email automáticamente.")
-
-      // Update local state
-      setInquiry({
-        ...inquiry,
-        response: response,
-        responded_at: new Date().toISOString(),
-        status: newStatus === "nuevo" ? "en_proceso" : newStatus
+          status: updatedStatus,
+        }),
       })
 
-      // Reload interactions
-      const { data: updatedInteractions } = await firebase
-        .from("inquiry_interactions")
-        .select("*")
-        .eq("inquiry_id", params.id)
-        .order("created_at", { ascending: false })
+      if (!res.ok) throw new Error("Error al enviar respuesta")
 
-      if (updatedInteractions) {
-        setInteractions(updatedInteractions)
-      }
+      // Record the interaction
+      await fetch(`/api/admin/inquiries/${inquiry.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "email_sent",
+          description: "Respuesta enviada",
+          details: { response, email_to: inquiry.email },
+        }),
+      })
 
-      setNewStatus(newStatus === "nuevo" ? "en_proceso" : newStatus)
+      setInquiry({
+        ...inquiry,
+        response,
+        responded_at: new Date().toISOString(),
+        status: updatedStatus,
+      })
+      setNewStatus(updatedStatus)
+      showSuccess("Respuesta guardada exitosamente")
+      await reloadInteractions()
     } catch (error) {
       console.error("Error sending response:", error)
       alert("Error al enviar la respuesta")
@@ -306,35 +242,21 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
   const handleAddInteraction = async () => {
     if (!inquiry || !newInteraction.trim()) return
 
-    const firebase = createClient()
-
     try {
-      const { data: user } = await firebase.auth.getUser()
-      if (!user.user) throw new Error("Usuario no autenticado")
-
-      const { error } = await firebase
-        .from("inquiry_interactions")
-        .insert({
-          inquiry_id: inquiry.id,
+      const res = await fetch(`/api/admin/inquiries/${inquiry.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           type: "note",
           description: newInteraction,
-          created_by: user.user.id
-        })
+        }),
+      })
 
-      if (error) throw error
-
-      // Reload interactions
-      const { data: updatedInteractions } = await firebase
-        .from("inquiry_interactions")
-        .select("*")
-        .eq("inquiry_id", params.id)
-        .order("created_at", { ascending: false })
-
-      if (updatedInteractions) {
-        setInteractions(updatedInteractions)
-      }
+      if (!res.ok) throw new Error("Error al agregar nota")
 
       setNewInteraction("")
+      showSuccess("Nota agregada")
+      await reloadInteractions()
     } catch (error) {
       console.error("Error adding interaction:", error)
       alert("Error al agregar la nota")
@@ -345,7 +267,7 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <Building2 className="w-12 h-12 text-green-600 mx-auto mb-4 animate-spin" />
+          <Loader2 className="w-12 h-12 text-green-600 mx-auto mb-4 animate-spin" />
           <p className="text-gray-600">Cargando consulta...</p>
         </div>
       </div>
@@ -375,6 +297,15 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
           </div>
         </div>
       </header>
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+            <p className="text-sm text-green-700">{successMessage}</p>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -436,10 +367,10 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
                       </p>
                       <div className="flex items-center gap-4 text-sm">
                         <Badge variant="outline">
-                          {inquiry.properties.property_type.charAt(0).toUpperCase() + inquiry.properties.property_type.slice(1)}
+                          {inquiry.properties.property_type?.charAt(0).toUpperCase() + inquiry.properties.property_type?.slice(1)}
                         </Badge>
                         <Badge variant="outline">
-                          {inquiry.properties.operation_type.charAt(0).toUpperCase() + inquiry.properties.operation_type.slice(1)}
+                          {inquiry.properties.operation_type?.charAt(0).toUpperCase() + inquiry.properties.operation_type?.slice(1)}
                         </Badge>
                         <span className="font-semibold text-green-600">
                           {formatPrice(inquiry.properties.price)}
@@ -479,8 +410,11 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
                     disabled={isUpdating || !response.trim()}
                     className="bg-green-600 hover:bg-green-700"
                   >
-                    <Send className="w-4 h-4 mr-2" />
-                    {isUpdating ? "Enviando..." : "Enviar Respuesta"}
+                    {isUpdating ? (
+                      <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Enviando...</>
+                    ) : (
+                      <><Send className="w-4 h-4 mr-2" /> Enviar Respuesta</>
+                    )}
                   </Button>
                 </div>
               </CardContent>
@@ -516,7 +450,11 @@ export default function QueryDetailPage({ params }: QueryDetailPageProps) {
                     className="w-full"
                     variant="outline"
                   >
-                    {isUpdating ? "Actualizando..." : "Actualizar Estado"}
+                    {isUpdating ? (
+                      <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Actualizando...</>
+                    ) : (
+                      "Actualizar Estado"
+                    )}
                   </Button>
                 )}
               </CardContent>
