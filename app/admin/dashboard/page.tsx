@@ -62,57 +62,22 @@ export default async function AdminDashboard() {
   let pendingInquiries = 0
 
   try {
-    // Get the base URL for API calls
-    // In server components, we can't use window.location, so we'll use the environment variable
-    // or construct it from Vercel's environment variable if available
-    let baseUrl = process.env.NEXT_PUBLIC_SITE_URL
-    if (!baseUrl && process.env.VERCEL_URL) {
-      baseUrl = `https://${process.env.VERCEL_URL}`
-    }
-    if (!baseUrl) {
-      baseUrl = 'http://localhost:3000'
-    }
-    
-    console.log("Dashboard: Fetching stats from:", baseUrl)
-    
     const [propertiesResult, inquiriesResult] = await Promise.all([
-      // Obtener propiedades
-      fetch(`${baseUrl}/api/properties/stats`, {
-        cache: 'no-store', // Ensure fresh data
-      }).then(res => {
-        if (!res.ok) {
-          console.error("Dashboard: Properties stats fetch failed:", res.status)
-          return { total: 0, available: 0, sold: 0 }
-        }
-        return res.json()
-      }).catch(err => {
-        console.error("Dashboard: Properties stats fetch error:", err)
-        return { total: 0, available: 0, sold: 0 }
-      }),
-      // Obtener consultas
-      fetch(`${baseUrl}/api/inquiries/stats`, {
-        cache: 'no-store', // Ensure fresh data
-      }).then(res => {
-        if (!res.ok) {
-          console.error("Dashboard: Inquiries stats fetch failed:", res.status)
-          return { total: 0, new: 0, pending: 0 }
-        }
-        return res.json()
-      }).catch(err => {
-        console.error("Dashboard: Inquiries stats fetch error:", err)
-        return { total: 0, new: 0, pending: 0 }
-      })
+      firebase.from("properties").select("status"),
+      firebase.from("property_inquiries").select("status")
     ])
+
+    const properties = propertiesResult.data || []
+    totalProperties = properties.length
+    availableProperties = properties.filter((p: any) => p.status === "disponible").length
+    soldProperties = properties.filter((p: any) => p.status === "vendido").length
+
+    const inquiries = inquiriesResult.data || []
+    totalInquiries = inquiries.length
+    newInquiries = inquiries.filter((i: any) => i.status === "nuevo").length
+    pendingInquiries = inquiries.filter((i: any) => i.status === "en_proceso").length
     
     console.log("Dashboard: Stats fetched successfully")
-
-    totalProperties = propertiesResult?.total ?? 0
-    availableProperties = propertiesResult?.available ?? 0
-    soldProperties = propertiesResult?.sold ?? 0
-
-    totalInquiries = inquiriesResult?.total ?? 0
-    newInquiries = inquiriesResult?.new ?? 0
-    pendingInquiries = inquiriesResult?.pending ?? 0
   } catch (error) {
     console.error('Error al obtener estadísticas:', error)
   }
